@@ -628,3 +628,53 @@ textarea.form-control {
         opacity: 1;
     }
 }
+
+/* --- Hero Section Background & Overlay --- */
+.hero-section {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    transition: background var(--transition-normal);
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.75) 100%);
+    z-index: 1;
+}
+
+/* Ensure content sits above the overlay */
+.hero-section > * {
+    position: relative;
+    z-index: 2;
+}
+
+/* Option 1: Sleek Dark Mode Styling */
+.hero-section-dark h1 {
+    color: #FFFFFF !important;
+}
+
+.hero-section-dark p {
+    color: #CBD5E1 !important; /* light slate gray */
+}
+
+/* Overrides for buttons on dark background */
+.hero-section-dark .btn-secondary {
+    color: #FFFFFF !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    background-color: transparent !important;
+}
+
+.hero-section-dark .btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border-color: #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
