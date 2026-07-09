@@ -4,5 +4,7 @@ Allow: /
 # Prevent indexing of sensitive or POST form targets
 Disallow: /contact/submit
 Disallow: /newsletter/subscribe
+Disallow: /careers/apply
+Disallow: /admin/
 
 Sitemap: https://www.globaltechvibers.com/sitemap.xml

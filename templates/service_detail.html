@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ service.title }}{% endblock %}
+
+{% block description %}{{ service.meta_desc }}{% endblock %}
+
+{% block content %}
+<!-- Service Detail Hero Section -->
+<section class="section animate-fade" style="background-color: var(--color-section-bg); padding: var(--spacing-xl) 0; border-bottom: 1px solid var(--color-border);">
+    <div class="container" style="max-width: 900px; text-align: left;">
+        <div style="margin-bottom: var(--spacing-sm);">
+            <a href="/services" style="font-size: 0.9rem; font-weight: 600; color: var(--color-text-muted); display: inline-flex; align-items: center; gap: 4px;">
+                <i class="bi bi-chevron-left"></i> All Services
+            </a>
+        </div>
+        
+        <span style="font-weight: 700; color: var(--color-primary); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+            <i class="bi {{ service.icon }}"></i> Specialized Division
+        </span>
+        <h1 style="font-size: 3rem; margin-bottom: var(--spacing-sm); color: var(--color-dark-navy);">{{ service.heading }}</h1>
+        <p style="font-size: 1.25rem; color: var(--color-text-muted); max-width: 800px; line-height: 1.5;">{{ service.subheading }}</p>
+    </div>
+</section>
+
+<!-- Deep Dive Content & Features -->
+<section class="section">
+    <div class="container">
+        <div class="grid grid-2" style="gap: var(--spacing-xl); align-items: start;">
+            
+            <!-- Left Column: Details -->
+            <div class="reveal reveal-up active">
+                <h2 style="font-size: 2rem; margin-bottom: var(--spacing-md); color: var(--color-dark-navy);">Overview & Capabilities</h2>
+                <p style="font-size: 1.1rem; line-height: 1.7; color: var(--color-text); margin-bottom: var(--spacing-lg);">{{ service.overview }}</p>
+                
+                <h3 style="font-size: 1.35rem; margin-bottom: var(--spacing-sm); color: var(--color-dark-navy);">Tech Stacks Covered:</h3>
+                <div style="background-color: var(--color-section-bg); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--spacing-md); margin-bottom: var(--spacing-lg);">
+                    <p style="font-family: monospace; font-size: 1rem; color: var(--color-primary); margin: 0; font-weight: 600;">
+                        {{ service.tech_stack }}
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Right Column: Features Checklist -->
+            <div class="reveal reveal-up active" style="background-color: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--spacing-lg); box-shadow: var(--shadow-md);">
+                <h3 style="font-size: 1.5rem; margin-bottom: var(--spacing-md); color: var(--color-dark-navy);">What We Deliver</h3>
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--spacing-sm);">
+                    {% for feature in service.features %}
+                    <li style="display: flex; align-items: flex-start; gap: 12px; font-size: 1.05rem; line-height: 1.4; color: var(--color-text);">
+                        <i class="bi bi-patch-check-fill" style="color: var(--color-primary); font-size: 1.2rem; flex-shrink: 0; margin-top: 2px;"></i>
+                        <span>{{ feature }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+<!-- Inline Conversion Form Section -->
+<section class="section section-bg" style="border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);">
+    <div class="container" style="max-width: 700px;">
+        <div class="reveal reveal-up active text-center" style="margin-bottom: var(--spacing-lg);">
+            <span style="font-weight: 700; color: var(--color-primary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px;">Fast Inquiries</span>
+            <h2>Get Started On Your Project</h2>
+            <p style="color: var(--color-text-muted); font-size: 1.05rem;">Submit your guidelines below and our engineering team will provide a tailored quote within 24 hours.</p>
+        </div>
+        
+        <!-- Flask Form Handler Integration -->
+        <div class="card reveal reveal-up active" style="background-color: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--spacing-xl); box-shadow: var(--shadow-sm);">
+            <form action="/contact/submit" method="POST" id="inquiryForm" style="display: flex; flex-direction: column; gap: var(--spacing-md);">
+                <!-- Anti-CSRF Protection Token -->
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                
+                <div class="form-grid-2">
+                    <div class="form-group" style="display: flex; flex-direction: column; gap: 6px;">
+                        <label for="name" style="font-weight: 600; font-size: 0.925rem; color: var(--color-dark-navy);">Your Name *</label>
+                        <input type="text" id="name" name="name" required placeholder="John Doe" style="padding: 0.75rem 1rem; border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-size: 0.95rem; width: 100%;">
+                    </div>
+                    
+                    <div class="form-group" style="display: flex; flex-direction: column; gap: 6px;">
+                        <label for="email" style="font-weight: 600; font-size: 0.925rem; color: var(--color-dark-navy);">Email Address *</label>
+                        <input type="email" id="email" name="email" required placeholder="john.doe@example.com" style="padding: 0.75rem 1rem; border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-size: 0.95rem; width: 100%;">
+                    </div>
+                </div>
+                
+                <div class="form-group" style="display: flex; flex-direction: column; gap: 6px;">
+                    <label for="subject" style="font-weight: 600; font-size: 0.925rem; color: var(--color-dark-navy);">Inquiry Subject *</label>
+                    <input type="text" id="subject" name="subject" required readonly value="{{ service.cta_subject }}" style="padding: 0.75rem 1rem; border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-size: 0.95rem; width: 100%; background-color: var(--color-section-bg); cursor: not-allowed; font-weight: 500; color: var(--color-text);">
+                </div>
+                
+                <div class="form-group" style="display: flex; flex-direction: column; gap: 6px;">
+                    <label for="message" style="font-weight: 600; font-size: 0.925rem; color: var(--color-dark-navy);">Describe Your Specifications / Project Details *</label>
+                    <textarea id="message" name="message" required rows="5" placeholder="Please outline your specifications, dead-lines, college guidelines, or specific custom software criteria here..." style="padding: 0.75rem 1rem; border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-size: 0.95rem; width: 100%; font-family: inherit; resize: vertical;"></textarea>
+                </div>
+                
+                <div style="text-align: center; margin-top: var(--spacing-sm);">
+                    <button type="submit" class="btn btn-primary" style="padding: 0.8rem 2.25rem; font-size: 1rem; font-weight: 600; width: 100%;"><i class="bi bi-send-fill" style="margin-right: 6px;"></i> Send Inquiry Request</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -129,6 +129,65 @@ def contact():
 def terms():
     return render_template('terms.html')
 
+SERVICES_DATA = {
+    'academic-projects': {
+        'title': 'College Major & Minor Projects | IEEE Final Year Support',
+        'meta_desc': 'Get professional college major & minor project support. We provide complete IEEE project source code, UML design documentation, and Viva prep guidance.',
+        'heading': 'Academic & IEEE Projects Support',
+        'subheading': 'Empowering students with industry-grade capstone engineering, full source code, and step-by-step documentation.',
+        'icon': 'bi-mortarboard-fill',
+        'overview': 'We help final year students bridge the gap between academic theory and professional engineering. Our systems are built from scratch using modern stacks, ensuring your submission stands out.',
+        'features': [
+            'Complete Source Code (Python, Flask, Java, C++)',
+            'Full Documentation (IEEE format, SRS layouts, UML/DFD diagrams)',
+            'Viva-Voce preparation and concept walk-throughs',
+            'Local setup and deployment assistance (1-on-1 support)'
+        ],
+        'tech_stack': 'Python, Flask, SQLite, PostgreSQL, Java, MySQL, HTML5/CSS3/JS',
+        'cta_subject': 'Inquiry for Academic Project Support'
+    },
+    'web-development': {
+        'title': 'Custom Web Development | Custom ERP & CRM Systems',
+        'meta_desc': 'Build high-performance web applications, business portals, and custom ERP/CRM platforms. Scalable, secure database integrations with Neon Postgres and SQLite.',
+        'heading': 'Enterprise Web Applications',
+        'subheading': 'Custom web portals, scalable B2B applications, and robust internal tracking suites designed for startups and established brands.',
+        'icon': 'bi-laptop-fill',
+        'overview': 'We build custom, scalable web architectures tailored to your specific business processes. By productizing your workflows, we eliminate manual administration hours and save costs.',
+        'features': [
+            'Custom ERP & CRM development (Inventory, Sales, Employee tracking)',
+            'Secure Database connections (Neon PostgreSQL, connection pooling)',
+            'Responsive frontend designs built from scratch (vanilla CSS/JS)',
+            'Restful API development and third-party integrations (Stripe, Twilio)'
+        ],
+        'tech_stack': 'Python Flask, Gunicorn, PostgreSQL, SQLite, HTML5/CSS3/JS, Render Cloud',
+        'cta_subject': 'Inquiry for Web Development Services'
+    },
+    'ai-solutions': {
+        'title': 'AI & Machine Learning Solutions | Custom Chatbots',
+        'meta_desc': 'Deploy custom AI chatbots, machine learning prediction models, and data analytics dashboards. Scalable integrations to automate client support.',
+        'heading': 'AI-Powered Business Solutions',
+        'subheading': 'Standardized chatbot models, forecasting engines, and predictive analytics tools trained on your business database.',
+        'icon': 'bi-cpu-fill',
+        'overview': 'Automate manual customer support and forecast business trends with custom-trained machine learning architectures. We build standalone AI tools or integrate them directly into your existing web platforms.',
+        'features': [
+            'Custom-trained AI Chatbots (LLM APIs, local databases integrations)',
+            'Machine Learning prediction engines (Sales forecasting, classification)',
+            'Natural Language Processing (NLP) text summaries & extraction',
+            'Dynamic analytical dashboards with interactive statistics'
+        ],
+        'tech_stack': 'Python, PyTorch, Scikit-learn, OpenAI API, Flask, SQLite/Postgres',
+        'cta_subject': 'Inquiry for AI & Chatbot Solutions'
+    }
+}
+
+@main_bp.route('/services/<service_slug>')
+def service_detail(service_slug):
+    service = SERVICES_DATA.get(service_slug)
+    if not service:
+        from flask import abort
+        abort(404)
+    return render_template('service_detail.html', service=service, service_slug=service_slug)
+
 @main_bp.route('/robots.txt')
 def robots():
     return send_from_directory(current_app.static_folder, 'robots.txt')
