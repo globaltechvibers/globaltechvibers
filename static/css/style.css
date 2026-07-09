@@ -678,3 +678,38 @@ textarea.form-control {
     color: #FFFFFF !important;
 }
 
+/* --- About Hero Section Background & Overlay --- */
+.about-hero-section {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    transition: background var(--transition-normal);
+}
+
+.about-hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.75) 100%);
+    z-index: 1;
+}
+
+.about-hero-section > * {
+    position: relative;
+    z-index: 2;
+}
+
+.about-hero-section h1 {
+    color: #FFFFFF !important;
+}
+
+.about-hero-section p {
+    color: #CBD5E1 !important; /* light slate gray */
+}
+
+
