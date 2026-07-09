@@ -18,6 +18,12 @@
                 <p style="color: var(--color-text-muted); font-size: 0.9rem;">Sign in to view your offer letter & track referrals</p>
             </div>
             
+            <!-- Google Sign-In Trigger -->
+            <div style="margin: 15px 0 25px 0; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                <div id="google-signin-button"></div>
+                <span style="font-size: 0.8rem; color: var(--color-text-muted); text-transform: uppercase; font-weight: 600;">or use credentials</span>
+            </div>
+            
             <form action="/ambassadors/login" method="POST" style="display: flex; flex-direction: column; gap: var(--spacing-md);">
                 <!-- CSRF Token -->
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
@@ -28,11 +34,10 @@
                     <input type="email" id="email" name="email" required class="form-control" placeholder="rahul@example.com" value="{{ email or '' }}">
                 </div>
                 
-                <!-- Referral Code Input -->
+                <!-- Password Input -->
                 <div class="form-group">
-                    <label for="referral_code" class="form-label">Referral / Ambassador Code</label>
-                    <input type="text" id="referral_code" name="referral_code" required class="form-control" placeholder="e.g. GTV-AMB-RAHUL-1029">
-                    <span style="font-size: 0.775rem; color: var(--color-text-muted); display: block; margin-top: 4px;">Use the code printed on your Letter of Appointment.</span>
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" name="password" required class="form-control" placeholder="••••••••">
                 </div>
                 
                 <!-- Submit -->
@@ -49,4 +54,43 @@
         
     </div>
 </section>
+
+<!-- Google GSI SDK Integration -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+    function handleCredentialResponse(response) {
+        // Send Google token to backend via AJAX
+        fetch('/ambassadors/google-auth', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': "{{ csrf_token() }}"
+            },
+            body: JSON.stringify({ credential: response.credential })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                // Redirect directly to dashboard or onboarding
+                window.location.href = data.redirect;
+            } else {
+                window.showToast(data.message || 'Google login failed.', 'error');
+            }
+        })
+        .catch(err => {
+            window.showToast('Identity validation error.', 'error');
+        });
+    }
+
+    window.addEventListener('load', () => {
+        google.accounts.id.initialize({
+            client_id: "{{ google_client_id }}",
+            callback: handleCredentialResponse
+        });
+        google.accounts.id.renderButton(
+            document.getElementById("google-signin-button"),
+            { theme: "outline", size: "large", text: "signin_with", shape: "rectangular", width: "100%" }
+        );
+    });
+</script>
 {% endblock %}

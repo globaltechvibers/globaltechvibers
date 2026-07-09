@@ -118,6 +118,7 @@ def _create_tables(app):
             college VARCHAR(150) NOT NULL,
             payment_info VARCHAR(255) NOT NULL,
             referral_code VARCHAR(50) NOT NULL UNIQUE,
+            password_hash VARCHAR(255),
             status VARCHAR(50) DEFAULT 'Pending',
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
@@ -176,6 +177,7 @@ def _create_tables(app):
             college TEXT NOT NULL,
             payment_info TEXT NOT NULL,
             referral_code TEXT NOT NULL UNIQUE,
+            password_hash TEXT,
             status TEXT DEFAULT 'Pending',
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
@@ -245,6 +247,34 @@ def _create_tables(app):
         cur.close()
     except Exception as e:
         app.logger.warning(f"Database Migration Warning (referral_code check): {e}")
+    finally:
+        release_connection(conn)
+
+    # Database Schema Migration: Check and add password_hash column to ambassadors table if missing
+    try:
+        conn = get_connection()
+        cur = conn.cursor()
+        if _db_type == 'sqlite':
+            cur.execute("PRAGMA table_info(ambassadors);")
+            columns = [row[1] for row in cur.fetchall()]
+            if 'password_hash' not in columns:
+                cur.execute("ALTER TABLE ambassadors ADD COLUMN password_hash TEXT;")
+                conn.commit()
+                app.logger.info("Database: Migrated SQLite ambassadors table adding password_hash.")
+        else:
+            cur.execute("""
+                SELECT column_name 
+                FROM information_schema.columns 
+                WHERE table_name='ambassadors' AND column_name='password_hash';
+            """)
+            row = cur.fetchone()
+            if not row:
+                cur.execute("ALTER TABLE ambassadors ADD COLUMN password_hash VARCHAR(255);")
+                conn.commit()
+                app.logger.info("Database: Migrated Postgres ambassadors table adding password_hash.")
+        cur.close()
+    except Exception as e:
+        app.logger.warning(f"Database Migration Warning (password_hash check): {e}")
     finally:
         release_connection(conn)
 

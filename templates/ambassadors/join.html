@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
-{% block title %}Become a Campus Ambassador | GlobalTechVibers{% endblock %}
+{% block title %}Join as a Campus Ambassador | GlobalTechVibers{% endblock %}
 
-{% block description %}Join the GlobalTechVibers Campus Ambassador Program. Represent us on your campus, share project catalogs, and earn a 15% cash commission on every successful referral.{% endblock %}
+{% block description %}Apply to the GlobalTechVibers Campus Ambassador Program. Complete signup to download your Letter of Appointment and start earning commissions.{% endblock %}
 
 {% block content %}
 <!-- Ambassador Hero Section -->
@@ -58,37 +58,72 @@
             
             <!-- Application Form / Right Column -->
             <div class="card reveal reveal-up active" style="background-color: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--spacing-lg); box-shadow: var(--shadow-md);">
-                <h3 style="font-size: 1.35rem; margin-bottom: var(--spacing-md); color: var(--color-dark-navy); text-align: center;">Apply & Get Offer Letter</h3>
+                <h3 style="font-size: 1.35rem; margin-bottom: var(--spacing-sm); color: var(--color-dark-navy); text-align: center;">Ambassador Signup</h3>
+                
+                {% if not is_google_signup %}
+                <!-- Google Sign-Up Trigger (Only show if not onboarding via Google session) -->
+                <div style="margin: 15px 0 25px 0; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                    <div id="google-signup-button"></div>
+                    <span style="font-size: 0.8rem; color: var(--color-text-muted); text-transform: uppercase; font-weight: 600;">or use credentials below</span>
+                </div>
+                {% else %}
+                <div style="background-color: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 6px; padding: 10px 14px; margin-bottom: 20px; font-size: 0.85rem; color: #047857; display: flex; align-items: center; gap: 8px;">
+                    <i class="bi bi-patch-check-fill" style="font-size: 1.15rem;"></i>
+                    <span>Email identity verified via Google. Please complete remaining fields.</span>
+                </div>
+                {% endif %}
                 
                 <form action="/ambassadors/join" method="POST" style="display: flex; flex-direction: column; gap: var(--spacing-md);">
                     <!-- CSRF Protection -->
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     
+                    {% if is_google_signup %}
+                    <!-- Onboarding via Google Session -->
+                    <div class="form-group">
+                        <label for="name" class="form-label">Full Name</label>
+                        <input type="text" id="name" name="name" class="form-control" style="background-color: #F8FAFC; color: var(--color-text-muted);" value="{{ google_name }}" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" id="email" name="email" class="form-control" style="background-color: #F8FAFC; color: var(--color-text-muted);" value="{{ google_email }}" readonly>
+                    </div>
+                    {% else %}
+                    <!-- Standard Registration -->
                     <div class="form-group">
                         <label for="name" class="form-label">Full Name *</label>
                         <input type="text" id="name" name="name" required class="form-control" placeholder="John Doe" value="{{ name or '' }}">
                     </div>
                     
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address *</label>
+                        <input type="email" id="email" name="email" required class="form-control" placeholder="john@example.com" value="{{ email or '' }}">
+                    </div>
+                    {% endif %}
+                    
                     <div class="form-grid-2">
-                        <div class="form-group">
-                            <label for="email" class="form-label">Email Address *</label>
-                            <input type="email" id="email" name="email" required class="form-control" placeholder="john@example.com" value="{{ email or '' }}">
-                        </div>
                         <div class="form-group">
                             <label for="phone" class="form-label">Phone Number *</label>
                             <input type="tel" id="phone" name="phone" required class="form-control" placeholder="+91 XXXXX XXXXX" value="{{ phone or '' }}">
                         </div>
+                        <div class="form-group">
+                            <label for="college" class="form-label">College / University *</label>
+                            <input type="text" id="college" name="college" required class="form-control" placeholder="Oxford College" value="{{ college or '' }}">
+                        </div>
                     </div>
                     
+                    {% if not is_google_signup %}
+                    <!-- Password Field for Traditional Signups -->
                     <div class="form-group">
-                        <label for="college" class="form-label">College / University Name *</label>
-                        <input type="text" id="college" name="college" required class="form-control" placeholder="e.g. Oxford Engineering College" value="{{ college or '' }}">
+                        <label for="password" class="form-label">Create Login Password *</label>
+                        <input type="password" id="password" name="password" required class="form-control" placeholder="Min. 6 characters">
                     </div>
+                    {% endif %}
                     
                     <div class="form-group">
                         <label for="payment_info" class="form-label">Payout Details (UPI ID / Google Pay / Bank Account) *</label>
                         <input type="text" id="payment_info" name="payment_info" required class="form-control" placeholder="e.g., UPI: name@okhdfcbank" value="{{ payment_info or '' }}">
-                        <span style="font-size: 0.8rem; color: var(--color-text-muted); display: block; margin-top: 4px;"><i class="bi bi-shield-lock-fill"></i> Payout details are encrypted and used only for commission transfers.</span>
+                        <span style="font-size: 0.8rem; color: var(--color-text-muted); display: block; margin-top: 4px;"><i class="bi bi-shield-lock-fill"></i> Payout details are used only for commission transfers.</span>
                     </div>
                     
                     <button type="submit" class="btn btn-primary" style="width: 100%; font-weight: 600; padding: 0.75rem;">
@@ -100,4 +135,45 @@
         </div>
     </div>
 </section>
+
+<!-- Google GSI SDK Integration (Only load if not onboarding via Google session) -->
+{% if not is_google_signup %}
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+    function handleCredentialResponse(response) {
+        // Send Google token to backend via AJAX
+        fetch('/ambassadors/google-auth', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': "{{ csrf_token() }}"
+            },
+            body: JSON.stringify({ credential: response.credential })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                // If user already existed, logs in; if new, redirects to complete college/payment fields
+                window.location.href = data.redirect;
+            } else {
+                window.showToast(data.message || 'Google signup failed.', 'error');
+            }
+        })
+        .catch(err => {
+            window.showToast('Identity validation error.', 'error');
+        });
+    }
+
+    window.addEventListener('load', () => {
+        google.accounts.id.initialize({
+            client_id: "{{ google_client_id }}",
+            callback: handleCredentialResponse
+        });
+        google.accounts.id.renderButton(
+            document.getElementById("google-signup-button"),
+            { theme: "outline", size: "large", text: "signup_with", shape: "rectangular", width: "100%" }
+        );
+    });
+</script>
+{% endif %}
 {% endblock %}

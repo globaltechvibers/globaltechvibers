@@ -19,3 +19,4 @@ class Config:
     # Admin Panel Credentials
     ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'admin')
     ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'admin123')
+    GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID', 'placeholder-google-client-id')
