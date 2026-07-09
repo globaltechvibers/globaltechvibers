@@ -48,8 +48,9 @@ def create_app():
 
     return app
 
+app = create_app()
+
 if __name__ == '__main__':
-    app = create_app()
     # Support Render port injection. Bind to 0.0.0.0 if PORT is defined (production), 
     # otherwise fall back to localhost (127.0.0.1) and port 8080 to avoid Windows socket conflicts.
     port = int(os.environ.get('PORT', 8080))

@@ -210,3 +210,7 @@ def execute_read(query, params=None):
         raise e
     finally:
         release_connection(conn)
+
+def get_db_type():
+    """Returns the active database driver type ('postgres' or 'sqlite')."""
+    return _db_type

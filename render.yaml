@@ -1,0 +1,22 @@
+# Render Deployment Blueprint for GlobalTechVibers
+# https://render.com/docs/blueprints
+
+services:
+  - type: web
+    name: globaltechvibers
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false
+        # Paste your PostgreSQL connection string here or link to a Render PostgreSQL service.
+        # If left empty, the application automatically falls back to an SQLite file database.
+      - key: ADMIN_USERNAME
+        value: admin
+      - key: ADMIN_PASSWORD
+        value: admin123
+      - key: FLASK_DEBUG
+        value: "false"
