@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block title %}Become a Campus Ambassador | GlobalTechVibers{% endblock %}
+
+{% block description %}Join the GlobalTechVibers Campus Ambassador Program. Represent us on your campus, share project catalogs, and earn a 15% cash commission on every successful referral.{% endblock %}
+
+{% block content %}
+<!-- Ambassador Hero Section -->
+<section class="section animate-fade" style="background-color: var(--color-section-bg); padding: var(--spacing-xl) 0; border-bottom: 1px solid var(--color-border); text-align: center;">
+    <div class="container" style="max-width: 800px;">
+        <span style="font-weight: 700; color: var(--color-primary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px;">Partnership Program</span>
+        <h1 style="margin-bottom: var(--spacing-sm);">Join as a Campus Tech Ambassador</h1>
+        <p style="font-size: 1.15rem; color: var(--color-text-muted);">Earn high commissions by representing GlobalTechVibers on your campus. Help your classmates get clean code, full documentation, and Viva-Voce prep.</p>
+    </div>
+</section>
+
+<!-- Onboarding and Perks Section -->
+<section class="section">
+    <div class="container" style="max-width: 1000px;">
+        <div class="grid grid-2" style="gap: var(--spacing-xl); align-items: start;">
+            
+            <!-- Perks / Left Column -->
+            <div class="reveal reveal-up active">
+                <h2 style="font-size: 1.85rem; margin-bottom: var(--spacing-md); color: var(--color-dark-navy);">Why Join Us?</h2>
+                
+                <div style="display: flex; flex-direction: column; gap: var(--spacing-md);">
+                    <div style="display: flex; gap: 16px;">
+                        <div style="background: rgba(214, 40, 40, 0.08); border-radius: 8px; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <i class="bi bi-cash-coin" style="color: var(--color-primary); font-size: 1.5rem;"></i>
+                        </div>
+                        <div>
+                            <h4 style="margin-bottom: 4px; color: var(--color-dark-navy);">High Commissions</h4>
+                            <p style="color: var(--color-text-muted); font-size: 0.95rem; margin: 0;">Earn a **15% cash cut** on every mini, major, or IEEE student project referred. Average payout is ₹2,000 to ₹5,000 per booking.</p>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 16px;">
+                        <div style="background: rgba(214, 40, 40, 0.08); border-radius: 8px; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <i class="bi bi-file-earmark-pdf-fill" style="color: var(--color-primary); font-size: 1.5rem;"></i>
+                        </div>
+                        <div>
+                            <h4 style="margin-bottom: 4px; color: var(--color-dark-navy);">Automated Offer Letter</h4>
+                            <p style="color: var(--color-text-muted); font-size: 0.95rem; margin: 0;">Receive an official, printable Letter of Appointment immediately upon approval to add to your resume.</p>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 16px;">
+                        <div style="background: rgba(214, 40, 40, 0.08); border-radius: 8px; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <i class="bi bi-mortarboard-fill" style="color: var(--color-primary); font-size: 1.5rem;"></i>
+                        </div>
+                        <div>
+                            <h4 style="margin-bottom: 4px; color: var(--color-dark-navy);">Internship Experience</h4>
+                            <p style="color: var(--color-text-muted); font-size: 0.95rem; margin: 0;">Stand out to recruiters. Get a Certificate of Internship and Letter of Recommendation (LOR) from our agency.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Application Form / Right Column -->
+            <div class="card reveal reveal-up active" style="background-color: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--spacing-lg); box-shadow: var(--shadow-md);">
+                <h3 style="font-size: 1.35rem; margin-bottom: var(--spacing-md); color: var(--color-dark-navy); text-align: center;">Apply & Get Offer Letter</h3>
+                
+                <form action="/ambassadors/join" method="POST" style="display: flex; flex-direction: column; gap: var(--spacing-md);">
+                    <!-- CSRF Protection -->
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    
+                    <div class="form-group">
+                        <label for="name" class="form-label">Full Name *</label>
+                        <input type="text" id="name" name="name" required class="form-control" placeholder="John Doe" value="{{ name or '' }}">
+                    </div>
+                    
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email Address *</label>
+                            <input type="email" id="email" name="email" required class="form-control" placeholder="john@example.com" value="{{ email or '' }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" class="form-label">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" required class="form-control" placeholder="+91 XXXXX XXXXX" value="{{ phone or '' }}">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="college" class="form-label">College / University Name *</label>
+                        <input type="text" id="college" name="college" required class="form-control" placeholder="e.g. Oxford Engineering College" value="{{ college or '' }}">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="payment_info" class="form-label">Payout Details (UPI ID / Google Pay / Bank Account) *</label>
+                        <input type="text" id="payment_info" name="payment_info" required class="form-control" placeholder="e.g., UPI: name@okhdfcbank" value="{{ payment_info or '' }}">
+                        <span style="font-size: 0.8rem; color: var(--color-text-muted); display: block; margin-top: 4px;"><i class="bi bi-shield-lock-fill"></i> Payout details are encrypted and used only for commission transfers.</span>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%; font-weight: 600; padding: 0.75rem;">
+                        Generate Offer Letter & Join <i class="bi bi-arrow-right" style="margin-left: 6px;"></i>
+                    </button>
+                </form>
+            </div>
+            
+        </div>
+    </div>
+</section>
+{% endblock %}

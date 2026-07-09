@@ -48,13 +48,14 @@ def logout():
 @admin_bp.route('/dashboard')
 @admin_required
 def dashboard():
-    """Renders the admin control dashboard displaying metrics, messages, subscribers, jobs, and applications."""
+    """Renders the admin control dashboard displaying metrics, messages, subscribers, jobs, applications, and ambassadors."""
     try:
         # Fetch statistics counts and lists
         contacts = execute_read("SELECT * FROM contacts ORDER BY created_at DESC")
         subscribers = execute_read("SELECT * FROM newsletter ORDER BY created_at DESC")
         jobs = execute_read("SELECT * FROM jobs ORDER BY created_at DESC")
         applications = execute_read("SELECT * FROM applications ORDER BY created_at DESC")
+        ambassadors = execute_read("SELECT * FROM ambassadors ORDER BY created_at DESC")
         
         return render_template(
             'admin/dashboard.html',
@@ -62,10 +63,12 @@ def dashboard():
             subscribers=subscribers,
             jobs=jobs,
             applications=applications,
+            ambassadors=ambassadors,
             contacts_count=len(contacts),
             subscribers_count=len(subscribers),
             jobs_count=len(jobs),
-            applications_count=len(applications)
+            applications_count=len(applications),
+            ambassadors_count=len(ambassadors)
         )
     except Exception as e:
         current_app.logger.error(f"Admin Dashboard Error: {e}")
@@ -76,10 +79,12 @@ def dashboard():
             subscribers=[],
             jobs=[],
             applications=[],
+            ambassadors=[],
             contacts_count=0,
             subscribers_count=0,
             jobs_count=0,
-            applications_count=0
+            applications_count=0,
+            ambassadors_count=0
         )
 
 @admin_bp.route('/contacts/delete/<int:contact_id>', methods=['POST'])
@@ -177,3 +182,16 @@ def delete_application(app_id):
         flash("Failed to delete candidate application.", "error")
         
     return redirect(url_for('admin.dashboard', _anchor='applications'))
+
+@admin_bp.route('/ambassadors/delete/<int:amb_id>', methods=['POST'])
+@admin_required
+def delete_ambassador(amb_id):
+    """Permanently deletes an ambassador registration record by ID."""
+    try:
+        execute_write("DELETE FROM ambassadors WHERE id = %s", (amb_id,))
+        flash("Ambassador record permanently purged from database.", "success")
+    except Exception as e:
+        current_app.logger.error(f"Failed to delete ambassador: {e}")
+        flash("Failed to delete ambassador record.", "error")
+        
+    return redirect(url_for('admin.dashboard', _anchor='ambassadors'))

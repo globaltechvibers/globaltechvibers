@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letter of Appointment | GlobalTechVibers</title>
+    
+    <!-- Google Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --font-primary: 'Inter', sans-serif;
+            --color-primary: #D62828;
+            --color-dark-navy: #0F172A;
+            --color-text: #334155;
+            --color-text-muted: #64748B;
+            --color-border: #E2E8F0;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: var(--font-primary);
+            color: var(--color-text);
+            background-color: #F1F5F9;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            padding: 40px 0;
+        }
+        
+        .letter-container {
+            background-color: #FFFFFF;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 80px;
+            box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.05), 0 4px 6px -4px rgba(15, 23, 42, 0.05);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            position: relative;
+        }
+        
+        /* Official Header */
+        .letter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--color-primary);
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--color-dark-navy);
+        }
+        
+        .brand-logo span {
+            color: var(--color-primary);
+        }
+        
+        .company-details {
+            text-align: right;
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            line-height: 1.4;
+        }
+        
+        /* Meta info row */
+        .meta-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+            color: var(--color-text);
+        }
+        
+        .recipient-address {
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+            color: var(--color-dark-navy);
+            line-height: 1.5;
+        }
+        
+        .letter-title {
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--color-dark-navy);
+            text-decoration: underline;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+        
+        .letter-body {
+            font-size: 0.95rem;
+            color: var(--color-text);
+            text-align: justify;
+        }
+        
+        .letter-body p {
+            margin-bottom: 20px;
+        }
+        
+        /* Key terms table */
+        .terms-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+        }
+        
+        .terms-table th, .terms-table td {
+            border: 1px solid var(--color-border);
+            padding: 10px 14px;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+        
+        .terms-table th {
+            background-color: #F8FAFC;
+            color: var(--color-dark-navy);
+            font-weight: 600;
+        }
+        
+        .terms-table td strong {
+            color: var(--color-primary);
+        }
+        
+        /* Signatures block */
+        .signature-block {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            align-items: flex-end;
+        }
+        
+        .signature-seal {
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+        }
+        
+        .seal-circle {
+            width: 80px;
+            height: 80px;
+            border: 2px dashed var(--color-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-primary);
+            font-weight: 700;
+            font-size: 0.75rem;
+            margin: 0 auto 10px auto;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .sign-line {
+            width: 180px;
+            border-top: 1px solid var(--color-dark-navy);
+            margin-bottom: 8px;
+        }
+        
+        /* Floating toolbar */
+        .toolbar {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.9);
+            padding: 12px 24px;
+            border-radius: 50px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            backdrop-filter: blur(5px);
+        }
+        
+        .tool-btn {
+            background: none;
+            border: none;
+            color: #FFFFFF;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+        
+        .tool-btn:hover {
+            opacity: 0.8;
+            color: #FFFFFF;
+        }
+        
+        .tool-btn-primary {
+            color: var(--color-primary);
+        }
+        
+        /* Printable Styles override */
+        @media print {
+            body {
+                background-color: #FFFFFF;
+                padding: 0;
+            }
+            .letter-container {
+                box-shadow: none;
+                border: none;
+                padding: 0;
+                max-width: 100%;
+            }
+            .toolbar {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="letter-container">
+        <!-- Official Letter Header -->
+        <div class="letter-header">
+            <div class="brand-logo">
+                <img src="/static/images/logo.png" alt="GlobalTechVibers Logo" style="height: 48px; width: auto; object-fit: contain;">
+                GlobalTech<span>Vibers</span>
+            </div>
+            <div class="company-details">
+                <strong>GlobalTechVibers Software Solutions</strong><br>
+                Tech & Development Operations Division<br>
+                Email: operations@globaltechvibers.com<br>
+                Web: https://globaltechvibers.com
+            </div>
+        </div>
+        
+        <!-- Metadata -->
+        <div class="meta-row">
+            <div><strong>Ref Code:</strong> GTV-HR-{{ '%04d' % ambassador.id }}</div>
+            <div><strong>Date:</strong> {{ formatted_date }}</div>
+        </div>
+        
+        <!-- Recipient Address -->
+        <div class="recipient-address">
+            <strong>To,</strong><br>
+            {{ ambassador.name }}<br>
+            {{ ambassador.college }}<br>
+            Phone: {{ ambassador.phone }}
+        </div>
+        
+        <!-- Letter Subject Title -->
+        <div class="letter-title">
+            Offer of Appointment: Campus Tech Ambassador
+        </div>
+        
+        <!-- Letter Body text -->
+        <div class="letter-body">
+            <p>Dear {{ ambassador.name.split()[0] }},</p>
+            
+            <p>On behalf of the Tech Operations board of <strong>GlobalTechVibers</strong>, we are thrilled to appoint you as a <strong>Campus Tech Ambassador</strong> representing our agency on your university campus. This appointment is effective starting <strong>{{ formatted_date }}</strong>.</p>
+            
+            <p>By accepting this offer, you will join our decentralized sales and marketing network. You are authorized to market our custom software capabilities, web development portfolios, and final year capstone/IEEE support packages to your peers, clubs, and local startup pipelines. Your commissions will be tracked automatically via your unique referral code.</p>
+            
+            <table class="terms-table">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Role / Designation</td>
+                        <td>Campus Tech Ambassador (Internship / Affiliate)</td>
+                    </tr>
+                    <tr>
+                        <td>Unique Referral Code</td>
+                        <td><strong>{{ ambassador.referral_code }}</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Academic Projects Commission</td>
+                        <td><strong>15% Cash Commission</strong> per successful student project booking</td>
+                    </tr>
+                    <tr>
+                        <td>Corporate Software Commission</td>
+                        <td><strong>20% Cash Commission</strong> on closed B2B setup contracts</td>
+                    </tr>
+                    <tr>
+                        <td>B2B Recurring Bonus</td>
+                        <td><strong>10% Monthly Cut</strong> on recurring site maintenance retainers</td>
+                    </tr>
+                    <tr>
+                        <td>Payment Mode</td>
+                        <td>UPI / Bank Transfer (Transferred within 48h of client payment settlement)</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <p><strong>Terms and Conditions:</strong></p>
+            <p style="font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 25px;">
+                1. <strong>Performance Payouts</strong>: Payment is strictly commission-based (performance-only). Commissions are paid out immediately after the referred client completes their deposit/final payment.<br>
+                2. <strong>Ethics</strong>: You represent the brand. Any misrepresentation of project specifications, false promises on pricing, or spamming is strictly forbidden and will result in immediate termination of appointment.<br>
+                3. <strong>Validity</strong>: This appointment remains active for 12 months, renewable based on referral volumes.
+            </p>
+            
+            <p>We are excited to work with you and help you earn while building engineering experience. Please download or print a copy of this letter for your records.</p>
+            
+            <!-- Signatures section -->
+            <div class="signature-block">
+                <div class="signature-seal">
+                    <div class="seal-circle">GTV<br>SEAL</div>
+                    Official Verification Stamp
+                </div>
+                <div>
+                    <div style="font-style: italic; font-family: cursive; font-size: 1.1rem; color: var(--color-primary); margin-bottom: 4px;">GlobalTechVibers</div>
+                    <div class="sign-line"></div>
+                    <strong>Director of Operations</strong><br>
+                    GlobalTechVibers Solutions
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+    <!-- Floating On-Screen Toolbar (Hidden during print) -->
+    <div class="toolbar">
+        <button onclick="window.print();" class="tool-btn"><i class="bi bi-printer-fill"></i> Print / Save PDF</button>
+        <div style="width: 1px; background: rgba(255,255,255,0.2); height: 20px; align-self: center;"></div>
+        <a href="/" class="tool-btn"><i class="bi bi-house-door-fill"></i> Homepage</a>
+        <div style="width: 1px; background: rgba(255,255,255,0.2); height: 20px; align-self: center;"></div>
+        <a href="/services/academic-projects" class="tool-btn tool-btn-primary"><i class="bi bi-mortarboard-fill"></i> View Catalog</a>
+    </div>
+
+</body>
+</html>

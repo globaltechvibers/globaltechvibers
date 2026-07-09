@@ -50,6 +50,9 @@
                 <button class="admin-nav-btn" data-target="panel-applications">
                     <i class="bi bi-person-workspace"></i> Applications ({{ applications_count }})
                 </button>
+                <button class="admin-nav-btn" data-target="panel-ambassadors">
+                    <i class="bi bi-people-fill"></i> Ambassadors ({{ ambassadors_count }})
+                </button>
             </aside>
 
             <!-- Main Work Panels -->
@@ -94,6 +97,15 @@
                             <div>
                                 <div class="admin-metric-val">{{ applications_count }}</div>
                                 <div class="admin-metric-lbl">Applications</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Stat: Active Ambassadors -->
+                        <div class="admin-metric-card">
+                            <div class="admin-metric-icon"><i class="bi bi-people-fill"></i></div>
+                            <div>
+                                <div class="admin-metric-val">{{ ambassadors_count }}</div>
+                                <div class="admin-metric-lbl">Ambassadors</div>
                             </div>
                         </div>
                     </div>
@@ -379,6 +391,66 @@
                         <i class="bi bi-people-fill" style="font-size: 3rem; color: var(--color-border); display: block; margin-bottom: var(--spacing-sm);"></i>
                         <h3 style="color: var(--color-text-muted);">No applications found</h3>
                         <p style="color: var(--color-text-muted);">No candidates have applied for jobs yet.</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- TAB 6: AMBASSADORS MANAGER -->
+                <div id="panel-ambassadors" class="tab-content">
+                    <h2 style="margin-bottom: var(--spacing-sm);">Ambassadors Manager</h2>
+                    <p style="color: var(--color-text-muted); margin-bottom: var(--spacing-md);">Monitor and track registered campus tech ambassadors.</p>
+                    
+                    {% if ambassadors %}
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Ambassador</th>
+                                    <th>College & Payout Details</th>
+                                    <th>Referral Code</th>
+                                    <th>Joining Date</th>
+                                    <th style="text-align: right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for amb in ambassadors %}
+                                <tr>
+                                    <td>
+                                        <strong style="color: var(--color-dark-navy); display: block; font-size: 0.95rem;">{{ amb.name }}</strong>
+                                        <span style="font-size: 0.85rem; color: var(--color-text-muted); display: block; margin-top: 2px;"><i class="bi bi-envelope-fill"></i> {{ amb.email }}</span>
+                                        <span style="font-size: 0.85rem; color: var(--color-text-muted); display: block; margin-top: 2px;"><i class="bi bi-telephone-fill"></i> {{ amb.phone }}</span>
+                                    </td>
+                                    <td>
+                                        <strong style="color: var(--color-dark-navy); display: block; font-size: 0.9rem; margin-bottom: 2px;">{{ amb.college }}</strong>
+                                        <span style="font-size: 0.85rem; color: var(--color-text-muted); display: block;"><i class="bi bi-wallet2"></i> UPI/Pay: {{ amb.payment_info }}</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge-type badge-contract" style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase;">{{ amb.referral_code }}</span>
+                                    </td>
+                                    <td style="font-size: 0.85rem; color: var(--color-text-muted);">
+                                        {{ amb.created_at }}
+                                    </td>
+                                    <td style="text-align: right; vertical-align: middle;">
+                                        <a href="/ambassadors/welcome/{{ amb.id }}" target="_blank" class="btn btn-secondary btn-sm" style="display: inline-flex; align-items: center; gap: 4px; margin-right: 4px;">
+                                            <i class="bi bi-file-earmark-pdf-fill"></i> Offer Letter
+                                        </a>
+                                        <form action="/admin/ambassadors/delete/{{ amb.id }}" method="POST" onsubmit="return confirm('Permanently delete this ambassador and revoke their code? This cannot be undone.');" style="display: inline-block; margin: 0;">
+                                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                            <button type="submit" class="btn btn-danger btn-sm" aria-label="Delete ambassador">
+                                                <i class="bi bi-trash-fill"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="text-center" style="padding: var(--spacing-xl) 0;">
+                        <i class="bi bi-people" style="font-size: 3rem; color: var(--color-border); display: block; margin-bottom: var(--spacing-sm);"></i>
+                        <h3 style="color: var(--color-text-muted);">No ambassadors registered</h3>
+                        <p style="color: var(--color-text-muted);">You don't have any campus ambassadors listed yet.</p>
                     </div>
                     {% endif %}
                 </div>

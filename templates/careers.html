@@ -53,9 +53,15 @@
                     </ul>
                 </div>
                 <div style="text-align: right;">
+                    {% if job.title == 'Campus Tech Ambassador' %}
+                    <a href="{{ url_for('ambassador.join') }}" class="btn btn-primary btn-sm" style="display: inline-flex; align-items: center; gap: 4px; text-decoration: none;">
+                        Join Program <i class="bi bi-arrow-right"></i>
+                    </a>
+                    {% else %}
                     <button class="btn btn-primary btn-sm open-apply-modal-btn" data-job-id="{{ job.id }}" data-job-title="{{ job.title }}" data-job-dept="{{ job.department }}">
                         Apply Now <i class="bi bi-pencil-square" style="margin-left: 4px;"></i>
                     </button>
+                    {% endif %}
                 </div>
             </div>
             {% endfor %}

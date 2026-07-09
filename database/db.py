@@ -109,6 +109,19 @@ def _create_tables(app):
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
         """
+        ambassadors_sql = """
+        CREATE TABLE IF NOT EXISTS ambassadors (
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(100) NOT NULL,
+            email VARCHAR(100) NOT NULL UNIQUE,
+            phone VARCHAR(20) NOT NULL,
+            college VARCHAR(150) NOT NULL,
+            payment_info VARCHAR(255) NOT NULL,
+            referral_code VARCHAR(50) NOT NULL UNIQUE,
+            status VARCHAR(50) DEFAULT 'Pending',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+        """
     else:
         contacts_sql = """
         CREATE TABLE IF NOT EXISTS contacts (
@@ -154,6 +167,19 @@ def _create_tables(app):
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
         """
+        ambassadors_sql = """
+        CREATE TABLE IF NOT EXISTS ambassadors (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            email TEXT NOT NULL UNIQUE,
+            phone TEXT NOT NULL,
+            college TEXT NOT NULL,
+            payment_info TEXT NOT NULL,
+            referral_code TEXT NOT NULL UNIQUE,
+            status TEXT DEFAULT 'Pending',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+        """
 
     conn = get_connection()
     try:
@@ -162,7 +188,29 @@ def _create_tables(app):
         cur.execute(newsletter_sql)
         cur.execute(jobs_sql)
         cur.execute(applications_sql)
+        cur.execute(ambassadors_sql)
         conn.commit()
+        
+        # Seed default Campus Tech Ambassador job if empty
+        cur.execute("SELECT COUNT(*) FROM jobs;")
+        count = cur.fetchone()[0]
+        if count == 0:
+            placeholder = '?' if _db_type == 'sqlite' else '%s'
+            seed_query = f"""
+            INSERT INTO jobs (title, department, location, type, description, requirements)
+            VALUES ({placeholder}, {placeholder}, {placeholder}, {placeholder}, {placeholder}, {placeholder})
+            """
+            cur.execute(seed_query, (
+                'Campus Tech Ambassador',
+                'Marketing & Sales',
+                'Remote / On-Campus',
+                'Internship',
+                'Represent GlobalTechVibers on your campus. Share final-year capstone and IEEE project catalogs in student WhatsApp groups, department forums, and coding clubs to earn performance-based commissions.',
+                'Enrolled in an Engineering / Computer Science / IT degree program\nStrong communication and networking skills\nActive in student groups or clubs'
+            ))
+            conn.commit()
+            app.logger.info("Database: Seeded default Campus Tech Ambassador job.")
+            
         cur.close()
         app.logger.info("Database: Tables initialized or verified successfully.")
     except Exception as e:
