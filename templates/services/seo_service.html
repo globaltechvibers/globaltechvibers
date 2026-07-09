@@ -1,0 +1,296 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ service.title }}{% endblock %}
+{% block description %}{{ service.meta_desc }}{% endblock %}
+
+{% block og_title %}{{ service.title }}{% endblock %}
+{% block og_description %}{{ service.meta_desc }}{% endblock %}
+
+{% block twitter_title %}{{ service.title }}{% endblock %}
+{% block twitter_description %}{{ service.meta_desc }}{% endblock %}
+
+{% block extra_head %}
+<!-- Schema.org Service JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "{{ service.heading }}",
+  "description": "{{ service.meta_desc }}",
+  "provider": {
+    "@type": "LocalBusiness",
+    "name": "GlobalTechVibers",
+    "url": "{{ request.url_root }}",
+    "logo": "{{ request.url_root }}static/favicon.ico",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Telangana",
+      "addressCountry": "IN"
+    }
+  },
+  "areaServed": "Worldwide"
+}
+</script>
+
+<!-- Breadcrumb Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": "{{ request.url_root }}"
+  },{
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Services",
+    "item": "{{ request.url_root }}services"
+  },{
+    "@type": "ListItem",
+    "position": 3,
+    "name": "{{ service.heading }}",
+    "item": "{{ request.url }}"
+  }]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<!-- 1. Hero Section -->
+<section class="section animate-fade" style="background-color: var(--color-section-bg); padding: var(--spacing-xl) 0; border-bottom: 1px solid var(--color-border);">
+    <div class="container">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="breadcrumb" style="margin-bottom: var(--spacing-sm);">
+            <ol style="display: flex; list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: var(--color-text-muted); gap: 6px; flex-wrap: wrap;">
+                <li><a href="/" style="color: var(--color-text-muted); font-weight: 500;">Home</a></li>
+                <li>/</li>
+                <li><a href="/services" style="color: var(--color-text-muted); font-weight: 500;">Services</a></li>
+                <li>/</li>
+                <li style="color: var(--color-primary); font-weight: 600;" aria-current="page">{{ service.heading }}</li>
+            </ol>
+        </nav>
+
+        <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: var(--spacing-xl); align-items: center;" class="grid-2">
+            <div class="reveal reveal-left active">
+                <span style="font-weight: 700; color: var(--color-primary); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                    <i class="bi {{ service.icon }}"></i> Specialized Service
+                </span>
+                <h1 style="font-size: 2.75rem; line-height: 1.2; margin-bottom: var(--spacing-sm); color: var(--color-dark-navy);">{{ service.heading }}</h1>
+                <p style="font-size: 1.2rem; color: var(--color-text-muted); line-height: 1.5; margin-bottom: var(--spacing-md);">{{ service.subheading }}</p>
+                <a href="#inquiryForm" class="btn btn-primary">Request Free Consultation <i class="bi bi-chevron-down"></i></a>
+            </div>
+            
+            <div class="reveal reveal-right active text-center" style="background: rgba(214, 40, 40, 0.04); border: 1px dashed rgba(214, 40, 40, 0.15); border-radius: var(--radius-md); padding: var(--spacing-xl); display: flex; align-items: center; justify-content: center;">
+                <i class="bi {{ service.icon }}" style="font-size: 8rem; color: var(--color-primary); opacity: 0.85;"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 2. Service Overview & 3. Key Features -->
+<section class="section">
+    <div class="container">
+        <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: var(--spacing-xl); align-items: start;" class="grid-2">
+            
+            <!-- Service Overview -->
+            <div class="reveal reveal-up active">
+                <h2 style="font-size: 2rem; margin-bottom: var(--spacing-md); color: var(--color-dark-navy);">Service Overview &amp; Capabilities</h2>
+                <div style="font-size: 1.05rem; line-height: 1.7; color: var(--color-text); margin-bottom: var(--spacing-lg);">
+                    {{ service.overview|safe }}
+                </div>
+                
+                <!-- 4. Technologies Used -->
+                <h3 style="font-size: 1.35rem; margin-bottom: var(--spacing-sm); color: var(--color-dark-navy);">Technologies &amp; Frameworks Covered:</h3>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: var(--spacing-lg);">
+                    {% for tech in service.tech_stack.split(',') %}
+                    <span style="font-size: 0.85rem; background: var(--color-section-bg); color: var(--color-primary); padding: 5px 12px; border-radius: 4px; border: 1px solid var(--color-border); font-weight: 600;">
+                        {{ tech.strip() }}
+                    </span>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <!-- Key Features Checklist -->
+            <div class="reveal reveal-up active" style="background-color: var(--color-section-bg); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--spacing-lg); box-shadow: var(--shadow-sm);">
+                <h3 style="font-size: 1.5rem; margin-bottom: var(--spacing-md); color: var(--color-dark-navy);">Key Features &amp; Deliverables</h3>
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--spacing-sm);">
+                    {% for feature in service.features %}
+                    <li style="display: flex; align-items: flex-start; gap: 12px; font-size: 1.05rem; line-height: 1.45; color: var(--color-text);">
+                        <i class="bi bi-patch-check-fill" style="color: var(--color-primary); font-size: 1.25rem; flex-shrink: 0; margin-top: 2px;"></i>
+                        <span>{{ feature }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+<!-- 5. Development Process Section -->
+<section class="section section-bg" style="border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);">
+    <div class="container">
+        <div class="section-header reveal reveal-up active">
+            <span style="font-weight: 700; color: var(--color-primary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px;">Methodology</span>
+            <h2>Our Development Process</h2>
+            <p>We combine clean engineering standards with agile delivery frameworks to deliver reliable platforms.</p>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--spacing-md);" class="grid-2">
+            {% set process_steps = [
+                ('1. Discovery', 'bi-search', 'Gathering technical requirements, architecture design, and database planning.'),
+                ('2. Architecture', 'bi-diagram-3', 'Structuring schemas, data structures, and secure blueprint routing definitions.'),
+                ('3. Engineering', 'bi-code-slash', 'Writing clean, commented source code with strict verification checks.'),
+                ('4. Testing', 'bi-shield-check', 'Verifying outputs using automated test runners and security vulnerability scans.'),
+                ('5. Deployment', 'bi-cloud-arrow-up', 'Configuring server instances, persistent pools, and production releases.')
+            ] %}
+            {% for name, icon, description in process_steps %}
+            <div class="card reveal reveal-up active" style="background: #FFFFFF; padding: var(--spacing-md); border: 1px solid var(--color-border); border-radius: var(--radius-sm); text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: flex-start;">
+                <div style="background: rgba(214, 40, 40, 0.08); border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; color: var(--color-primary); font-size: 1.5rem; margin-bottom: 12px;">
+                    <i class="bi {{ icon }}"></i>
+                </div>
+                <h4 style="font-size: 1.05rem; color: var(--color-dark-navy); margin-top: 0; margin-bottom: 8px;">{{ name }}</h4>
+                <p style="font-size: 0.8rem; color: var(--color-text-muted); line-height: 1.45; margin: 0;">{{ description }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- 6. Industries Served & 7. Benefits Section -->
+<section class="section">
+    <div class="container">
+        <div class="grid grid-2" style="gap: var(--spacing-xl);">
+            <!-- Benefits -->
+            <div class="reveal reveal-left active">
+                <h3 style="font-size: 1.75rem; margin-bottom: var(--spacing-md); color: var(--color-dark-navy);">Benefits You Receive</h3>
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--spacing-md);">
+                    {% for benefit in service.benefits %}
+                    <li style="display: flex; gap: 12px; align-items: flex-start;">
+                        <div style="font-size: 1.5rem; color: var(--color-primary); line-height: 1;"><i class="bi bi-check-circle-fill"></i></div>
+                        <div>
+                            <h4 style="font-size: 1.1rem; margin-top: 0; margin-bottom: 4px; color: var(--color-dark-navy);">{{ benefit[0] }}</h4>
+                            <p style="font-size: 0.9rem; color: var(--color-text-muted); margin: 0; line-height: 1.45;">{{ benefit[1] }}</p>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <!-- Industries Served -->
+            <div class="reveal reveal-right active">
+                <h3 style="font-size: 1.75rem; margin-bottom: var(--spacing-md); color: var(--color-dark-navy);">Industries We Serve</h3>
+                <p style="color: var(--color-text-muted); margin-bottom: var(--spacing-md); font-size: 0.95rem;">Our architectures are tailored to meet constraints unique to each sector:</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-sm);">
+                    {% for industry, icon in service.industries %}
+                    <div style="background-color: var(--color-section-bg); border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: var(--spacing-sm) var(--spacing-md); display: flex; align-items: center; gap: 12px;">
+                        <i class="bi {{ icon }}" style="font-size: 1.35rem; color: var(--color-primary);"></i>
+                        <span style="font-weight: 600; font-size: 0.9rem; color: var(--color-dark-navy);">{{ industry }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 8. Frequently Asked Questions -->
+<section class="section section-bg" style="border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);">
+    <div class="container">
+        <div class="section-header reveal reveal-up active">
+            <span style="font-weight: 700; color: var(--color-primary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px;">FAQ</span>
+            <h2>Frequently Asked Questions</h2>
+            <p>Get answers to common queries regarding this specific service division.</p>
+        </div>
+        
+        <div style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: var(--spacing-sm);">
+            {% for faq in service.faqs %}
+            <div class="reveal reveal-up active" style="background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-sm); overflow: hidden;">
+                <details style="padding: var(--spacing-md);">
+                    <summary style="font-weight: 600; color: var(--color-dark-navy); cursor: pointer; display: flex; justify-content: space-between; align-items: center; list-style: none;">
+                        <span>{{ faq[0] }}</span>
+                        <i class="bi bi-chevron-down" style="font-size: 0.8rem; color: var(--color-text-muted);"></i>
+                    </summary>
+                    <p style="margin-top: 10px; margin-bottom: 0; font-size: 0.925rem; color: var(--color-text-muted); line-height: 1.6;">{{ faq[1] }}</p>
+                </details>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- 9. Call To Action Form Section -->
+<section class="section" id="inquiryForm">
+    <div class="container" style="max-width: 700px;">
+        <div class="reveal reveal-up active text-center" style="margin-bottom: var(--spacing-lg);">
+            <span style="font-weight: 700; color: var(--color-primary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px;">Contact Us</span>
+            <h2>Get Started On Your Project</h2>
+            <p style="color: var(--color-text-muted); font-size: 1.05rem;">Submit your guidelines below and our engineering team will provide a tailored quote within 24 hours.</p>
+        </div>
+        
+        <!-- Contact Form Card -->
+        <div class="card reveal reveal-up active" style="background-color: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--spacing-xl); box-shadow: var(--shadow-sm);">
+            <form action="/contact/submit" method="POST" style="display: flex; flex-direction: column; gap: var(--spacing-md);">
+                <!-- Anti-CSRF Protection Token -->
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                
+                <div class="form-grid-2">
+                    <div class="form-group" style="display: flex; flex-direction: column; gap: 6px;">
+                        <label for="name_inp" style="font-weight: 600; font-size: 0.925rem; color: var(--color-dark-navy);">Your Name *</label>
+                        <input type="text" id="name_inp" name="name" required placeholder="John Doe" style="padding: 0.75rem 1rem; border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-size: 0.95rem; width: 100%;">
+                    </div>
+                    
+                    <div class="form-group" style="display: flex; flex-direction: column; gap: 6px;">
+                        <label for="email_inp" style="font-weight: 600; font-size: 0.925rem; color: var(--color-dark-navy);">Email Address *</label>
+                        <input type="email" id="email_inp" name="email" required placeholder="john.doe@example.com" style="padding: 0.75rem 1rem; border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-size: 0.95rem; width: 100%;">
+                    </div>
+                </div>
+                
+                <div class="form-group" style="display: flex; flex-direction: column; gap: 6px;">
+                    <label for="subject_inp" style="font-weight: 600; font-size: 0.925rem; color: var(--color-dark-navy);">Inquiry Subject *</label>
+                    <input type="text" id="subject_inp" name="subject" required readonly value="Inquiry for {{ service.heading }}" style="padding: 0.75rem 1rem; border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-size: 0.95rem; width: 100%; background-color: var(--color-section-bg); cursor: not-allowed; font-weight: 500; color: var(--color-text);">
+                </div>
+                
+                <div class="form-group" style="display: flex; flex-direction: column; gap: 6px;">
+                    <label for="message_inp" style="font-weight: 600; font-size: 0.925rem; color: var(--color-dark-navy);">Describe Your Specifications / Project Details *</label>
+                    <textarea id="message_inp" name="message" required rows="5" placeholder="Please outline your specifications, deadlines, or specific custom software criteria here..." style="padding: 0.75rem 1rem; border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-size: 0.95rem; width: 100%; font-family: inherit; resize: vertical;"></textarea>
+                </div>
+                
+                <!-- Referral Code Field (Optional) -->
+                <div class="form-group" style="display: flex; flex-direction: column; gap: 6px;">
+                    <label for="referral_code_inp" style="font-weight: 600; font-size: 0.925rem; color: var(--color-dark-navy);">Referral / Ambassador Code <span style="color: var(--color-text-muted); font-weight: normal; font-size: 0.85rem;">(Optional)</span></label>
+                    <input type="text" id="referral_code_inp" name="referral_code" placeholder="e.g. GTV-AMB-101" style="padding: 0.75rem 1rem; border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-size: 0.95rem; width: 100%;">
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="margin-top: 10px; width: 100%; padding: 0.85rem;">Submit Project Specs <i class="bi bi-send"></i></button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- 10. Related Services Section -->
+<section class="section section-bg" style="border-top: 1px solid var(--color-border);">
+    <div class="container">
+        <div class="section-header reveal reveal-up active">
+            <span style="font-weight: 700; color: var(--color-primary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px;">Explore</span>
+            <h2>Related Services</h2>
+            <p>Interlinked specialized service divisions related to {{ service.heading }}.</p>
+        </div>
+        
+        <div class="grid grid-3">
+            {% for related_slug, related_info in related_services %}
+            <div class="card reveal reveal-up active" style="background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--spacing-md); display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div style="font-size: 1.75rem; color: var(--color-primary); margin-bottom: 8px;"><i class="bi {{ related_info.icon }}"></i></div>
+                    <h3 style="font-size: 1.15rem; margin-top: 0; margin-bottom: var(--spacing-xs); color: var(--color-dark-navy);">{{ related_info.heading }}</h3>
+                    <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.45; margin-bottom: var(--spacing-sm);">{{ related_info.subheading }}</p>
+                </div>
+                <a href="/services/{{ related_slug }}" style="font-weight: 600; font-size: 0.85rem; color: var(--color-primary); display: inline-flex; align-items: center; gap: 4px;">Learn More <i class="bi bi-arrow-right"></i></a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

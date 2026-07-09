@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, send_from_directory, current_app
 from database.db import execute_read
+from blueprints.services_data import SERVICES_MAP
 
 main_bp = Blueprint('main', __name__)
 
@@ -179,11 +180,21 @@ SERVICES_DATA = {
 
 @main_bp.route('/services/<service_slug>')
 def service_detail(service_slug):
-    service = SERVICES_DATA.get(service_slug)
-    if not service:
-        from flask import abort
-        abort(404)
-    return render_template('service_detail.html', service=service, service_slug=service_slug)
+    service = SERVICES_MAP.get(service_slug)
+    if service:
+        related_services = []
+        for rel_slug in service.get('related', []):
+            rel_info = SERVICES_MAP.get(rel_slug)
+            if rel_info:
+                related_services.append((rel_slug, rel_info))
+        return render_template('services/seo_service.html', service=service, service_slug=service_slug, related_services=related_services)
+    
+    legacy_service = SERVICES_DATA.get(service_slug)
+    if legacy_service:
+        return render_template('service_detail.html', service=legacy_service, service_slug=service_slug)
+        
+    from flask import abort
+    abort(404)
 
 @main_bp.route('/robots.txt')
 def robots():
