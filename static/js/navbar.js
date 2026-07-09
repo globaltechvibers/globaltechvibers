@@ -8,6 +8,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileToggle = document.querySelector('.mobile-nav-toggle');
     const navLinks = document.querySelector('.nav-links');
     const navLinksItems = document.querySelectorAll('.nav-links a');
+    const body = document.body;
+
+    const setNavOpen = (isOpen) => {
+        navLinks.classList.toggle('active', isOpen);
+        mobileToggle.setAttribute('aria-expanded', String(isOpen));
+        body.classList.toggle('nav-open', isOpen);
+
+        const icon = mobileToggle.querySelector('i');
+        if (icon) {
+            icon.className = isOpen ? 'bi bi-x' : 'bi bi-list';
+        }
+    };
 
     // 1. Sticky Header Transformation on Scroll
     const handleScroll = () => {
@@ -25,39 +37,27 @@ document.addEventListener('DOMContentLoaded', () => {
     if (mobileToggle && navLinks) {
         mobileToggle.addEventListener('click', (e) => {
             const isExpanded = mobileToggle.getAttribute('aria-expanded') === 'true';
-            
-            navLinks.classList.toggle('active');
-            mobileToggle.setAttribute('aria-expanded', !isExpanded);
-            
-            // Toggle hamburger icon if using bootstrap icon
-            const icon = mobileToggle.querySelector('i');
-            if (icon) {
-                if (navLinks.classList.contains('active')) {
-                    icon.className = 'bi bi-x';
-                } else {
-                    icon.className = 'bi bi-list';
-                }
-            }
+            setNavOpen(!isExpanded);
             e.stopPropagation();
         });
 
-        // Close menu when clicking outside of it
+        navLinksItems.forEach((link) => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 992) {
+                    setNavOpen(false);
+                }
+            });
+        });
+
         document.addEventListener('click', (event) => {
             if (navLinks.classList.contains('active') && !navLinks.contains(event.target) && !mobileToggle.contains(event.target)) {
-                navLinks.classList.remove('active');
-                mobileToggle.setAttribute('aria-expanded', 'false');
-                const icon = mobileToggle.querySelector('i');
-                if (icon) icon.className = 'bi bi-list';
+                setNavOpen(false);
             }
         });
 
-        // Close menu on pressing Escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && navLinks.classList.contains('active')) {
-                navLinks.classList.remove('active');
-                mobileToggle.setAttribute('aria-expanded', 'false');
-                const icon = mobileToggle.querySelector('i');
-                if (icon) icon.className = 'bi bi-list';
+                setNavOpen(false);
                 mobileToggle.focus();
             }
         });

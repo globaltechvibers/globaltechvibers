@@ -59,6 +59,12 @@ html {
     background-color: var(--color-bg);
 }
 
+img, svg {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
 body {
     font-family: var(--font-primary);
     color: var(--color-text);
