@@ -68,6 +68,20 @@
                     <li><a href="/blog">Blog</a></li>
                     <li><a href="/careers">Careers</a></li>
                     <li><a href="/contact">Contact</a></li>
+                    
+                    {% if session.get('admin_logged_in') %}
+                        <li><a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary btn-sm" style="color: white !important; font-size: 0.85rem; padding: 0.4rem 0.8rem; margin-left: 5px; text-decoration: none;"><i class="bi bi-shield-fill"></i> Admin Panel</a></li>
+                    {% elif session.get('ambassador_id') %}
+                        <li><a href="{{ url_for('ambassador.dashboard') }}" class="btn btn-primary btn-sm" style="color: white !important; font-size: 0.85rem; padding: 0.4rem 0.8rem; margin-left: 5px; text-decoration: none;"><i class="bi bi-people-fill"></i> Dashboard</a></li>
+                    {% else %}
+                        <li class="nav-dropdown">
+                            <a href="#" style="display: inline-flex; align-items: center; gap: 4px; pointer-events: none;">Login <i class="bi bi-chevron-down" style="font-size: 0.75rem;"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ url_for('admin.login') }}"><i class="bi bi-shield-lock-fill" style="color: var(--color-primary);"></i> Admin Panel</a></li>
+                                <li><a href="{{ url_for('ambassador.login') }}"><i class="bi bi-people-fill" style="color: var(--color-primary);"></i> Ambassador Portal</a></li>
+                            </ul>
+                        </li>
+                    {% endif %}
                 </ul>
             </nav>
         </div>
