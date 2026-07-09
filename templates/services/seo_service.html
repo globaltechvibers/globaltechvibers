@@ -10,6 +10,52 @@
 {% block twitter_description %}{{ service.meta_desc }}{% endblock %}
 
 {% block extra_head %}
+<!-- Localized Responsive Styling overrides -->
+<style>
+    .seo-hero-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: var(--spacing-xl);
+        align-items: center;
+    }
+    .seo-process-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: var(--spacing-md);
+    }
+    .seo-industries-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-sm);
+    }
+    @media (max-width: 992px) {
+        .seo-process-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+    @media (max-width: 768px) {
+        .seo-hero-grid {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+        .seo-hero-grid .reveal-left {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .seo-hero-grid .reveal-right {
+            display: none; /* Save viewport space by hiding large icons on mobile */
+        }
+        .seo-process-grid {
+            grid-template-columns: 1fr;
+        }
+        .seo-industries-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
 <!-- Schema.org Service JSON-LD -->
 <script type="application/ld+json">
 {
@@ -63,7 +109,7 @@
     <div class="container">
         <!-- Breadcrumb Navigation -->
         <nav aria-label="breadcrumb" style="margin-bottom: var(--spacing-sm);">
-            <ol style="display: flex; list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: var(--color-text-muted); gap: 6px; flex-wrap: wrap;">
+            <ol style="display: flex; list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: var(--color-text-muted); gap: 6px; flex-wrap: wrap; justify-content: inherit;">
                 <li><a href="/" style="color: var(--color-text-muted); font-weight: 500;">Home</a></li>
                 <li>/</li>
                 <li><a href="/services" style="color: var(--color-text-muted); font-weight: 500;">Services</a></li>
@@ -72,7 +118,7 @@
             </ol>
         </nav>
 
-        <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: var(--spacing-xl); align-items: center;" class="grid-2">
+        <div class="seo-hero-grid">
             <div class="reveal reveal-left active">
                 <span style="font-weight: 700; color: var(--color-primary); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 12px;">
                     <i class="bi {{ service.icon }}"></i> Specialized Service
@@ -92,7 +138,7 @@
 <!-- 2. Service Overview & 3. Key Features -->
 <section class="section">
     <div class="container">
-        <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: var(--spacing-xl); align-items: start;" class="grid-2">
+        <div class="grid grid-2" style="gap: var(--spacing-xl); align-items: start;">
             
             <!-- Service Overview -->
             <div class="reveal reveal-up active">
@@ -138,7 +184,7 @@
             <p>We combine clean engineering standards with agile delivery frameworks to deliver reliable platforms.</p>
         </div>
         
-        <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--spacing-md);" class="grid-2">
+        <div class="seo-process-grid">
             {% set process_steps = [
                 ('1. Discovery', 'bi-search', 'Gathering technical requirements, architecture design, and database planning.'),
                 ('2. Architecture', 'bi-diagram-3', 'Structuring schemas, data structures, and secure blueprint routing definitions.'),
@@ -183,7 +229,7 @@
             <div class="reveal reveal-right active">
                 <h3 style="font-size: 1.75rem; margin-bottom: var(--spacing-md); color: var(--color-dark-navy);">Industries We Serve</h3>
                 <p style="color: var(--color-text-muted); margin-bottom: var(--spacing-md); font-size: 0.95rem;">Our architectures are tailored to meet constraints unique to each sector:</p>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-sm);">
+                <div class="seo-industries-grid">
                     {% for industry, icon in service.industries %}
                     <div style="background-color: var(--color-section-bg); border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: var(--spacing-sm) var(--spacing-md); display: flex; align-items: center; gap: 12px;">
                         <i class="bi {{ icon }}" style="font-size: 1.35rem; color: var(--color-primary);"></i>
