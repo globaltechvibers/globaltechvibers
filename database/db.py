@@ -259,7 +259,7 @@ def _create_tables(app):
                 'Marketing & Sales',
                 'Remote / On-Campus',
                 'Internship',
-                'Represent GlobalTechVibers on your campus. Share final-year capstone and IEEE project catalogs in student WhatsApp groups, department forums, and coding clubs to earn performance-based commissions.',
+                'Represent GlobalTechVibers on your campus. Share final-year capstone and college project catalogs in student WhatsApp groups, department forums, and coding clubs to earn performance-based commissions.',
                 'Enrolled in an Engineering / Computer Science / IT degree program\nStrong communication and networking skills\nActive in student groups or clubs'
             ))
             conn.commit()

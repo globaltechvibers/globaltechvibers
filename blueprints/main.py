@@ -11,10 +11,10 @@ BLOG_ARTICLES = [
         'category': "Academic Support",
         'date': "July 7, 2026",
         'read_time': "5 min read",
-        'excerpt': "Final year and IEEE projects serve as a vital bridge between theory and industry. Here is how to apply clean architecture and design patterns to stand out.",
+        'excerpt': "Final year and college capstone projects serve as a vital bridge between theory and industry. Here is how to apply clean architecture and design patterns to stand out.",
         'image': "blog_academic.jpg",
         'featured': True,
-        'content': "Creating robust mini, major, or IEEE capstone projects requires more than just making the code 'work'. It is about applying structured architecture, version control, security checks, and database isolation. In this article, we outline best practices in documentation, test-driven validation, and professional deployment templates that ensure students can showcase enterprise-level engineering during job interviews."
+        'content': "Creating robust mini, major, or college capstone projects requires more than just making the code 'work'. It is about applying structured architecture, version control, security checks, and database isolation. In this article, we outline best practices in documentation, test-driven validation, and professional deployment templates that ensure students can showcase enterprise-level engineering during job interviews."
     },
     {
         'id': 2,
@@ -128,15 +128,15 @@ def terms():
 
 SERVICES_DATA = {
     'academic-projects': {
-        'title': 'College Major & Minor Projects | IEEE Final Year Support',
-        'meta_desc': 'Get professional college major & minor project support. We provide complete IEEE project source code, UML design documentation, and Viva prep guidance.',
-        'heading': 'Academic & IEEE Projects Support',
+        'title': 'College Major & Minor Projects | Academic Capstone Support',
+        'meta_desc': 'Get professional college major & minor project support. We provide complete project source code, UML design documentation, and Viva prep guidance.',
+        'heading': 'Academic & Capstone Projects Support',
         'subheading': 'Empowering students with industry-grade capstone engineering, full source code, and step-by-step documentation.',
         'icon': 'bi-mortarboard-fill',
         'overview': 'We help final year students bridge the gap between academic theory and professional engineering. Our systems are built from scratch using modern stacks, ensuring your submission stands out.',
         'features': [
             'Complete Source Code (Python, Flask, Java, C++)',
-            'Full Documentation (IEEE format, SRS layouts, UML/DFD diagrams)',
+            'Full Documentation (Standard format, SRS layouts, UML/DFD diagrams)',
             'Viva-Voce preparation and concept walk-throughs',
             'Local setup and deployment assistance (1-on-1 support)'
         ],
