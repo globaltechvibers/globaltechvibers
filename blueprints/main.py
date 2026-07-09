@@ -65,9 +65,6 @@ def about():
 def services():
     return render_template('services.html')
 
-@main_bp.route('/projects')
-def projects():
-    return render_template('projects.html')
 
 @main_bp.route('/blog')
 def blog():

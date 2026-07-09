@@ -23,11 +23,13 @@ def create_app():
     from blueprints.contact import contact_bp
     from blueprints.admin import admin_bp
     from blueprints.ambassador import ambassador_bp
+    from blueprints.project import project_bp
     
     app.register_blueprint(main_bp)
     app.register_blueprint(contact_bp)
     app.register_blueprint(admin_bp)
     app.register_blueprint(ambassador_bp)
+    app.register_blueprint(project_bp)
     
     # Standard security headers injection
     @app.after_request

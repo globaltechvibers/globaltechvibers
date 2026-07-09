@@ -237,14 +237,21 @@ def dashboard():
         
     ambassador = dict(rows[0])
     
-    # Fetch referred inquiries
-    referrals = execute_read(
+    # Fetch referred contact inquiries (Leads)
+    leads = execute_read(
         "SELECT name, subject, created_at FROM contacts WHERE referral_code = %s ORDER BY created_at DESC",
         (ambassador['referral_code'],)
     )
     
-    referrals_count = len(referrals)
-    estimated_earnings = referrals_count * 2000
+    # Fetch referred project bookings (Sales)
+    bookings = execute_read(
+        "SELECT b.name, b.project_title, b.status, b.created_at, p.price FROM bookings b JOIN projects p ON b.project_id = p.id WHERE b.referral_code = %s ORDER BY b.created_at DESC",
+        (ambassador['referral_code'],)
+    )
+    
+    # Calculate 15% commission of Approved/finalized sales
+    approved_sales = [b for b in bookings if b['status'] == 'Approved']
+    total_earnings = sum(int(b['price'] * 0.15) for b in approved_sales)
     
     created_at = ambassador.get('created_at')
     if hasattr(created_at, 'strftime'):
@@ -258,9 +265,12 @@ def dashboard():
     return render_template(
         'ambassadors/dashboard.html',
         ambassador=ambassador,
-        referrals=referrals,
-        referrals_count=referrals_count,
-        estimated_earnings=estimated_earnings,
+        leads=leads,
+        leads_count=len(leads),
+        bookings=bookings,
+        bookings_count=len(bookings),
+        approved_bookings_count=len(approved_sales),
+        total_earnings=total_earnings,
         formatted_date=formatted_date
     )
 

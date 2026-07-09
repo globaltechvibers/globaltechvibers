@@ -123,6 +123,31 @@ def _create_tables(app):
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
         """
+        projects_sql = """
+        CREATE TABLE IF NOT EXISTS projects (
+            id SERIAL PRIMARY KEY,
+            title VARCHAR(255) NOT NULL,
+            category VARCHAR(100) NOT NULL,
+            description TEXT NOT NULL,
+            technologies VARCHAR(255) NOT NULL,
+            price INTEGER NOT NULL,
+            status VARCHAR(50) DEFAULT 'Active',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+        """
+        bookings_sql = """
+        CREATE TABLE IF NOT EXISTS bookings (
+            id SERIAL PRIMARY KEY,
+            project_id INTEGER NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
+            project_title VARCHAR(255) NOT NULL,
+            name VARCHAR(100) NOT NULL,
+            email VARCHAR(100) NOT NULL,
+            phone VARCHAR(20) NOT NULL,
+            referral_code VARCHAR(50),
+            status VARCHAR(50) DEFAULT 'Pending',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+        """
     else:
         contacts_sql = """
         CREATE TABLE IF NOT EXISTS contacts (
@@ -182,6 +207,31 @@ def _create_tables(app):
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
         """
+        projects_sql = """
+        CREATE TABLE IF NOT EXISTS projects (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            category TEXT NOT NULL,
+            description TEXT NOT NULL,
+            technologies TEXT NOT NULL,
+            price INTEGER NOT NULL,
+            status TEXT DEFAULT 'Active',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+        """
+        bookings_sql = """
+        CREATE TABLE IF NOT EXISTS bookings (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            project_id INTEGER NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
+            project_title TEXT NOT NULL,
+            name TEXT NOT NULL,
+            email TEXT NOT NULL,
+            phone TEXT NOT NULL,
+            referral_code TEXT,
+            status TEXT DEFAULT 'Pending',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+        """
 
     conn = get_connection()
     try:
@@ -191,6 +241,8 @@ def _create_tables(app):
         cur.execute(jobs_sql)
         cur.execute(applications_sql)
         cur.execute(ambassadors_sql)
+        cur.execute(projects_sql)
+        cur.execute(bookings_sql)
         conn.commit()
         
         # Seed default Campus Tech Ambassador job if empty
@@ -212,6 +264,50 @@ def _create_tables(app):
             ))
             conn.commit()
             app.logger.info("Database: Seeded default Campus Tech Ambassador job.")
+
+        # Seed default projects if empty
+        cur.execute("SELECT COUNT(*) FROM projects;")
+        proj_count = cur.fetchone()[0]
+        if proj_count == 0:
+            placeholder = '?' if _db_type == 'sqlite' else '%s'
+            seed_proj_query = f"""
+            INSERT INTO projects (title, category, description, technologies, price)
+            VALUES ({placeholder}, {placeholder}, {placeholder}, {placeholder}, {placeholder})
+            """
+            projects_data = [
+                (
+                    'Apex Ledger CRM',
+                    'commercial',
+                    'An automated inventory tracking, sales reporting, and CRM module built for commercial distribution enterprises.',
+                    'Flask, PostgreSQL, Vanilla JS',
+                    3999
+                ),
+                (
+                    'Aegis Query Assistant',
+                    'ai-ml',
+                    'Intelligent support bot integrating Google Gemini APIs, featuring semantic history caching for low-latency client service.',
+                    'Gemini API, Python, Vector DB',
+                    4999
+                ),
+                (
+                    'TrustVote Blockchain',
+                    'academic',
+                    'An academic capstone implementation of secure cryptographic protocols to establish double-spending immunity in online ballots.',
+                    'Cryptography, Python, SQLite',
+                    4499
+                ),
+                (
+                    'SentimenX Core',
+                    'ai-ml',
+                    'Algorithmic trading sentiment parser tracking financial news headlines, trained using Scikit-Learn classification pipelines.',
+                    'Scikit-Learn, Pandas, Python',
+                    4299
+                )
+            ]
+            for proj in projects_data:
+                cur.execute(seed_proj_query, proj)
+            conn.commit()
+            app.logger.info("Database: Seeded default project catalog.")
             
         cur.close()
         app.logger.info("Database: Tables initialized or verified successfully.")

@@ -9,18 +9,17 @@
 <section class="section animate-fade" style="background-color: var(--color-section-bg); padding: var(--spacing-xl) 0; border-bottom: 1px solid var(--color-border); text-align: center;">
     <div class="container" style="max-width: 800px;">
         <span style="display: inline-block; padding: 6px 12px; background: rgba(214, 40, 40, 0.08); border: 1px solid rgba(214, 40, 40, 0.15); color: var(--color-primary); font-size: 0.85rem; font-weight: 700; border-radius: 30px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--spacing-md);">
-            <i class="bi bi-rocket-takeoff-fill"></i> Coming Soon
+            <i class="bi bi-shop"></i> Project Store
         </span>
-        <h1 style="margin-bottom: var(--spacing-sm);">Official Projects Portfolio</h1>
-        <p style="font-size: 1.25rem; color: var(--color-text-muted); font-weight: 600; margin-bottom: 0;">Launching July 9, 2026</p>
-        <p style="color: var(--color-text-muted); font-size: 0.95rem; margin-top: 8px;">We are currently uploading our complete catalog of enterprise web systems and IEEE capstone models. Sneak peek below.</p>
+        <h1 style="margin-bottom: var(--spacing-sm);">Book A Live Project Demo</h1>
+        <p style="font-size: 1.15rem; color: var(--color-text-muted); margin-bottom: 0;">Explore our active catalog of final-year capstone, IEEE models, and commercial systems. Book a free video demo on WhatsApp, see it run, and pay only after complete verification.</p>
     </div>
 </section>
 
 <!-- Projects Catalog with Filters -->
 <section class="section">
     <div class="container">
-        <!-- Interactive Category Filters Mockup -->
+        <!-- Category Filters -->
         <div style="display: flex; justify-content: center; gap: var(--spacing-sm); margin-bottom: var(--spacing-xl); flex-wrap: wrap;" class="reveal reveal-up">
             <button class="btn btn-primary btn-sm filter-btn" data-filter="all">All Projects</button>
             <button class="btn btn-secondary btn-sm filter-btn" data-filter="commercial">Commercial Web</button>
@@ -30,132 +29,146 @@
         
         <!-- Project Cards Grid -->
         <div class="grid grid-3" id="projects-grid">
-            <!-- Project 1: Commercial -->
-            <div class="card reveal reveal-up project-item" data-category="commercial" style="padding: 0;">
-                <div style="background: var(--color-dark-navy); height: 180px; display: flex; align-items: center; justify-content: center; color: white; position: relative;">
-                    <i class="bi bi-wallet2" style="font-size: 3.5rem; color: var(--color-primary);"></i>
-                    <span style="position: absolute; top: 12px; right: 12px; background: var(--color-primary); color: white; font-size: 0.75rem; font-weight: 700; padding: 4px 8px; border-radius: 4px;">COMING SOON</span>
-                </div>
-                <div style="padding: var(--spacing-md);">
-                    <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--color-primary);">Commercial ERP</span>
-                    <h3 style="font-size: 1.25rem; margin-top: 4px; margin-bottom: 8px;">Apex Ledger CRM</h3>
-                    <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: var(--spacing-sm);">An automated inventory tracking and CRM module built for a medium distribution enterprise, utilizing Neon PostgreSQL.</p>
-                    <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: var(--spacing-md);">
-                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">Flask</span>
-                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">PostgreSQL</span>
-                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">Vanilla JS</span>
+            {% if projects %}
+                {% for project in projects %}
+                <div class="card reveal reveal-up project-item" data-category="{{ project.category }}" style="padding: 0; background-color: #FFFFFF; display: flex; flex-direction: column; justify-content: space-between; border: 1px solid var(--color-border); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); transition: transform 0.2s ease, box-shadow 0.2s ease;">
+                    <div>
+                        <!-- Card Header Graphic based on Category -->
+                        <div style="background: var(--color-dark-navy); height: 160px; display: flex; align-items: center; justify-content: center; color: white; border-top-left-radius: var(--radius-md); border-top-right-radius: var(--radius-md); position: relative;">
+                            {% if project.category == 'commercial' %}
+                                <i class="bi bi-wallet2" style="font-size: 3rem; color: var(--color-primary);"></i>
+                            {% elif project.category == 'ai-ml' %}
+                                <i class="bi bi-chat-quote" style="font-size: 3rem; color: var(--color-primary);"></i>
+                            {% else %}
+                                <i class="bi bi-shield-lock" style="font-size: 3rem; color: var(--color-primary);"></i>
+                            {% endif %}
+                            
+                            <span style="position: absolute; bottom: 12px; left: 12px; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px); color: white; font-size: 0.75rem; font-weight: 600; padding: 4px 8px; border-radius: 4px; text-transform: uppercase;">
+                                {{ project.category }}
+                            </span>
+                        </div>
+                        
+                        <!-- Card Content -->
+                        <div style="padding: var(--spacing-md);">
+                            <h3 style="font-size: 1.25rem; margin-bottom: 6px; color: var(--color-dark-navy);">{{ project.title }}</h3>
+                            <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: var(--spacing-sm); line-height: 1.45;">{{ project.description }}</p>
+                            
+                            <!-- Technologies List -->
+                            <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: var(--spacing-sm);">
+                                {% for tech in project.technologies.split(',') %}
+                                    <span style="font-size: 0.7rem; background: var(--color-section-bg); color: var(--color-text); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border); font-weight: 500;">
+                                        {{ tech.strip() }}
+                                    </span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card Footer (Price & Action) -->
+                    <div style="padding: 0 var(--spacing-md) var(--spacing-md) var(--spacing-md); border-top: 1px solid var(--color-section-bg); padding-top: 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+                        <div>
+                            <span style="display: block; font-size: 0.7rem; text-transform: uppercase; color: var(--color-text-muted); font-weight: 600; letter-spacing: 0.05em;">Project Price</span>
+                            <span style="font-weight: 700; color: var(--color-primary); font-size: 1.25rem;">₹{{ "{:,}".format(project.price) }}</span>
+                        </div>
+                        <button class="btn btn-primary btn-sm book-demo-btn" 
+                                data-project-id="{{ project.id }}" 
+                                data-project-title="{{ project.title }}" 
+                                data-project-price="₹{{ '{:,}'.format(project.price) }}"
+                                style="font-weight: 600; padding: 0.45rem 0.9rem; font-size: 0.85rem;">
+                            Book Free Demo <i class="bi bi-chevron-right" style="font-size: 0.75rem;"></i>
+                        </button>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Project 2: AI/ML -->
-            <div class="card reveal reveal-up project-item" data-category="ai-ml" style="padding: 0;">
-                <div style="background: var(--color-dark-navy); height: 180px; display: flex; align-items: center; justify-content: center; color: white; position: relative;">
-                    <i class="bi bi-chat-quote" style="font-size: 3.5rem; color: var(--color-primary);"></i>
-                    <span style="position: absolute; top: 12px; right: 12px; background: var(--color-primary); color: white; font-size: 0.75rem; font-weight: 700; padding: 4px 8px; border-radius: 4px;">COMING SOON</span>
+                {% endfor %}
+            {% else %}
+                <div style="grid-column: span 3; text-align: center; padding: var(--spacing-xl) 0;">
+                    <i class="bi bi-inbox" style="font-size: 3rem; color: var(--color-text-muted);"></i>
+                    <p style="margin-top: 10px; color: var(--color-text-muted);">No projects found in catalog database.</p>
                 </div>
-                <div style="padding: var(--spacing-md);">
-                    <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--color-primary);">Artificial Intelligence</span>
-                    <h3 style="font-size: 1.25rem; margin-top: 4px; margin-bottom: 8px;">Aegis Query Assistant</h3>
-                    <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: var(--spacing-sm);">Intelligent support bot integrating Google Gemini APIs, featuring semantic history caching for low-latency client service.</p>
-                    <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: var(--spacing-md);">
-                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">Gemini API</span>
-                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">Python</span>
-                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">Vector DB</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Project 3: Academic -->
-            <div class="card reveal reveal-up project-item" data-category="academic" style="padding: 0;">
-                <div style="background: var(--color-dark-navy); height: 180px; display: flex; align-items: center; justify-content: center; color: white; position: relative;">
-                    <i class="bi bi-shield-lock" style="font-size: 3.5rem; color: var(--color-primary);"></i>
-                    <span style="position: absolute; top: 12px; right: 12px; background: var(--color-primary); color: white; font-size: 0.75rem; font-weight: 700; padding: 4px 8px; border-radius: 4px;">COMING SOON</span>
-                </div>
-                <div style="padding: var(--spacing-md);">
-                    <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--color-primary);">IEEE Capstone</span>
-                    <h3 style="font-size: 1.25rem; margin-top: 4px; margin-bottom: 8px;">TrustVote Blockchain</h3>
-                    <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: var(--spacing-sm);">An academic final year implementation of secure cryptographic protocols to establish double-spending immunity in online ballots.</p>
-                    <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: var(--spacing-md);">
-                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">Cryptography</span>
-                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">Python</span>
-                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">SQLite</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Project 4: AI/ML -->
-            <div class="card reveal reveal-up project-item" data-category="ai-ml" style="padding: 0;">
-                <div style="background: var(--color-dark-navy); height: 180px; display: flex; align-items: center; justify-content: center; color: white; position: relative;">
-                    <i class="bi bi-bar-chart-line" style="font-size: 3.5rem; color: var(--color-primary);"></i>
-                    <span style="position: absolute; top: 12px; right: 12px; background: var(--color-primary); color: white; font-size: 0.75rem; font-weight: 700; padding: 4px 8px; border-radius: 4px;">COMING SOON</span>
-                </div>
-                <div style="padding: var(--spacing-md);">
-                    <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--color-primary);">Machine Learning</span>
-                    <h3 style="font-size: 1.25rem; margin-top: 4px; margin-bottom: 8px;">SentimenX Core</h3>
-                    <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: var(--spacing-sm);">Algorithmic trading sentiment parser tracking financial news, trained using Pandas and Scikit-Learn pipelines.</p>
-                    <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: var(--spacing-md);">
-                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">Scikit-Learn</span>
-                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">Pandas</span>
-                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">Python</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Project 5: Commercial -->
-            <div class="card reveal reveal-up project-item" data-category="commercial" style="padding: 0;">
-                <div style="background: var(--color-dark-navy); height: 180px; display: flex; align-items: center; justify-content: center; color: white; position: relative;">
-                    <i class="bi bi-box" style="font-size: 3.5rem; color: var(--color-primary);"></i>
-                    <span style="position: absolute; top: 12px; right: 12px; background: var(--color-primary); color: white; font-size: 0.75rem; font-weight: 700; padding: 4px 8px; border-radius: 4px;">COMING SOON</span>
-                </div>
-                <div style="padding: var(--spacing-md);">
-                    <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--color-primary);">Commercial CRM</span>
-                    <h3 style="font-size: 1.25rem; margin-top: 4px; margin-bottom: 8px;">SwiftCargo Dispatch</h3>
-                    <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: var(--spacing-sm);">SaaS transport dispatching tracking dashboard equipped with custom calendar tools and SMS notification scripts.</p>
-                    <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: var(--spacing-md);">
-                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">Flask Blueprints</span>
-                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">PostgreSQL</span>
-                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">APIs</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Project 6: Academic -->
-            <div class="card reveal reveal-up project-item" data-category="academic" style="padding: 0;">
-                <div style="background: var(--color-dark-navy); height: 180px; display: flex; align-items: center; justify-content: center; color: white; position: relative;">
-                    <i class="bi bi-activity" style="font-size: 3.5rem; color: var(--color-primary);"></i>
-                    <span style="position: absolute; top: 12px; right: 12px; background: var(--color-primary); color: white; font-size: 0.75rem; font-weight: 700; padding: 4px 8px; border-radius: 4px;">COMING SOON</span>
-                </div>
-                <div style="padding: var(--spacing-md);">
-                    <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--color-primary);">IEEE Capstone</span>
-                    <h3 style="font-size: 1.25rem; margin-top: 4px; margin-bottom: 8px;">Aegis Health Analytics</h3>
-                    <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: var(--spacing-sm);">An academic algorithm implementing SVM models to perform low-latency classification of cardiovascular symptoms datasets.</p>
-                    <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: var(--spacing-md);">
-                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">SVM Algorithm</span>
-                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">Pandas</span>
-                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">Flask</span>
-                    </div>
-                </div>
-            </div>
+            {% endif %}
         </div>
     </div>
 </section>
 
-<!-- Interactive Filter script -->
+<!-- Booking Overlay Modal -->
+<div id="bookingModal" style="display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); align-items: center; justify-content: center;">
+    <div style="background-color: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-md); max-width: 500px; width: 90%; padding: var(--spacing-lg); box-shadow: var(--shadow-lg); position: relative; margin: auto;">
+        
+        <!-- Close trigger icon -->
+        <span id="closeModalBtn" style="position: absolute; top: 12px; right: 16px; font-size: 1.75rem; font-weight: 700; cursor: pointer; color: var(--color-text-muted); transition: color 0.2s ease;">&times;</span>
+        
+        <!-- Step 1: Form panel -->
+        <div id="modalFormStep">
+            <h3 style="color: var(--color-dark-navy); margin-bottom: 4px; font-size: 1.35rem;" id="modalProjectTitle">Book Free Demo</h3>
+            <p style="color: var(--color-primary); font-weight: 700; font-size: 1.25rem; margin-bottom: var(--spacing-sm); margin-top: 0;" id="modalProjectPrice">Price: ₹3,999</p>
+            
+            <div style="background-color: rgba(214, 40, 40, 0.04); border-left: 4px solid var(--color-primary); padding: 10px 14px; border-radius: 4px; margin-bottom: var(--spacing-md); font-size: 0.85rem; color: var(--color-text-muted); display: flex; align-items: flex-start; gap: 8px; line-height: 1.4;">
+                <i class="bi bi-info-circle-fill" style="color: var(--color-primary); font-size: 1.05rem; flex-shrink: 0; margin-top: 2px;"></i>
+                <span><strong>No payment required now.</strong> Book a free video demo. Our developer will show you the running code live on WhatsApp, and you pay only if fully satisfied!</span>
+            </div>
+            
+            <form id="bookingForm" style="display: flex; flex-direction: column; gap: var(--spacing-sm);">
+                <input type="hidden" id="bookingProjectId" name="project_id">
+                
+                <div class="form-group" style="display: flex; flex-direction: column; gap: 4px;">
+                    <label for="bookingName" class="form-label" style="font-weight: 600; font-size: 0.875rem;">Your Name *</label>
+                    <input type="text" id="bookingName" required class="form-control" placeholder="Enter your full name">
+                </div>
+                
+                <div class="form-group" style="display: flex; flex-direction: column; gap: 4px;">
+                    <label for="bookingEmail" class="form-label" style="font-weight: 600; font-size: 0.875rem;">Email Address *</label>
+                    <input type="email" id="bookingEmail" required class="form-control" placeholder="yourname@gmail.com">
+                </div>
+                
+                <div class="form-group" style="display: flex; flex-direction: column; gap: 4px;">
+                    <label for="bookingPhone" class="form-label" style="font-weight: 600; font-size: 0.875rem;">WhatsApp Number *</label>
+                    <input type="tel" id="bookingPhone" required class="form-control" placeholder="e.g. +91 98765 43210">
+                    <span style="font-size: 0.75rem; color: var(--color-text-muted);"><i class="bi bi-whatsapp" style="color: #25D366; margin-right: 2px;"></i> We will message you here to show the live project execution.</span>
+                </div>
+                
+                <div class="form-group" style="display: flex; flex-direction: column; gap: 4px;">
+                    <label for="bookingRef" class="form-label" style="font-weight: 600; font-size: 0.875rem;">Referral / Ambassador Code <span style="font-weight: normal; color: var(--color-text-muted); font-size: 0.8rem;">(Optional)</span></label>
+                    <input type="text" id="bookingRef" class="form-control" placeholder="e.g. GTV-AMB-RAHUL-101">
+                </div>
+                
+                <button type="submit" class="btn btn-primary" id="bookingSubmitBtn" style="width: 100%; font-weight: 600; padding: 0.75rem; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    Confirm Free Demo Booking <i class="bi bi-chevron-right"></i>
+                </button>
+            </form>
+        </div>
+        
+        <!-- Step 2: Success panel -->
+        <div id="modalSuccessStep" style="display: none; text-align: center; padding: var(--spacing-sm) 0;">
+            <div style="background: rgba(16, 185, 129, 0.08); border-radius: 50%; width: 64px; height: 64px; display: inline-flex; align-items: center; justify-content: center; margin-bottom: var(--spacing-md);">
+                <i class="bi bi-patch-check-fill" style="color: #10B981; font-size: 2.25rem;"></i>
+            </div>
+            <h3 style="color: var(--color-dark-navy); margin-bottom: 8px; font-size: 1.4rem;">Demo Booked Successfully!</h3>
+            <p style="font-size: 0.95rem; color: var(--color-text-muted); margin-bottom: var(--spacing-md); line-height: 1.5; text-align: left;">
+                Hi <strong id="successStudentName">Student</strong>,<br><br>
+                We have registered your booking for <strong id="successProjectTitle">Project</strong>. Our developers will message you on WhatsApp at <strong id="successStudentPhone">Phone</strong> within 15 minutes to coordinate your live demonstration.
+            </p>
+            <div style="background-color: var(--color-section-bg); border-radius: 6px; padding: 12px; font-size: 0.85rem; font-weight: 500; color: var(--color-text-muted); margin-bottom: var(--spacing-md); text-align: center; border: 1px solid var(--color-border);">
+                <i class="bi bi-shield-check" style="color: #10B981; margin-right: 4px;"></i> Pay project cost only after seeing the project run!
+            </div>
+            <button class="btn btn-secondary close-success-btn" style="padding: 0.5rem 2rem; width: 100%; font-weight: 600;">Close Panel</button>
+        </div>
+        
+    </div>
+</div>
+
+<!-- Modal Control Script -->
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+        // --- 1. Project Filter Functionality ---
         const filterBtns = document.querySelectorAll('.filter-btn');
         const projectItems = document.querySelectorAll('.project-item');
 
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                // Remove primary class from active button and restore secondary
                 filterBtns.forEach(b => {
                     b.classList.remove('btn-primary');
                     b.classList.add('btn-secondary');
                 });
-                
-                // Add primary style to this clicked button
                 btn.classList.remove('btn-secondary');
                 btn.classList.add('btn-primary');
 
@@ -163,14 +176,105 @@
 
                 projectItems.forEach(item => {
                     if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
-                        item.style.display = 'block';
-                        // Trigger scroll animation check in case hidden items now show
+                        item.style.display = 'flex';
                         item.classList.add('active');
                     } else {
                         item.style.display = 'none';
                     }
                 });
             });
+        });
+
+        // --- 2. Booking Modal Functionality ---
+        const bookingModal = document.getElementById('bookingModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const closeSuccessBtn = document.querySelector('.close-success-btn');
+        
+        const modalFormStep = document.getElementById('modalFormStep');
+        const modalSuccessStep = document.getElementById('modalSuccessStep');
+        
+        const modalProjectTitle = document.getElementById('modalProjectTitle');
+        const modalProjectPrice = document.getElementById('modalProjectPrice');
+        const bookingProjectId = document.getElementById('bookingProjectId');
+        
+        const bookingForm = document.getElementById('bookingForm');
+        const bookingSubmitBtn = document.getElementById('bookingSubmitBtn');
+        
+        // Open Modal
+        document.querySelectorAll('.book-demo-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const projectId = btn.getAttribute('data-project-id');
+                const projectTitle = btn.getAttribute('data-project-title');
+                const projectPrice = btn.getAttribute('data-project-price');
+                
+                // Populate modal headers
+                bookingProjectId.value = projectId;
+                modalProjectTitle.textContent = "Book Free Demo: " + projectTitle;
+                modalProjectPrice.textContent = "Price: " + projectPrice;
+                
+                // Reset step visibility
+                modalFormStep.style.display = 'block';
+                modalSuccessStep.style.display = 'none';
+                
+                // Show modal
+                bookingModal.style.display = 'flex';
+            });
+        });
+        
+        // Close Modal Handlers
+        const dismissModal = () => {
+            bookingModal.style.display = 'none';
+        };
+        closeModalBtn.addEventListener('click', dismissModal);
+        closeSuccessBtn.addEventListener('click', dismissModal);
+        
+        // Form Submit Handler via AJAX
+        bookingForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const project_id = bookingProjectId.value;
+            const name = document.getElementById('bookingName').value.trim();
+            const email = document.getElementById('bookingEmail').value.trim();
+            const phone = document.getElementById('bookingPhone').value.trim();
+            const referral_code = document.getElementById('bookingRef').value.trim();
+            
+            // Disable button
+            bookingSubmitBtn.disabled = true;
+            bookingSubmitBtn.innerHTML = '<i class="bi bi-arrow-clockwise animate-spin" style="display:inline-block; animation: spin 1s linear infinite;"></i> Registering...';
+            
+            try {
+                const response = await fetch('/projects/book', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': "{{ csrf_token() }}"
+                    },
+                    body: JSON.stringify({ project_id, name, email, phone, referral_code })
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
+                    // Populate success step
+                    document.getElementById('successStudentName').textContent = result.student_name;
+                    document.getElementById('successProjectTitle').textContent = result.project_title;
+                    document.getElementById('successStudentPhone').textContent = result.phone;
+                    
+                    // Toggle steps
+                    modalFormStep.style.display = 'none';
+                    modalSuccessStep.style.display = 'block';
+                    
+                    // Reset form
+                    bookingForm.reset();
+                } else {
+                    window.showToast(result.message || 'Booking failed.', 'error');
+                }
+            } catch (err) {
+                window.showToast('Server communication error.', 'error');
+            } finally {
+                bookingSubmitBtn.disabled = false;
+                bookingSubmitBtn.innerHTML = 'Confirm Free Demo Booking <i class="bi bi-chevron-right"></i>';
+            }
         });
     });
 </script>

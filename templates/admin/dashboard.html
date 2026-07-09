@@ -53,6 +53,9 @@
                 <button class="admin-nav-btn" data-target="panel-ambassadors">
                     <i class="bi bi-people-fill"></i> Ambassadors ({{ ambassadors_count }})
                 </button>
+                <button class="admin-nav-btn" data-target="panel-bookings">
+                    <i class="bi bi-cart-fill"></i> Bookings & Demos ({{ bookings_count }})
+                </button>
             </aside>
 
             <!-- Main Work Panels -->
@@ -106,6 +109,15 @@
                             <div>
                                 <div class="admin-metric-val">{{ ambassadors_count }}</div>
                                 <div class="admin-metric-lbl">Ambassadors</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Stat: Total Bookings -->
+                        <div class="admin-metric-card">
+                            <div class="admin-metric-icon"><i class="bi bi-cart-fill"></i></div>
+                            <div>
+                                <div class="admin-metric-val">{{ bookings_count }}</div>
+                                <div class="admin-metric-lbl">Project Bookings</div>
                             </div>
                         </div>
                     </div>
@@ -451,6 +463,106 @@
                         <i class="bi bi-people" style="font-size: 3rem; color: var(--color-border); display: block; margin-bottom: var(--spacing-sm);"></i>
                         <h3 style="color: var(--color-text-muted);">No ambassadors registered</h3>
                         <p style="color: var(--color-text-muted);">You don't have any campus ambassadors listed yet.</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- TAB 7: BOOKINGS & DEMO REQUESTS -->
+                <div id="panel-bookings" class="tab-content">
+                    <h2 style="margin-bottom: var(--spacing-sm);">Project Demo Bookings</h2>
+                    <p style="color: var(--color-text-muted); margin-bottom: var(--spacing-lg);">Verify transaction receipts and approve demo bookings to credit student ambassadors.</p>
+                    
+                    {% if bookings %}
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Student Details</th>
+                                    <th>Project Title & Price</th>
+                                    <th>Ambassador Referral</th>
+                                    <th>Submitted At</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for booking in bookings %}
+                                <tr>
+                                    <td>
+                                        <div style="font-weight: 700; color: var(--color-dark-navy);">{{ booking.name }}</div>
+                                        <div style="font-size: 0.85rem; color: var(--color-text-muted); margin-top: 2px;"><i class="bi bi-envelope"></i> {{ booking.email }}</div>
+                                        <div style="font-size: 0.85rem; color: var(--color-text-muted); margin-top: 2px;"><i class="bi bi-telephone"></i> {{ booking.phone }}</div>
+                                    </td>
+                                    <td>
+                                        <div style="font-weight: 600;">{{ booking.project_title }}</div>
+                                        <div style="font-size: 0.9rem; color: var(--color-primary); font-weight: 700; margin-top: 2px;">
+                                            {% if booking.project_title == 'Apex Ledger CRM' %}
+                                                ₹3,999
+                                            {% elif booking.project_title == 'Aegis Query Assistant' %}
+                                                ₹4,999
+                                            {% elif booking.project_title == 'TrustVote Blockchain' %}
+                                                ₹4,499
+                                            {% else %}
+                                                ₹4,299
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {% if booking.referral_code %}
+                                            <span class="badge-type badge-contract" style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase;">{{ booking.referral_code }}</span>
+                                        {% else %}
+                                            <span style="font-size: 0.85rem; color: var(--color-text-muted); font-style: italic;">Direct Customer</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div style="font-size: 0.85rem; color: var(--color-text-muted);">{{ booking.created_at }}</div>
+                                    </td>
+                                    <td>
+                                        {% if booking.status == 'Approved' %}
+                                            <span class="status-badge status-hired" style="font-size: 0.8rem; font-weight: 700; padding: 4px 8px; border-radius: 4px; background-color: rgba(16, 185, 129, 0.1); color: #10B981; display: inline-flex; align-items: center; gap: 4px;"><i class="bi bi-check-circle-fill"></i> Paid & Approved</span>
+                                        {% else %}
+                                            <span class="status-badge status-applied" style="font-size: 0.8rem; font-weight: 700; padding: 4px 8px; border-radius: 4px; background-color: rgba(59, 130, 246, 0.1); color: #3B82F6; display: inline-flex; align-items: center; gap: 4px;"><i class="bi bi-clock-fill"></i> Pending Demo</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                                            <!-- WhatsApp Deep Link -->
+                                            <a href="https://wa.me/{{ booking.phone|replace(' ', '')|replace('+', '')|replace('-', '')|replace('(', '')|replace(')', '') }}?text=Hi%20{{ booking.name }}!%20I'm%20from%20GlobalTechVibers.%20I%20saw%20you%20booked%20a%20free%20demo%20for%20the%20{{ booking.project_title }}%20project.%20Let%20me%20know%20when%20you're%20free%20to%20see%20the%20demo!" 
+                                               target="_blank" 
+                                               class="btn btn-secondary btn-sm" 
+                                               style="display: inline-flex; align-items: center; gap: 4px; padding: 0.4rem 0.8rem; background-color: #25D366; border-color: #25D366; color: white !important; font-size: 0.8rem; font-weight: 600; text-decoration: none;">
+                                                <i class="bi bi-whatsapp"></i> Chat
+                                            </a>
+                                            
+                                            {% if booking.status == 'Pending' %}
+                                            <!-- Approve Form -->
+                                            <form action="{{ url_for('admin.approve_booking', booking_id=booking.id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Verify that the student has paid on WhatsApp. Clicking OK will mark as Approved and credit the Ambassador.');">
+                                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                                <button type="submit" class="btn btn-primary btn-sm" style="background-color: #10B981; border-color: #10B981; font-weight: 600; font-size: 0.8rem; padding: 0.4rem 0.8rem; color: white !important;">
+                                                    <i class="bi bi-check-circle"></i> Approve
+                                                </button>
+                                            </form>
+                                            {% endif %}
+                                            
+                                            <!-- Delete Form -->
+                                            <form action="{{ url_for('admin.delete_booking', booking_id=booking.id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this booking record?');">
+                                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                                <button type="submit" class="btn btn-secondary btn-sm" style="border-color: var(--color-primary); color: var(--color-primary) !important; font-size: 0.8rem; padding: 0.4rem 0.8rem; background: none;">
+                                                    <i class="bi bi-trash"></i> Delete
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="text-center" style="padding: var(--spacing-xl) 0;">
+                        <i class="bi bi-cart" style="font-size: 3rem; color: var(--color-border); display: block; margin-bottom: var(--spacing-sm);"></i>
+                        <h3 style="color: var(--color-text-muted);">No demo bookings registered</h3>
+                        <p style="color: var(--color-text-muted);">No student has submitted any demo requests yet.</p>
                     </div>
                     {% endif %}
                 </div>

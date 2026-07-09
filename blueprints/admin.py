@@ -48,7 +48,7 @@ def logout():
 @admin_bp.route('/dashboard')
 @admin_required
 def dashboard():
-    """Renders the admin control dashboard displaying metrics, messages, subscribers, jobs, applications, and ambassadors."""
+    """Renders the admin control dashboard displaying metrics, messages, subscribers, jobs, applications, ambassadors, and bookings."""
     try:
         # Fetch statistics counts and lists
         contacts = execute_read("SELECT * FROM contacts ORDER BY created_at DESC")
@@ -56,6 +56,7 @@ def dashboard():
         jobs = execute_read("SELECT * FROM jobs ORDER BY created_at DESC")
         applications = execute_read("SELECT * FROM applications ORDER BY created_at DESC")
         ambassadors = execute_read("SELECT * FROM ambassadors ORDER BY created_at DESC")
+        bookings = execute_read("SELECT * FROM bookings ORDER BY created_at DESC")
         
         return render_template(
             'admin/dashboard.html',
@@ -64,11 +65,13 @@ def dashboard():
             jobs=jobs,
             applications=applications,
             ambassadors=ambassadors,
+            bookings=bookings,
             contacts_count=len(contacts),
             subscribers_count=len(subscribers),
             jobs_count=len(jobs),
             applications_count=len(applications),
-            ambassadors_count=len(ambassadors)
+            ambassadors_count=len(ambassadors),
+            bookings_count=len(bookings)
         )
     except Exception as e:
         current_app.logger.error(f"Admin Dashboard Error: {e}")
@@ -80,11 +83,13 @@ def dashboard():
             jobs=[],
             applications=[],
             ambassadors=[],
+            bookings=[],
             contacts_count=0,
             subscribers_count=0,
             jobs_count=0,
             applications_count=0,
-            ambassadors_count=0
+            ambassadors_count=0,
+            bookings_count=0
         )
 
 @admin_bp.route('/contacts/delete/<int:contact_id>', methods=['POST'])
@@ -195,3 +200,29 @@ def delete_ambassador(amb_id):
         flash("Failed to delete ambassador record.", "error")
         
     return redirect(url_for('admin.dashboard', _anchor='ambassadors'))
+
+@admin_bp.route('/bookings/approve/<int:booking_id>', methods=['POST'])
+@admin_required
+def approve_booking(booking_id):
+    """Approves a demo booking/order request once payment is completed."""
+    try:
+        execute_write("UPDATE bookings SET status = 'Approved' WHERE id = %s", (booking_id,))
+        flash("Booking approved successfully. Ambassador commission credited.", "success")
+    except Exception as e:
+        current_app.logger.error(f"Failed to approve booking: {e}")
+        flash("Failed to approve project booking.", "error")
+        
+    return redirect(url_for('admin.dashboard', _anchor='bookings'))
+
+@admin_bp.route('/bookings/delete/<int:booking_id>', methods=['POST'])
+@admin_required
+def delete_booking(booking_id):
+    """Deletes or rejects a booking/order request."""
+    try:
+        execute_write("DELETE FROM bookings WHERE id = %s", (booking_id,))
+        flash("Project booking record deleted successfully.", "success")
+    except Exception as e:
+        current_app.logger.error(f"Failed to delete booking: {e}")
+        flash("Failed to delete project booking.", "error")
+        
+    return redirect(url_for('admin.dashboard', _anchor='bookings'))
