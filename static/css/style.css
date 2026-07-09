@@ -529,3 +529,102 @@ textarea.form-control {
 .badge-part-time { background: #FEF3C7; color: #B45309; }
 .badge-contract { background: #F3E8FF; color: #6B21A8; }
 .badge-internship { background: #DCFCE7; color: #15803D; }
+
+/* --- Hero Rotating Rounded Logo Styles --- */
+.hero-logo-orbit {
+    position: relative;
+    width: min(380px, 90vw);
+    height: min(380px, 90vw);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-logo-glow {
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(214, 40, 40, 0.25) 0%, rgba(214, 40, 40, 0) 70%);
+    filter: blur(15px);
+    z-index: 1;
+    animation: glowPulse 4s ease-in-out infinite alternate;
+}
+
+.orbit-ring.ring-outer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px dashed rgba(214, 40, 40, 0.35);
+    z-index: 2;
+    animation: spinSlow 30s linear infinite reverse;
+}
+
+.orbiting-particle-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    animation: spinSlow 8s linear infinite;
+}
+
+.orbiting-particle {
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    background-color: var(--color-primary);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--color-primary), 0 0 20px var(--color-primary);
+    transform: translateX(-50%);
+}
+
+.hero-logo-frame {
+    position: absolute;
+    width: 82%;
+    height: 82%;
+    border-radius: 50%;
+    background-color: #ffffff;
+    box-shadow: var(--shadow-lg), 0 15px 35px rgba(15, 23, 42, 0.1);
+    border: 4px solid #ffffff;
+    z-index: 4;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.hero-logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.hero-logo-orbit:hover .hero-logo-frame {
+    transform: scale(1.03);
+    box-shadow: 0 20px 45px rgba(15, 23, 42, 0.15);
+}
+
+.hero-logo-orbit:hover .orbiting-particle-container {
+    animation-play-state: paused;
+}
+
+.hero-logo-orbit:hover .orbit-ring.ring-outer {
+    border-color: rgba(214, 40, 40, 0.6);
+}
+
+@keyframes glowPulse {
+    0% {
+        transform: scale(0.92);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(1.08);
+        opacity: 1;
+    }
+}

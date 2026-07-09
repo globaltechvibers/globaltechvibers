@@ -55,6 +55,17 @@ def create_app():
 
 app = create_app()
 
+def is_port_available(host, port):
+    """Checks if a port is available for binding on the specified host."""
+    import socket
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            s.bind((host, port))
+            return True
+    except OSError:
+        return False
+
 if __name__ == '__main__':
     # Support Render port injection. Bind to 0.0.0.0 if PORT is defined (production), 
     # otherwise fall back to localhost (127.0.0.1) and scan candidate ports to avoid Windows socket conflicts.
@@ -70,13 +81,18 @@ if __name__ == '__main__':
         server_started = False
         
         for p in candidate_ports:
+            if not is_port_available(host, p):
+                print(f"[PORT CONFLICT] Port {p} is restricted or already in use.")
+                print("[*] Automatically shifting to next fallback candidate port...")
+                continue
+                
             try:
                 # Run Werkzeug server
                 app.run(host=host, port=p, debug=app.config.get('DEBUG', False))
                 server_started = True
                 break
-            except OSError as e:
-                print(f"[PORT CONFLICT] Port {p} is restricted or already in use: {e}")
+            except (OSError, SystemExit) as e:
+                print(f"[PORT CONFLICT] Port {p} failed to run: {e}")
                 print("[*] Automatically shifting to next fallback candidate port...")
                 
         if not server_started:
