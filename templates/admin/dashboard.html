@@ -121,6 +121,7 @@
                                     <th>Sender Details</th>
                                     <th>Subject & Message</th>
                                     <th>Submitted At</th>
+                                    <th>Referral Code</th>
                                     <th style="text-align: right;">Actions</th>
                                 </tr>
                             </thead>
@@ -138,6 +139,13 @@
                                     </td>
                                     <td style="font-size: 0.85rem; color: var(--color-text-muted);">
                                         {{ contact.created_at }}
+                                    </td>
+                                    <td>
+                                        {% if contact.referral_code %}
+                                            <span class="badge-type badge-contract" style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase;">{{ contact.referral_code }}</span>
+                                        {% else %}
+                                            <span style="color: var(--color-text-muted); font-style: italic; font-size: 0.85rem;">None</span>
+                                        {% endif %}
                                     </td>
                                     <td style="text-align: right; vertical-align: middle;">
                                         <form action="{{ url_for('admin.delete_contact', contact_id=contact.id) }}" method="POST" onsubmit="return confirm('Purge this inquiry record permanently? This cannot be undone.');">

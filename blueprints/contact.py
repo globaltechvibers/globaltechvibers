@@ -48,6 +48,7 @@ def submit_contact():
         phone = data.get('phone', '')
         subject = data.get('subject', '')
         message = data.get('message', '')
+        referral_code = data.get('referral_code', '')
         is_ajax = True
     else:
         name = request.form.get('name', '')
@@ -55,6 +56,7 @@ def submit_contact():
         phone = request.form.get('phone', '')
         subject = request.form.get('subject', '')
         message = request.form.get('message', '')
+        referral_code = request.form.get('referral_code', '')
         is_ajax = False
 
     # Validate inputs
@@ -70,10 +72,17 @@ def submit_contact():
     # Store in database
     try:
         query = """
-        INSERT INTO contacts (name, email, phone, subject, message) 
-        VALUES (%s, %s, %s, %s, %s)
+        INSERT INTO contacts (name, email, phone, subject, message, referral_code) 
+        VALUES (%s, %s, %s, %s, %s, %s)
         """
-        execute_write(query, (name.strip(), email.strip(), phone.strip(), subject.strip(), message.strip()))
+        execute_write(query, (
+            name.strip(), 
+            email.strip(), 
+            phone.strip(), 
+            subject.strip(), 
+            message.strip(), 
+            referral_code.strip() if referral_code and referral_code.strip() else None
+        ))
         
         success_msg = "Thank you! Your message has been sent successfully. We will contact you soon."
         if is_ajax:

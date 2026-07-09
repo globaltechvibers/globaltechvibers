@@ -73,6 +73,7 @@ def _create_tables(app):
             phone VARCHAR(20) NOT NULL,
             subject VARCHAR(150) NOT NULL,
             message TEXT NOT NULL,
+            referral_code VARCHAR(50),
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
         """
@@ -117,6 +118,7 @@ def _create_tables(app):
             phone TEXT NOT NULL,
             subject TEXT NOT NULL,
             message TEXT NOT NULL,
+            referral_code TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
         """
@@ -167,6 +169,34 @@ def _create_tables(app):
         conn.rollback()
         app.logger.error(f"Database: Table creation failed: {e}")
         raise e
+    finally:
+        release_connection(conn)
+
+    # Database Schema Migration: Check and add referral_code column to contacts table if missing
+    try:
+        conn = get_connection()
+        cur = conn.cursor()
+        if _db_type == 'sqlite':
+            cur.execute("PRAGMA table_info(contacts);")
+            columns = [row[1] for row in cur.fetchall()]
+            if 'referral_code' not in columns:
+                cur.execute("ALTER TABLE contacts ADD COLUMN referral_code TEXT;")
+                conn.commit()
+                app.logger.info("Database: Migrated SQLite contacts table adding referral_code.")
+        else:
+            cur.execute("""
+                SELECT column_name 
+                FROM information_schema.columns 
+                WHERE table_name='contacts' AND column_name='referral_code';
+            """)
+            row = cur.fetchone()
+            if not row:
+                cur.execute("ALTER TABLE contacts ADD COLUMN referral_code VARCHAR(50);")
+                conn.commit()
+                app.logger.info("Database: Migrated Postgres contacts table adding referral_code.")
+        cur.close()
+    except Exception as e:
+        app.logger.warning(f"Database Migration Warning (referral_code check): {e}")
     finally:
         release_connection(conn)
 
