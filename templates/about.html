@@ -25,34 +25,10 @@
                 <p>Today, we design and support production web software, build intelligent API connections, database setups, and guide final-year engineering students through capstone IEEE project implementations.</p>
             </div>
             
-            <div class="reveal reveal-right" style="display: flex; justify-content: center;">
-                <!-- Custom SVG illustrating partnership and goals -->
-                <svg width="380" height="340" viewBox="0 0 380 340" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto;">
-                    <rect width="380" height="340" rx="12" fill="#F8FAFC" />
-                    <!-- Visual Nodes -->
-                    <circle cx="190" cy="170" r="80" stroke="#E2E8F0" stroke-width="2"/>
-                    <circle cx="190" cy="170" r="110" stroke="#E2E8F0" stroke-dasharray="6 6"/>
-                    
-                    <!-- Nodes connected -->
-                    <circle cx="190" cy="90" r="25" fill="#FFFFFF" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.05))"/>
-                    <i class="bi bi-rocket-takeoff" style="font-size: 1.25rem;"></i>
-                    <!-- SVG graphics for nodes -->
-                    <path d="M190 78 L190 102 M178 90 L202 90" stroke="#D62828" stroke-width="2"/>
-                    
-                    <circle cx="110" cy="210" r="25" fill="#FFFFFF" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.05))"/>
-                    <path d="M102 205 L118 205 M102 215 L118 215 M110 197 L110 223" stroke="#0F172A" stroke-width="2" opacity="0.6"/>
-                    
-                    <circle cx="270" cy="210" r="25" fill="#FFFFFF" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.05))"/>
-                    <circle cx="270" cy="210" r="8" stroke="#D62828" stroke-width="2"/>
-                    
-                    <line x1="190" y1="115" x2="190" y2="170" stroke="#94A3B8" stroke-dasharray="4 4"/>
-                    <line x1="190" y1="170" x2="110" y2="210" stroke="#94A3B8" stroke-dasharray="4 4"/>
-                    <line x1="190" y1="170" x2="270" y2="210" stroke="#94A3B8" stroke-dasharray="4 4"/>
-                    
-                    <!-- Center Core Badge -->
-                    <rect x="155" y="145" width="70" height="50" rx="8" fill="#0F172A" />
-                    <text x="190" y="175" fill="#FFFFFF" font-family="sans-serif" font-weight="bold" font-size="12" text-anchor="middle">GTV Core</text>
-                </svg>
+            <div class="reveal reveal-right" style="display: flex; justify-content: center; align-items: center;">
+                <img src="{{ url_for('static', filename='images/about-team.png') }}" 
+                     alt="GlobalTechVibers team collaboration" 
+                     style="width: 100%; max-width: 420px; height: auto; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); object-fit: cover;">
             </div>
         </div>
     </div>
