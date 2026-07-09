@@ -73,6 +73,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const phone = document.getElementById('phone').value.trim();
             const subject = document.getElementById('subject').value.trim();
             const message = document.getElementById('message').value.trim();
+            const referralCodeInput = document.getElementById('referral_code');
+            const referral_code = referralCodeInput ? referralCodeInput.value.trim() : '';
 
             // Client-side validation checks
             let clientErrors = [];
@@ -98,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         'Content-Type': 'application/json',
                         'X-CSRFToken': getCsrfToken()
                     },
-                    body: JSON.stringify({ name, email, phone, subject, message })
+                    body: JSON.stringify({ name, email, phone, subject, message, referral_code })
                 });
 
                 const result = await response.json();
