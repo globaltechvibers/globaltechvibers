@@ -1,0 +1,549 @@
+{% extends 'base.html' %}
+
+{% block title %}GlobalTechVibers | Professional Software & Academic Solutions{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/loader.css') }}">
+{% endblock %}
+
+{% block content %}
+<!-- Loader HTML Overlay -->
+<div id="intro-loader" class="intro-loader">
+    <div class="loader-content">
+        <div class="loader-text-step" id="step-1">Building Tomorrow.</div>
+        <div class="loader-text-step" id="step-2">Engineering Innovation.</div>
+        <div class="loader-text-step" id="step-3">
+            <div>Web Applications</div>
+            <div>AI Solutions</div>
+            <div>College Projects</div>
+        </div>
+        <div class="loader-text-step" id="step-4">Empowering Student Innovation.</div>
+        
+        <div class="loader-logo-step" id="step-logo">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="GlobalTechVibers Logo" class="loader-logo-icon" style="height: 100px; width: auto; object-fit: contain; margin-bottom: 16px;">
+            <h1 class="loader-logo-text">GlobalTech<span>Vibers</span></h1>
+        </div>
+    </div>
+</div>
+
+<!-- Homepage Content Wrapper -->
+<div id="homepage-content">
+    <script>
+        // Synchronous script run immediately during DOM parsing to prevent page flash (FOUC)
+        (function() {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const hasLoadedBefore = sessionStorage.getItem('gtv_has_loaded_before');
+            if (!prefersReducedMotion && !hasLoadedBefore) {
+                document.getElementById('homepage-content').className = 'homepage-content-hidden';
+                document.body.classList.add('loading-active');
+            }
+        })();
+    </script>
+<!-- 1. HERO SECTION -->
+<section class="section animate-fade" style="padding: var(--spacing-xl) 0; overflow: hidden; background: linear-gradient(180deg, rgba(248, 250, 252, 0.5) 0%, rgba(255, 255, 255, 1) 100%);">
+    <div class="container hero-container" style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: var(--spacing-xl); align-items: center;">
+        <div class="hero-text animate-slide-up">
+            <span style="display: inline-block; padding: 6px 12px; background: rgba(214, 40, 40, 0.08); border: 1px solid rgba(214, 40, 40, 0.15); color: var(--color-primary); font-size: 0.85rem; font-weight: 700; border-radius: 30px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--spacing-md);">
+                <span class="badge-pulse"></span>Enterprise Grade Solutions
+            </span>
+            <h1 style="line-height: 1.2; margin-bottom: var(--spacing-md); min-height: 110px;">
+                Building Tomorrow's <br>
+                <span id="hero-typewriter" class="typewriter-cursor" style="color: var(--color-primary); font-weight: 800;">Digital Solutions</span> <br>
+                Today.
+            </h1>
+            <p style="font-size: 1.2rem; color: var(--color-text-muted); margin-bottom: var(--spacing-lg); max-width: 600px;">
+                GlobalTechVibers delivers professional software development, AI solutions, custom web applications, and academic project support with enterprise-level quality.
+            </p>
+            <div class="hero-buttons" style="display: flex; gap: var(--spacing-sm);">
+                <a href="/contact" class="btn btn-primary btn-lg">Start Your Project <i class="bi bi-arrow-right"></i></a>
+                <a href="/services" class="btn btn-secondary btn-lg">Explore Services</a>
+            </div>
+        </div>
+        
+        <div class="hero-image reveal reveal-right active" style="display: flex; justify-content: center;">
+            <!-- Modern Tech Vector SVG Illustration -->
+            <svg width="450" height="400" viewBox="0 0 450 400" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto;">
+                <!-- Grid background -->
+                <circle cx="225" cy="200" r="180" fill="#F8FAFC" />
+                <path d="M70 200 H380 M225 45 V355" stroke="#E5E7EB" stroke-dasharray="4 4"/>
+                
+                <!-- Main laptop/screen container -->
+                <rect x="90" y="110" width="270" height="170" rx="10" fill="#0F172A" />
+                <rect x="105" y="125" width="240" height="130" rx="4" fill="#FFFFFF" />
+                
+                <!-- Code mock inside laptop -->
+                <rect x="120" y="140" width="80" height="8" rx="4" fill="#E2E8F0" />
+                <rect x="120" y="155" width="120" height="8" rx="4" fill="#D62828" opacity="0.8" />
+                <rect x="120" y="170" width="100" height="8" rx="4" fill="#0F172A" opacity="0.5" />
+                <rect x="120" y="185" width="60" height="8" rx="4" fill="#E2E8F0" />
+                
+                <!-- Chart elements on the laptop -->
+                <circle cx="300" cy="190" r="35" stroke="#F1F5F9" stroke-width="8"/>
+                <circle class="hero-chart-radial" cx="300" cy="190" r="35" stroke="#D62828" stroke-width="8" stroke-dasharray="140 220" stroke-linecap="round"/>
+                
+                <!-- Floating Gear Icon (Automation) -->
+                <g transform="translate(360, 90)" class="hero-gear-spin">
+                    <circle cx="20" cy="20" r="25" fill="#FFFFFF" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.05))"/>
+                    <path d="M20 12v3M20 25v3M12 20h3M25 20h3M14.3 14.3l2.1 2.1M23.6 23.6l2.1 2.1M14.3 25.7l2.1-2.1M23.6 14.3l2.1-2.1" stroke="#D62828" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="20" cy="20" r="5" stroke="#D62828" stroke-width="2"/>
+                </g>
+                
+                <!-- Floating Database Icon -->
+                <g transform="translate(60, 240)" class="hero-db-float">
+                    <circle cx="20" cy="20" r="25" fill="#FFFFFF" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.05))"/>
+                    <path d="M11 15c0-1.66 4-3 9-3s9 1.34 9 3-4 3-9 3-9-1.34-9-3z" fill="#0F172A" opacity="0.3"/>
+                    <path d="M11 15v5c0 1.66 4 3 9 3s9-1.34 9-3v-5M11 20v5c0 1.66 4 3 9 3s9-1.34 9-3v-5" stroke="#0F172A" stroke-width="2"/>
+                    <path d="M11 15c0 1.66 4 3 9 3s9-1.34 9-3" stroke="#0F172A" stroke-width="2"/>
+                </g>
+                
+                <!-- Connecting dotted paths representing nodes -->
+                <path d="M360 115 C330 140, 240 130, 210 140" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="4 4" stroke-linecap="round"/>
+                <path d="M85 240 C110 200, 150 190, 180 185" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="4 4" stroke-linecap="round"/>
+            </svg>
+        </div>
+    </div>
+</section>
+
+<!-- 2. STATISTICS -->
+<section style="background-color: var(--color-dark-navy); color: white; padding: var(--spacing-lg) 0;">
+    <div class="container">
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-md); text-align: center;" class="grid-2">
+            <div class="reveal reveal-up">
+                <h3 style="font-size: 2.5rem; color: var(--color-primary); margin-bottom: 5px;">150+</h3>
+                <p style="color: #94A3B8; font-size: 0.95rem; margin-bottom: 0;">Projects Completed</p>
+            </div>
+            <div class="reveal reveal-up">
+                <h3 style="font-size: 2.5rem; color: var(--color-primary); margin-bottom: 5px;">99%</h3>
+                <p style="color: #94A3B8; font-size: 0.95rem; margin-bottom: 0;">Client Satisfaction</p>
+            </div>
+            <div class="reveal reveal-up">
+                <h3 style="font-size: 2.5rem; color: var(--color-primary); margin-bottom: 5px;">24/7</h3>
+                <p style="color: #94A3B8; font-size: 0.95rem; margin-bottom: 0;">Deployment Support</p>
+            </div>
+            <div class="reveal reveal-up">
+                <h3 style="font-size: 2.5rem; color: var(--color-primary); margin-bottom: 5px;">10+</h3>
+                <p style="color: #94A3B8; font-size: 0.95rem; margin-bottom: 0;">Years Expert Experience</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 3. ABOUT PREVIEW -->
+<section class="section">
+    <div class="container" style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-xl); align-items: center;" class="grid-2">
+        <div class="reveal reveal-left">
+            <span style="font-weight: 700; color: var(--color-primary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px;">Who We Are</span>
+            <h2 style="margin-bottom: var(--spacing-md);">Reliable, Scalable, Secure, and Affordable Software.</h2>
+            <p>GlobalTechVibers is an established software development company providing premium technology solutions for students, startups, small businesses, and corporations.</p>
+            <p style="color: var(--color-text-muted);">Our mission is simple: to deliver clean, modern engineering with strict adherence to deadlines, fully customized to meet unique commercial objectives or academic rubrics.</p>
+            <a href="/about" class="btn btn-secondary" style="margin-top: var(--spacing-sm);">Learn More About Us <i class="bi bi-arrow-right"></i></a>
+        </div>
+        <div class="reveal reveal-right" style="border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--spacing-lg); background: var(--color-section-bg);">
+            <h4 style="margin-bottom: var(--spacing-md); display: flex; align-items: center; gap: 8px;">
+                <i class="bi bi-shield-check" style="color: var(--color-primary);"></i> Enterprise Standards
+            </h4>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--spacing-sm);">
+                <li style="display: flex; gap: 10px; align-items: flex-start;">
+                    <i class="bi bi-patch-check" style="color: var(--color-primary); margin-top: 3px;"></i>
+                    <div>
+                        <strong>Clean Code Delivery</strong>
+                        <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 0;">Robust parameterization and blueprint layout.</p>
+                    </div>
+                </li>
+                <li style="display: flex; gap: 10px; align-items: flex-start;">
+                    <i class="bi bi-patch-check" style="color: var(--color-primary); margin-top: 3px;"></i>
+                    <div>
+                        <strong>PostgreSQL Database Integrity</strong>
+                        <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 0;">Designed with optimized queries and constraints.</p>
+                    </div>
+                </li>
+                <li style="display: flex; gap: 10px; align-items: flex-start;">
+                    <i class="bi bi-patch-check" style="color: var(--color-primary); margin-top: 3px;"></i>
+                    <div>
+                        <strong>Fully Documented Projects</strong>
+                        <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 0;">Comprehensive architectural reports for academic submission.</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- 4. SERVICES -->
+<section class="section section-bg">
+    <div class="container">
+        <div class="section-header reveal reveal-up">
+            <span style="font-weight: 700; color: var(--color-primary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px;">Our Services</span>
+            <h2>Tailored Technology Solutions</h2>
+            <p>From university project support to highly customizable enterprise-grade cloud systems, we build software that drives outcomes.</p>
+        </div>
+        
+        <div class="grid grid-3">
+            <!-- Academic: Mini Projects -->
+            <div class="card reveal reveal-up">
+                <div class="card-icon"><i class="bi bi-journal-code"></i></div>
+                <h3 class="card-title">Mini Projects</h3>
+                <p class="card-desc">Quick, high-impact college mini-projects built with Python, Flask, or basic web tools. Full source code included.</p>
+                <a href="/services#academic" class="btn btn-outline btn-sm">Learn More</a>
+            </div>
+            <!-- Academic: Major Projects -->
+            <div class="card reveal reveal-up">
+                <div class="card-icon"><i class="bi bi-mortarboard-fill"></i></div>
+                <h3 class="card-title">Major Projects</h3>
+                <p class="card-desc">Comprehensive final year graduation software. Custom architectures matching university guidelines.</p>
+                <a href="/services#academic" class="btn btn-outline btn-sm">Learn More</a>
+            </div>
+            <!-- Academic: IEEE Projects -->
+            <div class="card reveal reveal-up">
+                <div class="card-icon"><i class="bi bi-globe"></i></div>
+                <h3 class="card-title">IEEE Projects</h3>
+                <p class="card-desc">Implementation of technical IEEE research papers, focusing on Blockchain, Cryptography, or Networks.</p>
+                <a href="/services#academic" class="btn btn-outline btn-sm">Learn More</a>
+            </div>
+            <!-- Commercial: Web Development -->
+            <div class="card reveal reveal-up">
+                <div class="card-icon"><i class="bi bi-laptop"></i></div>
+                <h3 class="card-title">Web Development</h3>
+                <p class="card-desc">Modern custom web applications developed with clean responsive grid templates and responsive CSS layout.</p>
+                <a href="/services#web-development" class="btn btn-outline btn-sm">Learn More</a>
+            </div>
+            <!-- Commercial: Business Websites -->
+            <div class="card reveal reveal-up">
+                <div class="card-icon"><i class="bi bi-building"></i></div>
+                <h3 class="card-title">Business Websites</h3>
+                <p class="card-desc">Elevate corporate presence with professional portfolio pages, landing sites, and content dashboards.</p>
+                <a href="/services#web-development" class="btn btn-outline btn-sm">Learn More</a>
+            </div>
+            <!-- Commercial: Custom Software -->
+            <div class="card reveal reveal-up">
+                <div class="card-icon"><i class="bi bi-terminal"></i></div>
+                <h3 class="card-title">Custom Software</h3>
+                <p class="card-desc">Engineered to order. ERP tools, CRM databases, scheduling systems, and automation scripts.</p>
+                <a href="/services#custom-software" class="btn btn-outline btn-sm">Learn More</a>
+            </div>
+            <!-- AI: AI Applications -->
+            <div class="card reveal reveal-up">
+                <div class="card-icon"><i class="bi bi-cpu"></i></div>
+                <h3 class="card-title">AI Applications</h3>
+                <p class="card-desc">Intelligent software solutions integrating OpenAI, Gemini, or custom LangChain model endpoints.</p>
+                <a href="/services#ai-solutions" class="btn btn-outline btn-sm">Learn More</a>
+            </div>
+            <!-- AI: Machine Learning -->
+            <div class="card reveal reveal-up">
+                <div class="card-icon"><i class="bi bi-robot"></i></div>
+                <h3 class="card-title">Machine Learning</h3>
+                <p class="card-desc">Predictive algorithms, classification pipelines, data modeling, and neural networks in Python.</p>
+                <a href="/services#ai-solutions" class="btn btn-outline btn-sm">Learn More</a>
+            </div>
+            <!-- Infrastructure: Database Solutions -->
+            <div class="card reveal reveal-up">
+                <div class="card-icon"><i class="bi bi-database-check"></i></div>
+                <h3 class="card-title">Database Solutions</h3>
+                <p class="card-desc">Robust Postgres schema optimization, indexing configurations, and scalable tables construction.</p>
+                <a href="/services#database-solutions" class="btn btn-outline btn-sm">Learn More</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 5. DEVELOPMENT PROCESS -->
+<section class="section">
+    <div class="container">
+        <div class="section-header reveal reveal-up">
+            <span style="font-weight: 700; color: var(--color-primary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px;">Methodology</span>
+            <h2>Our Development Process</h2>
+            <p>We execute projects utilizing structured engineering workflows, maintaining transperancy at each milestone.</p>
+        </div>
+        
+        <!-- Horizontal Process Map (transforms to vertical stack on tablets) -->
+        <div style="display: flex; gap: var(--spacing-sm); align-items: stretch; justify-content: space-between;" class="grid-2">
+            {% set processes = [
+                ('Analysis', 'bi-search', 'Collecting specifications and defining requirements.'),
+                ('Planning', 'bi-calendar-range', 'Outlining architecture, database schemas, and workflows.'),
+                ('UI/UX Design', 'bi-palette', 'Designing clean, corporate layout mockups.'),
+                ('Development', 'bi-code-slash', 'Writing clean, parameterized, standard-compliant code.'),
+                ('Testing', 'bi-patch-check', 'Validating syntax, inputs, CSRF, and routing.'),
+                ('Deployment', 'bi-cloud-arrow-up', 'Launching to staging or production cloud (Render/Neon).'),
+                ('Maintenance', 'bi-activity', 'Regular security updates, bug fixes, and optimization.')
+            ] %}
+            
+            {% for name, icon, desc in processes %}
+            <div class="reveal reveal-up" style="flex: 1; min-width: 130px; text-align: center; border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--spacing-md) var(--spacing-sm); display: flex; flex-direction: column; align-items: center; justify-content: flex-start; background-color: var(--color-bg); position: relative;">
+                <div style="width: 45px; height: 45px; border-radius: 50%; background: rgba(214, 40, 40, 0.08); display: flex; align-items: center; justify-content: center; color: var(--color-primary); font-size: 1.25rem; margin-bottom: var(--spacing-xs);">
+                    <i class="bi {{ icon }}"></i>
+                </div>
+                <h4 style="font-size: 0.95rem; margin-bottom: 4px;">{{ name }}</h4>
+                <p style="font-size: 0.775rem; color: var(--color-text-muted); margin-bottom: 0; line-height: 1.4;">{{ desc }}</p>
+                {% if not loop.last %}
+                <!-- Connection arrow displayed on large screens -->
+                <div class="process-arrow" style="position: absolute; right: -12px; top: 30px; font-size: 1.2rem; color: var(--color-border); z-index: 2; pointer-events: none;">
+                    <i class="bi bi-chevron-right"></i>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- 6. TECHNOLOGIES -->
+<section class="section section-bg">
+    <div class="container">
+        <div class="section-header reveal reveal-up">
+            <span style="font-weight: 700; color: var(--color-primary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px;">Our Stack</span>
+            <h2>Technologies We Leverage</h2>
+            <p>We work exclusively with industry-proven, high-performance technology systems.</p>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--spacing-md); justify-items: center; align-items: center;" class="grid-3">
+            {% set techs = [
+                ('Python', 'bi-filetype-py'),
+                ('Flask', 'bi-terminal-fill'),
+                ('PostgreSQL', 'bi-database-fill'),
+                ('HTML5', 'bi-filetype-html'),
+                ('CSS3', 'bi-filetype-css'),
+                ('JavaScript', 'bi-filetype-js'),
+                ('Git', 'bi-git'),
+                ('GitHub', 'bi-github'),
+                ('Docker', 'bi-box-seam-fill'),
+                ('AWS', 'bi-cloud-fill'),
+                ('OpenAI', 'bi-chat-left-dots-fill'),
+                ('Gemini', 'bi-stars')
+            ] %}
+            {% for tech, icon in techs %}
+            <div class="reveal reveal-up" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: var(--spacing-md); border: 1px solid var(--color-border); border-radius: var(--radius-sm); background: var(--color-bg); width: 100%; max-width: 160px; height: 110px; transition: var(--transition-fast);" class="tech-badge">
+                <i class="bi {{ icon }}" style="font-size: 2.25rem; color: var(--color-dark-navy); margin-bottom: 6px;"></i>
+                <span style="font-size: 0.85rem; font-weight: 600; color: var(--color-text);">{{ tech }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- 7. WHY CHOOSE US -->
+<section class="section">
+    <div class="container">
+        <div class="section-header reveal reveal-up">
+            <span style="font-weight: 700; color: var(--color-primary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px;">Key Advantages</span>
+            <h2>Why Choose GlobalTechVibers?</h2>
+            <p>Our commitment to software engineering excellence ensures we stand out as a trusted development partner.</p>
+        </div>
+        
+        <div class="grid grid-2">
+            {% set advantages = [
+                ('Fast Delivery', 'bi-lightning-fill', 'We adhere strictly to milestones and deliver web systems promptly.'),
+                ('Affordable Pricing', 'bi-cash-coin', 'Budget-friendly rates tailored for startups, small businesses, and college students.'),
+                ('Professional Developers', 'bi-people-fill', 'Experienced full-stack engineers and backend system architects.'),
+                ('Modern Technologies', 'bi-laptop', 'Using efficient tech like Flask, Postgres, and AI APIs without bloated runtimes.'),
+                ('Source Code Included', 'bi-code-square', 'Complete, well-commented source code with full ownership transfer.'),
+                ('Comprehensive Documentation', 'bi-file-earmark-text-fill', 'Academic-ready architectural documentations and installation guides.'),
+                ('Deployment Support', 'bi-send-fill', 'Full support deploying to Render, AWS, Heroku, or shared hosting servers.'),
+                ('Software Maintenance', 'bi-wrench-adjustable-circle-fill', 'Post-deployment bug fixes, regular security checks, and upgrades.'),
+                ('Scalable Architecture', 'bi-diagram-3-fill', 'Modular blueprint designs that grow seamlessly as traffic increases.'),
+                ('Secure Development', 'bi-shield-lock-fill', 'Enforced parameterized queries, CSRF validation, and data safety guards.')
+            ] %}
+            {% for title, icon, desc in advantages %}
+            <div class="reveal reveal-up" style="display: flex; gap: var(--spacing-sm); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--spacing-md); background: var(--color-bg);">
+                <div style="font-size: 1.5rem; color: var(--color-primary);"><i class="bi {{ icon }}"></i></div>
+                <div>
+                    <h4 style="margin-bottom: 4px;">{{ title }}</h4>
+                    <p style="font-size: 0.925rem; color: var(--color-text-muted); margin-bottom: 0;">{{ desc }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- 8. PROJECT SHOWCASE -->
+<section class="section section-bg">
+    <div class="container">
+        <div class="section-header reveal reveal-up">
+            <span style="font-weight: 700; color: var(--color-primary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px;">Showcase</span>
+            <h2>Recent Enterprise Projects</h2>
+            <p>Take a look at a selection of technology systems engineered by our group.</p>
+        </div>
+        
+        <div class="grid grid-3">
+            <!-- Project 1 -->
+            <div class="card reveal reveal-up" style="padding: 0;">
+                <div style="background: var(--color-dark-navy); height: 180px; display: flex; align-items: center; justify-content: center; color: white;">
+                    <i class="bi bi-wallet2" style="font-size: 3.5rem; color: var(--color-primary);"></i>
+                </div>
+                <div style="padding: var(--spacing-md);">
+                    <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--color-primary);">Commercial ERP</span>
+                    <h3 style="font-size: 1.25rem; margin-top: 4px; margin-bottom: 8px;">Apex Ledger CRM</h3>
+                    <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: var(--spacing-sm);">An automated inventory tracking and CRM module built for a medium distribution enterprise, utilizing Neon PostgreSQL.</p>
+                    <a href="/projects" style="font-weight: 600; font-size: 0.9rem;">View Preview <i class="bi bi-chevron-right"></i></a>
+                </div>
+            </div>
+            <!-- Project 2 -->
+            <div class="card reveal reveal-up" style="padding: 0;">
+                <div style="background: var(--color-dark-navy); height: 180px; display: flex; align-items: center; justify-content: center; color: white;">
+                    <i class="bi bi-chat-quote" style="font-size: 3.5rem; color: var(--color-primary);"></i>
+                </div>
+                <div style="padding: var(--spacing-md);">
+                    <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--color-primary);">Artificial Intelligence</span>
+                    <h3 style="font-size: 1.25rem; margin-top: 4px; margin-bottom: 8px;">Aegis Query Assistant</h3>
+                    <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: var(--spacing-sm);">Intelligent support bot integrating Google Gemini APIs, featuring semantic history caching for low-latency client service.</p>
+                    <a href="/projects" style="font-weight: 600; font-size: 0.9rem;">View Preview <i class="bi bi-chevron-right"></i></a>
+                </div>
+            </div>
+            <!-- Project 3 -->
+            <div class="card reveal reveal-up" style="padding: 0;">
+                <div style="background: var(--color-dark-navy); height: 180px; display: flex; align-items: center; justify-content: center; color: white;">
+                    <i class="bi bi-shield-lock" style="font-size: 3.5rem; color: var(--color-primary);"></i>
+                </div>
+                <div style="padding: var(--spacing-md);">
+                    <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--color-primary);">IEEE Capstone</span>
+                    <h3 style="font-size: 1.25rem; margin-top: 4px; margin-bottom: 8px;">TrustVote Blockchain</h3>
+                    <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: var(--spacing-sm);">An academic final year implementation of secure cryptographic protocols to establish double-spending immunity in online ballots.</p>
+                    <a href="/projects" style="font-weight: 600; font-size: 0.9rem;">View Preview <i class="bi bi-chevron-right"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center" style="margin-top: var(--spacing-lg);">
+            <a href="/projects" class="btn btn-secondary">Explore All Projects <i class="bi bi-arrow-right"></i></a>
+        </div>
+    </div>
+</section>
+
+<!-- 9. TESTIMONIALS PLACEHOLDER -->
+<section class="section">
+    <div class="container">
+        <div class="section-header reveal reveal-up">
+            <span style="font-weight: 700; color: var(--color-primary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px;">Endorsements</span>
+            <h2>Client & Student Feedback</h2>
+            <p>Read opinions shared by companies and academic graduates who have partnered with us.</p>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-lg);" class="grid-2">
+            <div class="reveal reveal-left" style="border-left: 3px solid var(--color-primary); padding: var(--spacing-md) var(--spacing-lg); background-color: var(--color-section-bg); border-radius: 0 var(--radius-md) var(--radius-md) 0;">
+                <p style="font-style: italic; font-size: 1.05rem; margin-bottom: var(--spacing-sm);">"GlobalTechVibers built our corporate database infrastructure and custom client onboarding CRM. The team demonstrated high technical proficiency, delivering the product two weeks ahead of schedule. The system loads instantly."</p>
+                <cite style="display: block; font-weight: 700; font-style: normal; color: var(--color-dark-navy);">Amit Kumar</cite>
+                <span style="font-size: 0.85rem; color: var(--color-text-muted);">CTO, Zenith Logistics Solutions</span>
+            </div>
+            
+            <div class="reveal reveal-right" style="border-left: 3px solid var(--color-primary); padding: var(--spacing-md) var(--spacing-lg); background-color: var(--color-section-bg); border-radius: 0 var(--radius-md) var(--radius-md) 0;">
+                <p style="font-style: italic; font-size: 1.05rem; margin-bottom: var(--spacing-sm);">"For my IEEE computer science capstone project, I needed a customized Flask dashboard with SQLite data structures. GlobalTechVibers provided clean code, a structured PDF project thesis, and guided me through local installation."</p>
+                <cite style="display: block; font-weight: 700; font-style: normal; color: var(--color-dark-navy);">Rohan Sharma</cite>
+                <span style="font-size: 0.85rem; color: var(--color-text-muted);">B.Tech Graduate, SRM University</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 10. FAQ ACCORDION -->
+<section class="section section-bg">
+    <div class="container">
+        <div class="section-header reveal reveal-up">
+            <span style="font-weight: 700; color: var(--color-primary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px;">Answers</span>
+            <h2>Frequently Asked Questions</h2>
+            <p>Quick answers to common questions about our technical operations, delivery, and services.</p>
+        </div>
+        
+        <div style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: var(--spacing-sm);">
+            {% set faqs = [
+                ('What kind of academic projects do you support?', 'We provide comprehensive mentorship and codebase creation for college mini projects, major final year projects, and IEEE paper implementations. Supported stacks include Python/Flask, Data Science pipelines, PostgreSQL/MySQL database structures, and responsive web setups.'),
+                ('Do you provide the complete source code and documentation?', 'Yes. Every project includes the fully functional, well-commented source code, step-by-step setup guides, database schemas, and structured documentation suitable for university grading rubrics.'),
+                ('How do we get started with custom business software?', 'Get started by filling out our secure contact page or sending an email. We will schedule a requirements session to map your business objectives, draft a technical spec proposal, and initialize database tables once approved.'),
+                ('Do you provide hosting and deployment support?', 'Absolutely. We help deploy projects onto staging or production environments, including cloud providers like Render (Neon Postgres), AWS, Heroku, and cPanel-based shared servers.')
+            ] %}
+            {% for question, answer in faqs %}
+            <div class="reveal reveal-up" style="background: var(--color-bg); border: 1px solid var(--color-border); border-radius: var(--radius-sm); overflow: hidden;">
+                <details style="padding: var(--spacing-md);">
+                    <summary style="font-weight: 600; color: var(--color-dark-navy); cursor: pointer; display: flex; justify-content: space-between; align-items: center; list-style: none;">
+                        <span>{{ question }}</span>
+                        <i class="bi bi-chevron-down" style="font-size: 0.9rem; color: var(--color-primary);"></i>
+                    </summary>
+                    <p style="margin-top: var(--spacing-sm); margin-bottom: 0; color: var(--color-text-muted); font-size: 0.95rem; line-height: 1.5;">
+                        {{ answer }}
+                    </p>
+                </details>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- 11. CONTACT CTA -->
+<section class="section" style="background-color: var(--color-dark-navy); color: white; text-align: center; border-top: 4px solid var(--color-primary);">
+    <div class="container reveal reveal-up" style="max-width: 800px;">
+        <h2 style="color: white; margin-bottom: var(--spacing-sm);">Ready to Transform Your Digital Ideas into Reality?</h2>
+        <p style="color: #94A3B8; font-size: 1.15rem; margin-bottom: var(--spacing-lg);">Whether you are a startup needing dynamic web systems or a student completing graduation milestones, we build quality software tailored to your goals.</p>
+        <div style="display: flex; gap: var(--spacing-sm); justify-content: center; flex-wrap: wrap;">
+            <a href="/contact" class="btn btn-primary btn-lg">Start Your Project Today <i class="bi bi-arrow-right"></i></a>
+            <a href="/services" class="btn btn-secondary btn-lg" style="border-color: #334155; color: white;">View All Services</a>
+        </div>
+    </div>
+</section>
+
+<!-- Additional inline styling to override details summary arrows in some browsers -->
+<style>
+    details summary::-webkit-details-marker {
+        display: none;
+    }
+    
+    details[open] summary i {
+        transform: rotate(180deg);
+        transition: transform 0.2s ease;
+    }
+    
+    .tech-badge:hover {
+        border-color: var(--color-primary) !important;
+        transform: translateY(-2px);
+    }
+    
+    @media (max-width: 992px) {
+        .process-arrow {
+            display: none !important;
+        }
+    }
+</style>
+</div> <!-- End #homepage-content -->
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/loader.js') }}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const typewriter = document.getElementById('hero-typewriter');
+        if (!typewriter) return;
+        
+        const words = ["Web Applications", "AI Solutions", "IEEE Projects", "ERP & CRM Systems", "Digital Solutions"];
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typeSpeed = 80;
+        
+        function type() {
+            const currentWord = words[wordIndex];
+            if (isDeleting) {
+                typewriter.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+                typeSpeed = 40;
+            } else {
+                typewriter.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+                typeSpeed = 80;
+            }
+            
+            if (!isDeleting && charIndex === currentWord.length) {
+                isDeleting = true;
+                typeSpeed = 1800; // Pause at full word
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                typeSpeed = 400; // Pause before starting next word
+            }
+            
+            setTimeout(type, typeSpeed);
+        }
+        
+        // Stagger startup timing based on loader session state
+        const hasLoadedBefore = sessionStorage.getItem('gtv_has_loaded_before');
+        const startDelay = hasLoadedBefore ? 500 : 8000;
+        setTimeout(type, startDelay);
+    });
+</script>
+{% endblock %}
+{% endblock %}

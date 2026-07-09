@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <!-- CSRF Token for Secure AJAX Form Submissions -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    
+    <!-- Primary SEO Meta Tags -->
+    <title>{% block title %}GlobalTechVibers | Building Tomorrow's Digital Solutions Today{% endblock %}</title>
+    <meta name="description" content="{% block description %}GlobalTechVibers provides high-quality software development, academic capstone projects (IEEE, mini, major), custom web platforms, and AI integrations with enterprise quality standards.{% endblock %}">
+    <meta name="keywords" content="Software Development, Academic Projects, IEEE Projects, Custom Web Apps, AI Solutions, Machine Learning, Database Design, Flask, Python, PostgreSQL, Neon, GlobalTechVibers">
+    <meta name="author" content="GlobalTechVibers">
+    <link rel="canonical" href="{{ request.url }}">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.url }}">
+    <meta property="og:title" content="{% block og_title %}GlobalTechVibers | Software Development & Academic Projects{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Get professional technology solutions, custom web applications, and comprehensive academic project mentorship with full documentation and deployment support.{% endblock %}">
+    <meta property="og:image" content="{{ url_for('static', filename='images/og_banner.jpg', _external=True) }}">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ request.url }}">
+    <meta property="twitter:title" content="{% block twitter_title %}GlobalTechVibers | Software Development & Academic Projects{% endblock %}">
+    <meta property="twitter:description" content="{% block twitter_description %}Get professional technology solutions, custom web applications, and comprehensive academic project mentorship with full documentation and deployment support.{% endblock %}">
+    <meta property="twitter:image" content="{{ url_for('static', filename='images/og_banner.jpg', _external=True) }}">
+
+    <!-- Brand Favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    
+    <!-- External Icon Library (Bootstrap Icons) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Custom Style Imports -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
+    
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="container navbar">
+            <a href="/" class="brand" style="display: flex; align-items: center; gap: 8px;" aria-label="GlobalTechVibers Home">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="GlobalTechVibers Logo" style="height: 52px; width: auto; object-fit: contain;">
+                GlobalTech<span>Vibers</span>
+            </a>
+            
+            <button class="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                <i class="bi bi-list"></i>
+            </button>
+            
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/services">Services</a></li>
+                    <li><a href="/projects">Projects</a></li>
+                    <li><a href="/blog">Blog</a></li>
+                    <li><a href="/careers">Careers</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main style="padding-top: var(--header-height);">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Toast Container for Flask Flash alerts -->
+    <div class="toast-container"></div>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Column 1: About and Tagline -->
+                <div class="footer-brand-column">
+                    <a href="/" class="brand" style="color: white; display: flex; align-items: center; gap: 8px;" aria-label="GlobalTechVibers Home">
+                        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="GlobalTechVibers Logo" style="height: 52px; width: auto; object-fit: contain;">
+                        GlobalTech<span style="color: var(--color-primary);">Vibers</span>
+                    </a>
+                    <p>Building Tomorrow's Digital Solutions Today. Providing high-quality, secure, and affordable software solutions for startups, students, and businesses.</p>
+                </div>
+                
+                <!-- Column 2: Quick Links -->
+                <div>
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links-list">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/services">Services</a></li>
+                        <li><a href="/projects">Projects</a></li>
+                        <li><a href="/blog">Blog</a></li>
+                        <li><a href="/careers">Careers</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 3: Our Core Services -->
+                <div>
+                    <h4>Services</h4>
+                    <ul class="footer-links-list">
+                        <li><a href="/services#academic">Academic Projects</a></li>
+                        <li><a href="/services#web-development">Web Development</a></li>
+                        <li><a href="/services#custom-software">Custom Software</a></li>
+                        <li><a href="/services#ai-solutions">AI & Machine Learning</a></li>
+                        <li><a href="/services#database-solutions">Database Systems</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 4: Contact Details -->
+                <div>
+                    <h4>Contact Info</h4>
+                    <ul class="footer-contact-info">
+                        <li>
+                            <i class="bi bi-geo-alt"></i>
+                            <span>123 Enterprise Way, Innovation Center, Suite 400</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-envelope"></i>
+                            <span>info@globaltechvibers.com</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-telephone"></i>
+                            <span>+1 (555) 019-2834</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Bottom Footer Bar -->
+            <div class="footer-bottom">
+                <p>&copy; 2026 GlobalTechVibers. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="/privacy">Privacy Policy</a>
+                    <a href="/terms">Terms & Conditions</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Core Scripts -->
+    <script src="{{ url_for('static', filename='js/navbar.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/animations.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    
+    <!-- Render Flash Messages as Toast Alerts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        // Map Flask standard categories to Toast style types
+                        let toastType = 'info';
+                        if ('{{ category }}' === 'success') toastType = 'success';
+                        if ('{{ category }}' === 'error' || '{{ category }}' === 'danger') toastType = 'error';
+                        if ('{{ category }}' === 'warning') toastType = 'error';
+                        
+                        window.showToast("{{ message }}", toastType);
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        });
+    </script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

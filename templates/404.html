@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Page Not Found (404) | GlobalTechVibers{% endblock %}
+
+{% block content %}
+<section class="section" style="min-height: calc(100vh - var(--header-height) - 300px); display: flex; align-items: center; justify-content: center; background-color: var(--color-section-bg);">
+    <div class="container text-center reveal reveal-up" style="max-width: 600px; padding: var(--spacing-xl) var(--spacing-md); background: white; border: 1px solid var(--color-border); border-radius: var(--radius-md); box-shadow: var(--shadow-md);">
+        
+        <!-- Custom vector illustration for 404 page -->
+        <div style="margin-bottom: var(--spacing-md); display: flex; justify-content: center; width: 100%;">
+            <svg width="220" height="200" viewBox="0 0 220 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto;">
+                <circle cx="110" cy="100" r="70" fill="#F8FAFC"/>
+                
+                <!-- Dotted connection line -->
+                <path d="M50 130 C 70 80, 150 80, 170 130" stroke="#94A3B8" stroke-width="2" stroke-dasharray="6 6"/>
+                
+                <!-- Node 1: Home -->
+                <circle cx="50" cy="130" r="16" fill="#0F172A"/>
+                <text x="50" y="134" fill="#FFFFFF" font-family="sans-serif" font-weight="bold" font-size="10" text-anchor="middle">Home</text>
+                
+                <!-- Node 2: Disconnected 404 Node -->
+                <circle cx="170" cy="130" r="16" fill="#D62828"/>
+                <text x="170" y="134" fill="#FFFFFF" font-family="sans-serif" font-weight="bold" font-size="10" text-anchor="middle">404</text>
+                
+                <!-- Warning Shield symbol floating -->
+                <g transform="translate(95, 45)">
+                    <circle cx="15" cy="15" r="22" fill="#FFFFFF" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.05))"/>
+                    <path d="M15 6 L7 10 V16 C7 21 10.5 25.5 15 27 C19.5 25.5 23 21 23 16 V10 L15 6 Z" fill="#D62828" opacity="0.15"/>
+                    <path d="M15 6 L7 10 V16 C7 21 10.5 25.5 15 27 C19.5 25.5 23 21 23 16 V10 L15 6 Z" stroke="#D62828" stroke-width="2" stroke-linejoin="round"/>
+                    <text x="15" y="19" fill="#D62828" font-family="sans-serif" font-weight="bold" font-size="14" text-anchor="middle">!</text>
+                </g>
+            </svg>
+        </div>
+        
+        <h1 style="font-size: 2.25rem; margin-bottom: var(--spacing-xs); color: var(--color-dark-navy);">Page Not Found</h1>
+        <p style="color: var(--color-text-muted); font-size: 1.05rem; margin-bottom: var(--spacing-lg);">The page you are looking for does not exist, has been deleted, or has moved to a different URL route.</p>
+        
+        <a href="/" class="btn btn-primary">Return to Homepage <i class="bi bi-house-door-fill" style="margin-left: 5px;"></i></a>
+    </div>
+</section>
+{% endblock %}

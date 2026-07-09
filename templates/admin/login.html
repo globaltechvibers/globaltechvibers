@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Login | GlobalTechVibers{% endblock %}
+
+{% block content %}
+<section class="section" style="min-height: calc(100vh - var(--header-height) - 300px); display: flex; align-items: center; justify-content: center; background-color: var(--color-section-bg);">
+    <div class="container" style="max-width: 450px; padding: 0 var(--spacing-sm);">
+        <div class="card reveal reveal-up active" style="padding: var(--spacing-xl); background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-md); box-shadow: var(--shadow-lg);">
+            
+            <div class="text-center" style="margin-bottom: var(--spacing-lg);">
+                <i class="bi bi-shield-lock-fill" style="font-size: 3rem; color: var(--color-primary); display: block; margin-bottom: 8px;"></i>
+                <h2 style="font-size: 1.65rem; margin-bottom: 4px; color: var(--color-dark-navy);">Console Authentication</h2>
+                <p style="color: var(--color-text-muted); font-size: 0.9rem; margin-bottom: 0;">Access limited to system administrators.</p>
+            </div>
+            
+            <form action="{{ url_for('admin.login') }}" method="POST">
+                <!-- CSRF Protection Token -->
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                
+                <!-- Username Input -->
+                <div class="form-group">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" id="username" name="username" required class="form-control" placeholder="Enter username" autocomplete="username">
+                </div>
+                
+                <!-- Password Input -->
+                <div class="form-group" style="margin-bottom: var(--spacing-lg);">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" name="password" required class="form-control" placeholder="Enter password" autocomplete="current-password">
+                </div>
+                
+                <!-- Submit -->
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    Authenticate <i class="bi bi-unlock-fill" style="margin-left: 5px;"></i>
+                </button>
+            </form>
+            
+            <div class="text-center" style="margin-top: var(--spacing-md);">
+                <a href="/" style="font-size: 0.85rem; color: var(--color-text-muted);"><i class="bi bi-arrow-left"></i> Back to Homepage</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

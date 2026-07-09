@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% block title %}Tech Insights Blog | GlobalTechVibers{% endblock %}
+
+{% block description %}Read our latest insights on Python Flask, PostgreSQL optimization, AI integrations, and technical guidance for academic IEEE projects.{% endblock %}
+
+{% block content %}
+<!-- Blog Header Section -->
+<section class="section animate-fade" style="background-color: var(--color-section-bg); padding: var(--spacing-xl) 0; border-bottom: 1px solid var(--color-border);">
+    <div class="container" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+        <span style="font-weight: 700; color: var(--color-primary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px;">Our Journal</span>
+        <h1 style="margin-bottom: var(--spacing-sm);">Tech Insights & Guidelines</h1>
+        <p style="font-size: 1.15rem; color: var(--color-text-muted); max-width: 600px; margin-bottom: var(--spacing-lg);">Educational engineering tutorials, database tips, and academic capstone project guides.</p>
+        
+        <!-- Search bar -->
+        <form action="/blog" method="GET" style="display: flex; width: 100%; max-width: 500px; gap: 8px;">
+            <input type="text" name="q" value="{{ search_query }}" placeholder="Search articles..." class="form-control" style="border-radius: var(--radius-sm); margin-bottom: 0;" aria-label="Search articles">
+            {% if selected_category %}
+                <input type="hidden" name="category" value="{{ selected_category }}">
+            {% endif %}
+            <button type="submit" class="btn btn-primary" aria-label="Search"><i class="bi bi-search"></i></button>
+        </form>
+    </div>
+</section>
+
+<!-- Category Filtering Tabs -->
+<section style="border-bottom: 1px solid var(--color-border); padding: var(--spacing-sm) 0; background: white;">
+    <div class="container" style="display: flex; gap: var(--spacing-xs); justify-content: center; flex-wrap: wrap;">
+        <a href="/blog{% if search_query %}?q={{ search_query }}{% endif %}" class="btn {% if not selected_category %}btn-primary{% else %}btn-secondary{% endif %} btn-sm">All Topics</a>
+        {% for cat in categories %}
+            <a href="/blog?category={{ cat }}{% if search_query %}&q={{ search_query }}{% endif %}" class="btn {% if selected_category == cat %}btn-primary{% else %}btn-secondary{% endif %} btn-sm">{{ cat }}</a>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Blog Content Grid -->
+<section class="section">
+    <div class="container">
+        
+        <!-- If filtering results have search keywords, state them -->
+        {% if search_query or selected_category %}
+            <div style="margin-bottom: var(--spacing-lg);">
+                <p style="font-size: 1.1rem; color: var(--color-text-muted);">
+                    Showing results for 
+                    {% if selected_category %}category <strong>"{{ selected_category }}"</strong>{% endif %}
+                    {% if search_query %}{% if selected_category %} and {% endif %}search query <strong>"{{ search_query }}"</strong>{% endif %}
+                    <a href="/blog" style="margin-left: 10px; font-size: 0.9rem; font-weight: 600;"><i class="bi bi-x-circle-fill"></i> Clear Filters</a>
+                </p>
+            </div>
+        {% endif %}
+
+        <!-- 1. FEATURED ARTICLE SPOTLIGHT (Only shown if no filters active) -->
+        {% if featured and not selected_category and not search_query %}
+            <div class="reveal reveal-up" style="border: 1px solid var(--color-border); border-radius: var(--radius-md); overflow: hidden; background: white; margin-bottom: var(--spacing-xl); box-shadow: var(--shadow-md); display: grid; grid-template-columns: 1.2fr 0.8fr;" class="grid-2">
+                <div style="padding: var(--spacing-xl); display: flex; flex-direction: column; justify-content: center;">
+                    <span style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--color-primary); display: block; margin-bottom: 8px;">{{ featured.category }} &bull; Featured Spotlight</span>
+                    <h2 style="font-size: 1.85rem; margin-bottom: var(--spacing-sm);"><a href="#" style="color: var(--color-dark-navy);">{{ featured.title }}</a></h2>
+                    <p style="color: var(--color-text-muted); font-size: 0.95rem; margin-bottom: var(--spacing-md);">{{ featured.excerpt }}</p>
+                    <div style="display: flex; align-items: center; gap: 15px; font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: var(--spacing-md);">
+                        <span><i class="bi bi-calendar-event"></i> {{ featured.date }}</span>
+                        <span><i class="bi bi-clock"></i> {{ featured.read_time }}</span>
+                    </div>
+                    <p style="font-size: 0.925rem; line-height: 1.5; color: var(--color-text); margin-bottom: var(--spacing-lg);">{{ featured.content }}</p>
+                    <div>
+                        <a href="#newsletter-sec" class="btn btn-outline btn-sm">Subscribe to Updates</a>
+                    </div>
+                </div>
+                <div style="background: var(--color-dark-navy); display: flex; align-items: center; justify-content: center; color: white; min-height: 250px;">
+                    <i class="bi bi-file-earmark-code" style="font-size: 6rem; color: var(--color-primary);"></i>
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- 2. MAIN BLOG GRID -->
+        {% if articles %}
+            <div class="grid grid-3">
+                {% for article in articles %}
+                    <div class="card reveal reveal-up" style="display: flex; flex-direction: column; justify-content: space-between; padding: 0;">
+                        <!-- Mock Top image header -->
+                        <div style="background: var(--color-dark-navy); height: 160px; display: flex; align-items: center; justify-content: center; color: white;">
+                            {% if article.category == 'Web Development' %}
+                                <i class="bi bi-window-sidebar" style="font-size: 3rem; color: var(--color-primary);"></i>
+                            {% elif article.category == 'Artificial Intelligence' %}
+                                <i class="bi bi-cpu-fill" style="font-size: 3rem; color: var(--color-primary);"></i>
+                            {% elif article.category == 'Database Solutions' %}
+                                <i class="bi bi-database-check" style="font-size: 3rem; color: var(--color-primary);"></i>
+                            {% else %}
+                                <i class="bi bi-journal-code" style="font-size: 3rem; color: var(--color-primary);"></i>
+                            {% endif %}
+                        </div>
+                        
+                        <div style="padding: var(--spacing-md); flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                            <div>
+                                <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--color-primary);">{{ article.category }}</span>
+                                <h3 style="font-size: 1.15rem; margin-top: 4px; margin-bottom: 8px; font-weight: 600;"><a href="#" style="color: var(--color-dark-navy);">{{ article.title }}</a></h3>
+                                <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-bottom: var(--spacing-md);">{{ article.excerpt }}</p>
+                            </div>
+                            
+                            <div style="border-top: 1px solid var(--color-border); padding-top: var(--spacing-sm); display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--color-text-muted);">
+                                <span><i class="bi bi-calendar-event"></i> {{ article.date }}</span>
+                                <span><i class="bi bi-clock"></i> {{ article.read_time }}</span>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <!-- No Articles Found screen -->
+            <div class="text-center reveal reveal-up" style="padding: var(--spacing-xl) 0;">
+                <i class="bi bi-search" style="font-size: 3rem; color: var(--color-text-muted); display: block; margin-bottom: var(--spacing-sm);"></i>
+                <h3>No articles found</h3>
+                <p style="color: var(--color-text-muted);">We couldn't find any articles matching your filters. Try clearing search queries.</p>
+                <a href="/blog" class="btn btn-secondary btn-sm">Reset Blog Feed</a>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- 3. NEWSLETTER SUBSCRIPTION -->
+<span id="newsletter-sec"></span>
+<section class="section section-bg" style="border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);">
+    <div class="container reveal reveal-up" style="max-width: 600px; text-align: center;">
+        <div style="background: white; border: 1px solid var(--color-border); padding: var(--spacing-xl) var(--spacing-lg); border-radius: var(--radius-md); box-shadow: var(--shadow-md);">
+            <div style="font-size: 2.25rem; color: var(--color-primary); margin-bottom: var(--spacing-xs);"><i class="bi bi-envelope-paper-fill"></i></div>
+            <h2 style="font-size: 1.5rem; margin-bottom: var(--spacing-xs);">Subscribe to TechVibe Newsletter</h2>
+            <p style="color: var(--color-text-muted); font-size: 0.95rem; margin-bottom: var(--spacing-md); max-width: 450px; margin-left: auto; margin-right: auto;">Get monthly tutorials, code walkthroughs, and updates on open capstone files directly to your inbox.</p>
+            
+            <form class="newsletter-form" style="display: flex; gap: 8px; justify-content: center; max-width: 450px; margin: 0 auto; width: 100%;">
+                <input type="email" placeholder="Enter your email address" required class="form-control" style="margin-bottom: 0; border-radius: var(--radius-sm);" aria-label="Email address">
+                <button type="submit" class="btn btn-primary" style="white-space: nowrap;">Subscribe</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

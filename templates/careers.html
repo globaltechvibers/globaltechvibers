@@ -1,0 +1,357 @@
+{% extends 'base.html' %}
+
+{% block title %}Careers | GlobalTechVibers{% endblock %}
+
+{% block description %}Join our engineering team at GlobalTechVibers. View our current job openings and career opportunities.{% endblock %}
+
+{% block content %}
+<!-- Careers Hero Header -->
+<section class="section animate-fade" style="background-color: var(--color-section-bg); padding: var(--spacing-xl) 0; border-bottom: 1px solid var(--color-border); text-align: center;">
+    <div class="container" style="max-width: 800px;">
+        <span style="font-weight: 700; color: var(--color-primary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px;">Careers</span>
+        <h1 style="margin-bottom: var(--spacing-sm);">Build the Future with Us</h1>
+        <p style="font-size: 1.15rem; color: var(--color-text-muted);">At GlobalTechVibers, we believe in clean architecture, database optimization, and empowering students and businesses alike.</p>
+    </div>
+</section>
+
+<!-- Current Openings Section -->
+{% if jobs %}
+<section class="section">
+    <div class="container" style="max-width: 900px;">
+        <div class="section-header reveal reveal-up active">
+            <span style="font-weight: 700; color: var(--color-primary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px;">Opportunities</span>
+            <h2>Active Job Openings</h2>
+            <p>Join our core engineering and technical consulting teams. Explore open roles below.</p>
+        </div>
+        
+        <div style="display: flex; flex-direction: column; gap: var(--spacing-md);">
+            {% for job in jobs %}
+            <div class="card reveal reveal-up active" style="padding: var(--spacing-lg); border: 1px solid var(--color-border); border-radius: var(--radius-md); box-shadow: var(--shadow-md); display: grid; grid-template-columns: 1fr auto; gap: var(--spacing-md); align-items: center;" class="grid-2">
+                <div>
+                    <!-- Job Meta Info -->
+                    <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 8px; flex-wrap: wrap;">
+                        {% set badge_class = 'badge-full-time' %}
+                        {% if job.type == 'Part-Time' %}{% set badge_class = 'badge-part-time' %}
+                        {% elif job.type == 'Contract' %}{% set badge_class = 'badge-contract' %}
+                        {% elif job.type == 'Internship' %}{% set badge_class = 'badge-internship' %}{% endif %}
+                        <span class="badge-type {{ badge_class }}">{{ job.type }}</span>
+                        
+                        <span style="font-size: 0.85rem; color: var(--color-text-muted); font-weight: 500; margin-left: 4px;"><i class="bi bi-briefcase"></i> {{ job.department }}</span>
+                        <span style="font-size: 0.85rem; color: var(--color-text-muted); font-weight: 500; margin-left: 8px;"><i class="bi bi-geo-alt"></i> {{ job.location }}</span>
+                    </div>
+                    
+                    <h3 style="font-size: 1.35rem; margin-bottom: var(--spacing-xs); color: var(--color-dark-navy);">{{ job.title }}</h3>
+                    <p style="color: var(--color-text); font-size: 0.95rem; line-height: 1.5; margin-bottom: var(--spacing-sm); white-space: pre-wrap;">{{ job.description }}</p>
+                    
+                    <strong style="font-size: 0.85rem; color: var(--color-dark-navy); display: block; margin-bottom: 4px;">Key Requirements:</strong>
+                    <ul style="margin-left: 16px; font-size: 0.875rem; color: var(--color-text-muted); display: flex; flex-direction: column; gap: 2px;">
+                        {% for req in job.requirements.split('\n') %}
+                            {% if req.strip() %}
+                                <li>{{ req.strip() }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div style="text-align: right;">
+                    <button class="btn btn-primary btn-sm open-apply-modal-btn" data-job-id="{{ job.id }}" data-job-title="{{ job.title }}" data-job-dept="{{ job.department }}">
+                        Apply Now <i class="bi bi-pencil-square" style="margin-left: 4px;"></i>
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% else %}
+<!-- Current Openings: No Positions Screen -->
+<section class="section">
+    <div class="container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+        
+        <!-- Custom vector illustration for 'No Open Positions' -->
+        <div class="reveal reveal-up active" style="margin-bottom: var(--spacing-md); display: flex; justify-content: center; width: 100%;">
+            <svg width="340" height="280" viewBox="0 0 340 280" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto;">
+                <circle cx="170" cy="140" r="100" fill="#F8FAFC"/>
+                
+                <!-- Organizational Chart Nodes -->
+                <rect x="145" y="60" width="50" height="30" rx="4" fill="#0F172A" />
+                <rect x="95" y="120" width="50" height="30" rx="4" fill="#E2E8F0" />
+                <rect x="195" y="120" width="50" height="30" rx="4" fill="#E2E8F0" />
+                
+                <!-- Connector Lines -->
+                <path d="M170 90 V105 H120 V120 M170 105 H220 V120" stroke="#94A3B8" stroke-width="2"/>
+                
+                <!-- Search Loupe Overlay -->
+                <circle cx="190" cy="160" r="40" stroke="#D62828" stroke-width="4" fill="#FFFFFF" fill-opacity="0.8" filter="drop-shadow(0 8px 16px rgba(0,0,0,0.06))"/>
+                <line x1="218" y1="188" x2="245" y2="215" stroke="#D62828" stroke-width="5" stroke-linecap="round"/>
+                
+                <!-- Dots indicating seeking -->
+                <circle cx="180" cy="150" r="3" fill="#D62828"/>
+                <circle cx="200" cy="165" r="3" fill="#D62828"/>
+                <circle cx="190" cy="160" r="5" fill="#0F172A"/>
+            </svg>
+        </div>
+        
+        <div class="reveal reveal-up active" style="max-width: 600px;">
+            <span style="display: inline-block; padding: 4px 10px; background: rgba(15, 23, 42, 0.05); color: var(--color-dark-navy); font-size: 0.85rem; font-weight: 700; border-radius: 4px; margin-bottom: var(--spacing-sm);">CURRENT STATUS</span>
+            <h2 style="font-size: 1.75rem; margin-bottom: var(--spacing-sm);">No Open Positions</h2>
+            <p style="color: var(--color-text-muted); font-size: 1.05rem; margin-bottom: var(--spacing-md);">We're growing quickly. Follow us for future opportunities.</p>
+            <p style="font-size: 0.95rem; color: var(--color-text-muted); margin-bottom: var(--spacing-lg); max-width: 500px; margin-left: auto; margin-right: auto;">While we don't have active roles in full-stack Flask programming or Postgres database operations today, we routinely seek contractors, content authors, and project mentors.</p>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Update Subscription Banner -->
+<section class="section section-bg" style="border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);">
+    <div class="container reveal reveal-up" style="max-width: 600px; text-align: center;">
+        <h3 style="margin-bottom: var(--spacing-xs);">Keep in Touch</h3>
+        <p style="color: var(--color-text-muted); font-size: 0.95rem; margin-bottom: var(--spacing-md);">Register your email below to receive notices the moment we post fresh developer openings or internship vacancies.</p>
+        
+        <form class="newsletter-form" style="display: flex; gap: 8px; justify-content: center; max-width: 450px; margin: 0 auto; width: 100%;">
+            <input type="email" placeholder="Enter your email address" required class="form-control" style="margin-bottom: 0; border-radius: var(--radius-sm);" aria-label="Email address for job updates">
+            <button type="submit" class="btn btn-primary" style="white-space: nowrap;">Subscribe</button>
+        </form>
+    </div>
+</section>
+
+<!-- Job Application Modal Overlay -->
+<div id="apply-modal" class="modal-overlay">
+    <div class="modal-card">
+        <div class="modal-header">
+            <div>
+                <h3 id="modal-title-text" style="font-size: 1.35rem; margin-bottom: 2px;">Apply for Job</h3>
+                <span id="modal-dept-text" style="font-size: 0.85rem; color: var(--color-text-muted);">Department</span>
+            </div>
+            <button id="close-modal-btn" class="modal-close-btn" aria-label="Close modal">&times;</button>
+        </div>
+        
+        <form id="apply-job-form">
+            <!-- CSRF Protection -->
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" id="modal-job-id" name="job_id" value="">
+            
+            <div class="form-grid-2">
+                <div class="form-group">
+                    <label for="app-name" class="form-label">Full Name *</label>
+                    <input type="text" id="app-name" name="name" required class="form-control" placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label for="app-email" class="form-label">Email Address *</label>
+                    <input type="email" id="app-email" name="email" required class="form-control" placeholder="john.doe@company.com">
+                </div>
+            </div>
+            
+            <div class="form-grid-2">
+                <div class="form-group">
+                    <label for="app-phone" class="form-label">Phone Number *</label>
+                    <input type="tel" id="app-phone" name="phone" required class="form-control" placeholder="+1 (555) 000-0000">
+                </div>
+                <div class="form-group">
+                    <label for="app-resume" class="form-label">Upload Resume (PDF, DOCX up to 5MB) *</label>
+                    <input type="file" id="app-resume" name="resume" required class="form-control" accept=".pdf,.docx" style="padding: 0.35rem 0.5rem;">
+                </div>
+            </div>
+            
+            <div class="form-group" style="margin-bottom: var(--spacing-lg);">
+                <label for="app-cover" class="form-label">Cover Letter / Message *</label>
+                <textarea id="app-cover" name="cover_letter" required class="form-control" style="min-height: 100px;" placeholder="Briefly describe your experience and why you are a fit for this role..."></textarea>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+                Submit Application <i class="bi bi-send-fill" style="margin-left: 5px;"></i>
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Modal & AJAX Application Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const modal = document.getElementById('apply-modal');
+        const openBtns = document.querySelectorAll('.open-apply-modal-btn');
+        const closeBtn = document.getElementById('close-modal-btn');
+        const applyForm = document.getElementById('apply-job-form');
+        
+        const jobIdInput = document.getElementById('modal-job-id');
+        const titleText = document.getElementById('modal-title-text');
+        const deptText = document.getElementById('modal-dept-text');
+
+        // Open Modal handler
+        openBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const jobId = btn.getAttribute('data-job-id');
+                const jobTitle = btn.getAttribute('data-job-title');
+                const jobDept = btn.getAttribute('data-job-dept');
+                
+                jobIdInput.value = jobId;
+                titleText.textContent = `Apply for ${jobTitle}`;
+                deptText.textContent = `${jobDept} Department`;
+                
+                modal.classList.add('active');
+                document.body.classList.add('modal-active');
+            });
+        });
+
+        // Close Modal handler
+        const closeModal = () => {
+            modal.classList.remove('active');
+            document.body.classList.remove('modal-active');
+            applyForm.reset();
+        };
+
+        closeBtn.addEventListener('click', closeModal);
+
+        // Click outside closes modal
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Esc key closes modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        // AJAX Form Submission
+        applyForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const submitBtn = applyForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            
+            // Client validations
+            const fileInput = document.getElementById('app-resume');
+            if (fileInput.files.length === 0) {
+                window.showToast("Resume file is required.", "error");
+                return;
+            }
+            const file = fileInput.files[0];
+            const allowedExts = ['pdf', 'docx'];
+            const fileExt = file.name.split('.').pop().toLowerCase();
+            if (!allowedExts.includes(fileExt)) {
+                window.showToast("Only PDF and DOCX files are allowed.", "error");
+                return;
+            }
+            if (file.size > 5 * 1024 * 1024) {
+                window.showToast("Resume size must be under 5MB.", "error");
+                return;
+            }
+
+            // Disable button
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="bi bi-arrow-clockwise animate-spin" style="display:inline-block; animation: spin 1s linear infinite;"></i> Submitting...';
+
+            // Gather multipart data
+            const formData = new FormData(applyForm);
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            try {
+                const response = await fetch('/careers/apply', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': csrfToken
+                    },
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    window.showToast(result.message, 'success');
+                    closeModal();
+                } else {
+                    const errors = result.errors || [result.message || "Failed to submit application."];
+                    errors.forEach(err => window.showToast(err, 'error'));
+                }
+            } catch (err) {
+                window.showToast("Server connection failed.", "error");
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
+        });
+    });
+</script>
+
+<!-- Inline Styles for Modal Overlay and Card -->
+<style>
+    body.modal-active {
+        overflow: hidden !important;
+        height: 100vh !important;
+    }
+    
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(15, 23, 42, 0.4);
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    
+    .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .modal-card {
+        background: #FFFFFF;
+        width: 100%;
+        max-width: 600px;
+        padding: var(--spacing-lg);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-hover);
+        border: 1px solid var(--color-border);
+        transform: translateY(20px);
+        transition: transform 0.3s ease;
+    }
+    
+    .modal-overlay.active .modal-card {
+        transform: translateY(0);
+    }
+    
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        border-bottom: 1px solid var(--color-border);
+        padding-bottom: var(--spacing-sm);
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .modal-close-btn {
+        background: none;
+        border: none;
+        font-size: 2rem;
+        line-height: 0.5;
+        cursor: pointer;
+        color: var(--color-text-muted);
+        transition: var(--transition-fast);
+        margin-top: -5px;
+    }
+    
+    .modal-close-btn:hover {
+        color: var(--color-primary);
+    }
+    
+    @media (max-width: 650px) {
+        .modal-card {
+            width: calc(100% - 32px);
+            margin: 16px;
+            padding: var(--spacing-md);
+        }
+    }
+</style>
+    </div>
+</section>
+{% endblock %}

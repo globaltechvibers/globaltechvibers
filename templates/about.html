@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+
+{% block title %}About Us | GlobalTechVibers{% endblock %}
+
+{% block description %}Discover the mission, core values, and professional standards behind GlobalTechVibers. We deliver reliable, secure, and affordable software systems for startups and students.{% endblock %}
+
+{% block content %}
+<!-- About Hero Section -->
+<section class="section animate-fade" style="background-color: var(--color-section-bg); padding: var(--spacing-xl) 0; border-bottom: 1px solid var(--color-border);">
+    <div class="container text-center">
+        <span style="font-weight: 700; color: var(--color-primary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px;">Our Identity</span>
+        <h1 style="margin-bottom: var(--spacing-sm);">About GlobalTechVibers</h1>
+        <p style="font-size: 1.15rem; color: var(--color-text-muted); max-width: 600px; margin: 0 auto;">Building tomorrow's digital solutions today, with a focus on enterprise quality, cost accessibility, and secure architecture.</p>
+    </div>
+</section>
+
+<!-- Company History & Vision -->
+<section class="section">
+    <div class="container">
+        <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: var(--spacing-xl); align-items: center;" class="grid-2">
+            <div class="reveal reveal-left">
+                <h2 style="margin-bottom: var(--spacing-md);">Bridging the Gap Between Concept and Deployment</h2>
+                <p>GlobalTechVibers was founded with a clear objective: to offer top-tier software engineering services that remain financially accessible to students, startups, and growing small businesses.</p>
+                <p style="color: var(--color-text-muted);">We observed that many commercial development agencies charge excessive prices that freeze out early-stage startups. Simultaneously, academic project support platforms often deliver low-quality, copy-pasted templates that fail university code audits. We created GlobalTechVibers to deliver custom, modern, secure systems built to professional standards.</p>
+                <p>Today, we design and support production web software, build intelligent API connections, database setups, and guide final-year engineering students through capstone IEEE project implementations.</p>
+            </div>
+            
+            <div class="reveal reveal-right" style="display: flex; justify-content: center;">
+                <!-- Custom SVG illustrating partnership and goals -->
+                <svg width="380" height="340" viewBox="0 0 380 340" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto;">
+                    <rect width="380" height="340" rx="12" fill="#F8FAFC" />
+                    <!-- Visual Nodes -->
+                    <circle cx="190" cy="170" r="80" stroke="#E2E8F0" stroke-width="2"/>
+                    <circle cx="190" cy="170" r="110" stroke="#E2E8F0" stroke-dasharray="6 6"/>
+                    
+                    <!-- Nodes connected -->
+                    <circle cx="190" cy="90" r="25" fill="#FFFFFF" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.05))"/>
+                    <i class="bi bi-rocket-takeoff" style="font-size: 1.25rem;"></i>
+                    <!-- SVG graphics for nodes -->
+                    <path d="M190 78 L190 102 M178 90 L202 90" stroke="#D62828" stroke-width="2"/>
+                    
+                    <circle cx="110" cy="210" r="25" fill="#FFFFFF" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.05))"/>
+                    <path d="M102 205 L118 205 M102 215 L118 215 M110 197 L110 223" stroke="#0F172A" stroke-width="2" opacity="0.6"/>
+                    
+                    <circle cx="270" cy="210" r="25" fill="#FFFFFF" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.05))"/>
+                    <circle cx="270" cy="210" r="8" stroke="#D62828" stroke-width="2"/>
+                    
+                    <line x1="190" y1="115" x2="190" y2="170" stroke="#94A3B8" stroke-dasharray="4 4"/>
+                    <line x1="190" y1="170" x2="110" y2="210" stroke="#94A3B8" stroke-dasharray="4 4"/>
+                    <line x1="190" y1="170" x2="270" y2="210" stroke="#94A3B8" stroke-dasharray="4 4"/>
+                    
+                    <!-- Center Core Badge -->
+                    <rect x="155" y="145" width="70" height="50" rx="8" fill="#0F172A" />
+                    <text x="190" y="175" fill="#FFFFFF" font-family="sans-serif" font-weight="bold" font-size="12" text-anchor="middle">GTV Core</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Mission & Pillars -->
+<section class="section section-bg">
+    <div class="container">
+        <div class="section-header reveal reveal-up">
+            <span style="font-weight: 700; color: var(--color-primary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px;">Our Commitments</span>
+            <h2>Our Operational Pillars</h2>
+            <p>Every codebase we deliver, whether commercial or academic, adheres strictly to these principles.</p>
+        </div>
+        
+        <div class="grid grid-4" class="grid-2">
+            <!-- Pillar 1: Reliability -->
+            <div class="card reveal reveal-up" style="background: white; border: 1px solid var(--color-border);">
+                <div class="card-icon" style="color: var(--color-primary);"><i class="bi bi-clock-history"></i></div>
+                <h3 class="card-title" style="font-size: 1.25rem;">Reliability</h3>
+                <p class="card-desc" style="font-size: 0.9rem;">We deliver what we promise on time. Strict adherence to project schedules is the foundation of our engineering team.</p>
+            </div>
+            
+            <!-- Pillar 2: Scalability -->
+            <div class="card reveal reveal-up" style="background: white; border: 1px solid var(--color-border);" style="transition-delay: 0.1s;">
+                <div class="card-icon" style="color: var(--color-primary);"><i class="bi bi-graph-up-arrow"></i></div>
+                <h3 class="card-title" style="font-size: 1.25rem;">Scalability</h3>
+                <p class="card-desc" style="font-size: 0.9rem;">Using blueprints and object routing, our backend structures scale seamlessly from initial prototypes to multi-user systems.</p>
+            </div>
+            
+            <!-- Pillar 3: Security -->
+            <div class="card reveal reveal-up" style="background: white; border: 1px solid var(--color-border);" style="transition-delay: 0.2s;">
+                <div class="card-icon" style="color: var(--color-primary);"><i class="bi bi-shield-lock-fill"></i></div>
+                <h3 class="card-title" style="font-size: 1.25rem;">Security</h3>
+                <p class="card-desc" style="font-size: 0.9rem;">Protecting data via parameterized SQL syntax, environment isolation, input filters, and active CSRF defenses.</p>
+            </div>
+            
+            <!-- Pillar 4: Affordability -->
+            <div class="card reveal reveal-up" style="background: white; border: 1px solid var(--color-border);" style="transition-delay: 0.3s;">
+                <div class="card-icon" style="color: var(--color-primary);"><i class="bi bi-wallet2"></i></div>
+                <h3 class="card-title" style="font-size: 1.25rem;">Affordability</h3>
+                <p class="card-desc" style="font-size: 0.9rem;">We price our solutions fairly, enabling students and early startups to access elite development quality within their budgets.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Values & Team overview -->
+<section class="section">
+    <div class="container">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-xl); align-items: flex-start;" class="grid-2">
+            <div class="reveal reveal-left">
+                <h3 style="margin-bottom: var(--spacing-md); display: flex; align-items: center; gap: 8px;">
+                    <i class="bi bi-check-circle" style="color: var(--color-primary);"></i> Academic Standards
+                </h3>
+                <p>For students finishing graduate milestones, we don't just hand over a zip file. We focus on training. We provide:</p>
+                <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--spacing-xs); margin-bottom: var(--spacing-md);">
+                    <li style="display: flex; gap: 8px; font-size: 0.95rem; color: var(--color-text-muted);">
+                        <i class="bi bi-chevron-right" style="color: var(--color-primary);"></i> Full explanation sessions of the codebase layout.
+                    </li>
+                    <li style="display: flex; gap: 8px; font-size: 0.95rem; color: var(--color-text-muted);">
+                        <i class="bi bi-chevron-right" style="color: var(--color-primary);"></i> Step-by-step local configuration support via virtualenv.
+                    </li>
+                    <li style="display: flex; gap: 8px; font-size: 0.95rem; color: var(--color-text-muted);">
+                        <i class="bi bi-chevron-right" style="color: var(--color-primary);"></i> Project reporting templates in line with technical standards.
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="reveal reveal-right">
+                <h3 style="margin-bottom: var(--spacing-md); display: flex; align-items: center; gap: 8px;">
+                    <i class="bi bi-award" style="color: var(--color-primary);"></i> Enterprise Capability
+                </h3>
+                <p>For business clients, our processes mimic big-tech consulting corporations without the bureaucracy:</p>
+                <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--spacing-xs); margin-bottom: var(--spacing-md);">
+                    <li style="display: flex; gap: 8px; font-size: 0.95rem; color: var(--color-text-muted);">
+                        <i class="bi bi-chevron-right" style="color: var(--color-primary);"></i> Git-controlled repositories mapping all modifications transparently.
+                    </li>
+                    <li style="display: flex; gap: 8px; font-size: 0.95rem; color: var(--color-text-muted);">
+                        <i class="bi bi-chevron-right" style="color: var(--color-primary);"></i> Direct Postgres integration via Neon cloud instance pools.
+                    </li>
+                    <li style="display: flex; gap: 8px; font-size: 0.95rem; color: var(--color-text-muted);">
+                        <i class="bi bi-chevron-right" style="color: var(--color-primary);"></i> Deployment pipeline automation for Render and AWS environments.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="section section-bg text-center" style="border-top: 1px solid var(--color-border);">
+    <div class="container reveal reveal-up" style="max-width: 650px;">
+        <h2 style="margin-bottom: var(--spacing-sm);">Let's Build Together</h2>
+        <p style="color: var(--color-text-muted); margin-bottom: var(--spacing-lg);">Get in touch with our engineers today for a free initial consultation on your custom application or graduation project requirements.</p>
+        <a href="/contact" class="btn btn-primary btn-lg">Get Started Now <i class="bi bi-arrow-right"></i></a>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Privacy Policy | GlobalTechVibers{% endblock %}
+
+{% block content %}
+<section class="section animate-fade" style="background-color: var(--color-section-bg); padding: var(--spacing-xl) 0; border-bottom: 1px solid var(--color-border); text-align: center;">
+    <div class="container" style="max-width: 800px;">
+        <h1 style="margin-bottom: var(--spacing-sm);">Privacy Policy</h1>
+        <p style="font-size: 1.1rem; color: var(--color-text-muted); margin-bottom: 0;">Last updated: July 9, 2026</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container" style="max-width: 800px; line-height: 1.7;">
+        <div class="reveal reveal-up">
+            <h2 style="font-size: 1.5rem; margin-top: var(--spacing-md); margin-bottom: var(--spacing-xs);">1. Information We Collect</h2>
+            <p>At GlobalTechVibers, we collect information you provide directly to us through our contact form and newsletter subscription fields. This includes your name, email address, phone number, subject topic, and message description. We store this data securely inside parameterized SQL tables hosted on Neon PostgreSQL.</p>
+            
+            <h2 style="font-size: 1.5rem; margin-top: var(--spacing-md); margin-bottom: var(--spacing-xs);">2. How We Use Your Information</h2>
+            <p>We use the collected information solely to:</p>
+            <ul style="margin-left: 20px; margin-bottom: var(--spacing-md);">
+                <li>Respond to support questions or project specifications requests.</li>
+                <li>Verify your identity and provide project configuration updates.</li>
+                <li>Send promotional newsletter issues or career alerts (only if you opt-in).</li>
+                <li>Comply with necessary cybersecurity or legal compliance tasks.</li>
+            </ul>
+            
+            <h2 style="font-size: 1.5rem; margin-top: var(--spacing-md); margin-bottom: var(--spacing-xs);">3. Data Security and Storage</h2>
+            <p>We take database security seriously. Our backend utilizes strict CSRF input verification headers, database parameters escaping, and environment variables separation to thwart cross-site scripting and SQL injection. Only authorized development administrators can query contact tables.</p>
+            
+            <h2 style="font-size: 1.5rem; margin-top: var(--spacing-md); margin-bottom: var(--spacing-xs);">4. Cookies & Analytics</h2>
+            <p>Our website is built using minimal custom assets without tracking pixels. We use standard session cookies essential to support security features (like the Flask-WTF CSRF validation token). No commercial profiling or behavior mapping cookies are loaded.</p>
+            
+            <h2 style="font-size: 1.5rem; margin-top: var(--spacing-md); margin-bottom: var(--spacing-xs);">5. Third-Party Disclosures</h2>
+            <p>We do not sell, trade, or distribute your email addresses or project specifications documents to third-party advertising companies. Your data remains strictly within our internal records.</p>
+            
+            <h2 style="font-size: 1.5rem; margin-top: var(--spacing-md); margin-bottom: var(--spacing-xs);">6. Your Rights</h2>
+            <p>You can request to inspect, update, or purge your email records or contact entries from our database by contacting support at info@globaltechvibers.com. We execute purge requests within 48 hours.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

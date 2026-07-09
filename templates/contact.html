@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Us | GlobalTechVibers{% endblock %}
+
+{% block description %}Get in touch with the GlobalTechVibers development team. Submit your custom software specifications or graduation capstone project requirements.{% endblock %}
+
+{% block content %}
+<!-- Contact Hero Header -->
+<section class="section animate-fade" style="background-color: var(--color-section-bg); padding: var(--spacing-xl) 0; border-bottom: 1px solid var(--color-border); text-align: center;">
+    <div class="container" style="max-width: 800px;">
+        <span style="font-weight: 700; color: var(--color-primary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px;">Connect</span>
+        <h1 style="margin-bottom: var(--spacing-sm);">Contact Our Team</h1>
+        <p style="font-size: 1.15rem; color: var(--color-text-muted);">Have questions about custom software design, database schemas, or college IEEE projects? Send us a message today.</p>
+    </div>
+</section>
+
+<!-- Contact Form & Info Columns -->
+<section class="section">
+    <div class="container">
+        <div style="display: grid; grid-template-columns: 0.8fr 1.2fr; gap: var(--spacing-xl);" class="grid-2">
+            
+            <!-- Left Column: Contact Cards -->
+            <div class="reveal reveal-left" style="display: flex; flex-direction: column; gap: var(--spacing-md);">
+                <h2 style="font-size: 1.5rem; margin-bottom: var(--spacing-sm);">Contact Details</h2>
+                <p style="color: var(--color-text-muted);">Reach out directly or visit our office. Our developer group is active during business hours.</p>
+                
+                <!-- Card: Address -->
+                <div style="border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--spacing-md); background: var(--color-section-bg); display: flex; gap: var(--spacing-sm);">
+                    <div style="font-size: 1.5rem; color: var(--color-primary);"><i class="bi bi-geo-alt-fill"></i></div>
+                    <div>
+                        <h4 style="font-size: 1.1rem; margin-bottom: 4px;">Office Address</h4>
+                        <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 0;">123 Enterprise Way, Innovation Center, Suite 400</p>
+                    </div>
+                </div>
+                
+                <!-- Card: Email -->
+                <div style="border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--spacing-md); background: var(--color-section-bg); display: flex; gap: var(--spacing-sm);">
+                    <div style="font-size: 1.5rem; color: var(--color-primary);"><i class="bi bi-envelope-fill"></i></div>
+                    <div>
+                        <h4 style="font-size: 1.1rem; margin-bottom: 4px;">Email Support</h4>
+                        <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 0;">info@globaltechvibers.com<br>support@globaltechvibers.com</p>
+                    </div>
+                </div>
+                
+                <!-- Card: Phone -->
+                <div style="border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--spacing-md); background: var(--color-section-bg); display: flex; gap: var(--spacing-sm);">
+                    <div style="font-size: 1.5rem; color: var(--color-primary);"><i class="bi bi-telephone-fill"></i></div>
+                    <div>
+                        <h4 style="font-size: 1.1rem; margin-bottom: 4px;">Phone Call</h4>
+                        <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 0;">+1 (555) 019-2834 (Toll-Free)<br>Mon-Fri, 9:00 AM - 6:00 PM EST</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column: Interactive Form -->
+            <div class="reveal reveal-right" style="border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--spacing-lg); background: white; box-shadow: var(--shadow-md);">
+                <h2 style="font-size: 1.5rem; margin-bottom: var(--spacing-md);">Send a Message</h2>
+                
+                <form id="contact-form" action="/contact/submit" method="POST">
+                    <!-- Secure CSRF Token Injection -->
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-sm);" class="grid-2">
+                        <!-- Name Field -->
+                        <div class="form-group">
+                            <label for="name" class="form-label">Full Name <span style="color: var(--color-primary);">*</span></label>
+                            <input type="text" id="name" name="name" required class="form-control" placeholder="John Doe">
+                        </div>
+                        
+                        <!-- Email Field -->
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email Address <span style="color: var(--color-primary);">*</span></label>
+                            <input type="email" id="email" name="email" required class="form-control" placeholder="john.doe@company.com">
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-sm);" class="grid-2">
+                        <!-- Phone Field -->
+                        <div class="form-group">
+                            <label for="phone" class="form-label">Phone Number <span style="color: var(--color-primary);">*</span></label>
+                            <input type="tel" id="phone" name="phone" required class="form-control" placeholder="+1 (555) 000-0000">
+                        </div>
+                        
+                        <!-- Subject Field -->
+                        <div class="form-group">
+                            <label for="subject" class="form-label">Subject <span style="color: var(--color-primary);">*</span></label>
+                            <input type="text" id="subject" name="subject" required class="form-control" placeholder="e.g., Custom Web App Quote">
+                        </div>
+                    </div>
+                    
+                    <!-- Message Field -->
+                    <div class="form-group" style="margin-bottom: var(--spacing-lg);">
+                        <label for="message" class="form-label">Message Details <span style="color: var(--color-primary);">*</span></label>
+                        <textarea id="message" name="message" required class="form-control" placeholder="Describe your technical specifications or academic project requirements in detail..."></textarea>
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        Submit Request <i class="bi bi-send" style="margin-left: 5px;"></i>
+                    </button>
+                </form>
+            </div>
+            
+        </div>
+    </div>
+</section>
+{% endblock %}

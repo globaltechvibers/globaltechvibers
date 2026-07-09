@@ -1,0 +1,439 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard | GlobalTechVibers{% endblock %}
+
+{% block extra_head %}
+<!-- Admin Panel Stylesheet -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="section animate-fade">
+    <div class="container">
+        
+        <!-- Header Banner -->
+        <div class="admin-panel-header" style="margin-bottom: var(--spacing-md);">
+            <div>
+                <h1 style="font-size: 1.85rem; margin-bottom: 4px; display: flex; align-items: center; gap: 8px;">
+                    <i class="bi bi-shield-fill-check" style="color: var(--color-primary);"></i>
+                    Administration Console
+                </h1>
+                <p style="color: var(--color-text-muted); font-size: 0.95rem; margin-bottom: 0;">Monitor user requirements, inquiries, and manage job listings.</p>
+            </div>
+            <div>
+                <a href="{{ url_for('admin.logout') }}" class="btn btn-secondary btn-sm" style="border-color: #EF4444; color: #EF4444;">
+                    Logout <i class="bi bi-box-arrow-right" style="margin-left: 4px;"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="admin-layout">
+            
+            <!-- Sidebar Panel Selector -->
+            <aside class="admin-sidebar reveal reveal-left active">
+                <div class="admin-sidebar-header">
+                    <h3>Navigations</h3>
+                    <span>Logged in as Admin</span>
+                </div>
+                <button class="admin-nav-btn active" data-target="panel-overview">
+                    <i class="bi bi-grid-fill"></i> Overview
+                </button>
+                <button class="admin-nav-btn" data-target="panel-contacts">
+                    <i class="bi bi-chat-left-text-fill"></i> Contacts ({{ contacts_count }})
+                </button>
+                <button class="admin-nav-btn" data-target="panel-subscribers">
+                    <i class="bi bi-envelope-paper-fill"></i> Subscribers ({{ subscribers_count }})
+                </button>
+                <button class="admin-nav-btn" data-target="panel-jobs">
+                    <i class="bi bi-briefcase-fill"></i> Careers Manager ({{ jobs_count }})
+                </button>
+                <button class="admin-nav-btn" data-target="panel-applications">
+                    <i class="bi bi-person-workspace"></i> Applications ({{ applications_count }})
+                </button>
+            </aside>
+
+            <!-- Main Work Panels -->
+            <main class="admin-panel reveal reveal-right active">
+                
+                <!-- TAB 1: OVERVIEW -->
+                <div id="panel-overview" class="tab-content active">
+                    <h2 style="margin-bottom: var(--spacing-sm);">Performance Overview</h2>
+                    <p style="color: var(--color-text-muted); margin-bottom: var(--spacing-lg);">Quick metrics of database tables records count.</p>
+                    
+                    <div class="admin-metrics-grid">
+                        <!-- Stat: Contact Inquiries -->
+                        <div class="admin-metric-card">
+                            <div class="admin-metric-icon"><i class="bi bi-chat-dots-fill"></i></div>
+                            <div>
+                                <div class="admin-metric-val">{{ contacts_count }}</div>
+                                <div class="admin-metric-lbl">Total Contacts</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Stat: Newsletter Subscriptions -->
+                        <div class="admin-metric-card">
+                            <div class="admin-metric-icon"><i class="bi bi-envelope-check-fill"></i></div>
+                            <div>
+                                <div class="admin-metric-val">{{ subscribers_count }}</div>
+                                <div class="admin-metric-lbl">Subscribers</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Stat: Active Careers Listings -->
+                        <div class="admin-metric-card">
+                            <div class="admin-metric-icon"><i class="bi bi-briefcase-fill"></i></div>
+                            <div>
+                                <div class="admin-metric-val">{{ jobs_count }}</div>
+                                <div class="admin-metric-lbl">Active Job Posts</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Stat: Received Applications -->
+                        <div class="admin-metric-card">
+                            <div class="admin-metric-icon"><i class="bi bi-person-workspace"></i></div>
+                            <div>
+                                <div class="admin-metric-val">{{ applications_count }}</div>
+                                <div class="admin-metric-lbl">Applications</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="border-top: 1px solid var(--color-border); padding-top: var(--spacing-md); margin-top: var(--spacing-lg);">
+                        <h4 style="margin-bottom: var(--spacing-sm);">System Status Details</h4>
+                        <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--spacing-xs); font-size: 0.9rem; color: var(--color-text-muted);">
+                            <li><i class="bi bi-check-circle-fill" style="color: #10B981; margin-right: 6px;"></i> Secure CSRF Protection: Active</li>
+                            <li><i class="bi bi-check-circle-fill" style="color: #10B981; margin-right: 6px;"></i> SQL Injection Filter parameters: Active</li>
+                            <li><i class="bi bi-check-circle-fill" style="color: #10B981; margin-right: 6px;"></i> Active Database: {{ 'PostgreSQL (Neon)' if 'postgres' in request.url_root else 'SQLite Local Fallback' }}</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- TAB 2: CONTACTS LIST -->
+                <div id="panel-contacts" class="tab-content">
+                    <h2 style="margin-bottom: var(--spacing-sm);">Contact Inquiries</h2>
+                    <p style="color: var(--color-text-muted); margin-bottom: var(--spacing-md);">Lists messages submitted via the corporate contact form.</p>
+                    
+                    {% if contacts %}
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Sender Details</th>
+                                    <th>Subject & Message</th>
+                                    <th>Submitted At</th>
+                                    <th style="text-align: right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for contact in contacts %}
+                                <tr>
+                                    <td>
+                                        <strong style="color: var(--color-dark-navy); display: block; font-size: 0.95rem;">{{ contact.name }}</strong>
+                                        <span style="font-size: 0.85rem; color: var(--color-text-muted); display: block; margin-top: 2px;"><i class="bi bi-envelope-fill"></i> {{ contact.email }}</span>
+                                        <span style="font-size: 0.85rem; color: var(--color-text-muted); display: block; margin-top: 2px;"><i class="bi bi-telephone-fill"></i> {{ contact.phone }}</span>
+                                    </td>
+                                    <td>
+                                        <strong style="color: var(--color-dark-navy); display: block; font-size: 0.9rem; margin-bottom: 4px;">{{ contact.subject }}</strong>
+                                        <div class="admin-table-msg-cell">{{ contact.message }}</div>
+                                    </td>
+                                    <td style="font-size: 0.85rem; color: var(--color-text-muted);">
+                                        {{ contact.created_at }}
+                                    </td>
+                                    <td style="text-align: right; vertical-align: middle;">
+                                        <form action="{{ url_for('admin.delete_contact', contact_id=contact.id) }}" method="POST" onsubmit="return confirm('Purge this inquiry record permanently? This cannot be undone.');">
+                                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                            <button type="submit" class="btn btn-danger btn-sm" aria-label="Delete message">
+                                                <i class="bi bi-trash-fill"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="text-center" style="padding: var(--spacing-xl) 0;">
+                        <i class="bi bi-chat-left-dots" style="font-size: 3rem; color: var(--color-border); display: block; margin-bottom: var(--spacing-sm);"></i>
+                        <h3 style="color: var(--color-text-muted);">No inquiries found</h3>
+                        <p style="color: var(--color-text-muted);">No contact requests have been submitted yet.</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- TAB 3: SUBSCRIBERS LIST -->
+                <div id="panel-subscribers" class="tab-content">
+                    <h2 style="margin-bottom: var(--spacing-sm);">Newsletter Subscriptions</h2>
+                    <p style="color: var(--color-text-muted); margin-bottom: var(--spacing-md);">Monitor email registrations for monthly updates.</p>
+                    
+                    {% if subscribers %}
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Subscriber Email</th>
+                                    <th>Registered At</th>
+                                    <th style="text-align: right;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for sub in subscribers %}
+                                <tr>
+                                    <td style="font-weight: 600; color: var(--color-dark-navy);">
+                                        {{ sub.email }}
+                                    </td>
+                                    <td style="font-size: 0.85rem; color: var(--color-text-muted);">
+                                        {{ sub.created_at }}
+                                    </td>
+                                    <td style="text-align: right;">
+                                        <button onclick="navigator.clipboard.writeText('{{ sub.email }}'); window.showToast('Copied to clipboard!', 'success');" class="btn btn-secondary btn-sm" aria-label="Copy email address">
+                                            <i class="bi bi-copy"></i> Copy
+                                        </button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="text-center" style="padding: var(--spacing-xl) 0;">
+                        <i class="bi bi-envelope-open" style="font-size: 3rem; color: var(--color-border); display: block; margin-bottom: var(--spacing-sm);"></i>
+                        <h3 style="color: var(--color-text-muted);">No subscribers</h3>
+                        <p style="color: var(--color-text-muted);">No newsletter subscriptions recorded yet.</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- TAB 4: CAREERS MANAGER -->
+                <div id="panel-jobs" class="tab-content">
+                    <h2 style="margin-bottom: var(--spacing-sm);">Manage Open Positions</h2>
+                    <p style="color: var(--color-text-muted); margin-bottom: var(--spacing-lg);">Add new career listings or delete inactive open roles.</p>
+                    
+                    <!-- Job Creator Form -->
+                    <div style="border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: var(--spacing-md); background: var(--color-section-bg); margin-bottom: var(--spacing-xl);">
+                        <h3 style="font-size: 1.15rem; margin-bottom: var(--spacing-md);">Create Job Posting</h3>
+                        
+                        <form action="{{ url_for('admin.create_job') }}" method="POST">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            
+                            <div class="form-grid-2">
+                                <div class="form-group">
+                                    <label for="job-title" class="form-label">Job Title *</label>
+                                    <input type="text" id="job-title" name="title" required class="form-control" placeholder="e.g., Senior Flask Engineer">
+                                </div>
+                                <div class="form-group">
+                                    <label for="job-dept" class="form-label">Department *</label>
+                                    <input type="text" id="job-dept" name="department" required class="form-control" placeholder="e.g., Core Engineering">
+                                </div>
+                            </div>
+                            
+                            <div class="form-grid-2">
+                                <div class="form-group">
+                                    <label for="job-loc" class="form-label">Location *</label>
+                                    <input type="text" id="job-loc" name="location" required class="form-control" placeholder="e.g., Boston, MA or Remote">
+                                </div>
+                                <div class="form-group">
+                                    <label for="job-type" class="form-label">Job Type *</label>
+                                    <select id="job-type" name="type" required class="form-control">
+                                        <option value="Full-Time">Full-Time</option>
+                                        <option value="Part-Time">Part-Time</option>
+                                        <option value="Contract">Contract</option>
+                                        <option value="Internship">Internship</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="job-desc" class="form-label">Role Description *</label>
+                                <textarea id="job-desc" name="description" required class="form-control" style="min-height: 80px;" placeholder="Provide role responsibilities..."></textarea>
+                            </div>
+                            
+                            <div class="form-group" style="margin-bottom: var(--spacing-md);">
+                                <label for="job-req" class="form-label">Requirements (one per line) *</label>
+                                <textarea id="job-req" name="requirements" required class="form-control" style="min-height: 80px;" placeholder="e.g., 3+ years experience with Python Flask&#10;Strong understanding of Postgres connection pools&#10;Ability to write clean semantic HTML/CSS"></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary btn-sm">
+                                Create Listing <i class="bi bi-plus-circle" style="margin-left: 4px;"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Job Openings list -->
+                    <h3 style="font-size: 1.15rem; margin-bottom: var(--spacing-md);">Active Postings</h3>
+                    {% if jobs %}
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Role Details</th>
+                                    <th>Description & Requirements</th>
+                                    <th style="text-align: right;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for job in jobs %}
+                                <tr>
+                                    <td>
+                                        <strong style="color: var(--color-dark-navy); display: block; font-size: 1rem;">{{ job.title }}</strong>
+                                        <span style="font-size: 0.85rem; color: var(--color-text-muted); display: block; margin-top: 4px;">
+                                            <i class="bi bi-briefcase-fill"></i> {{ job.department }} &bull; <i class="bi bi-geo-alt-fill"></i> {{ job.location }}
+                                        </span>
+                                        <!-- Styled badge -->
+                                        {% set badge_class = 'badge-full-time' %}
+                                        {% if job.type == 'Part-Time' %}{% set badge_class = 'badge-part-time' %}
+                                        {% elif job.type == 'Contract' %}{% set badge_class = 'badge-contract' %}
+                                        {% elif job.type == 'Internship' %}{% set badge_class = 'badge-internship' %}{% endif %}
+                                        <span class="badge-type {{ badge_class }}" style="margin-top: 6px;">{{ job.type }}</span>
+                                    </td>
+                                    <td>
+                                        <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-bottom: var(--spacing-xs); white-space: pre-wrap;">{{ job.description }}</p>
+                                        <strong style="font-size: 0.825rem; color: var(--color-dark-navy); display: block; margin-bottom: 2px;">Requirements:</strong>
+                                        <ul style="margin-left: 16px; font-size: 0.825rem; color: var(--color-text-muted);">
+                                            {% for req in job.requirements.split('\n') %}
+                                                {% if req.strip() %}
+                                                    <li>{{ req.strip() }}</li>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </ul>
+                                    </td>
+                                    <td style="text-align: right; vertical-align: middle;">
+                                        <form action="{{ url_for('admin.delete_job', job_id=job.id) }}" method="POST" onsubmit="return confirm('Purge this job listing permanently?');">
+                                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                            <button type="submit" class="btn btn-danger btn-sm" aria-label="Delete job posting">
+                                                <i class="bi bi-trash-fill"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p style="color: var(--color-text-muted); font-style: italic;">No active job postings are currently defined. The portal fallback screen is currently displayed.</p>
+                    {% endif %}
+                </div>
+
+                <!-- TAB 5: APPLICATIONS LIST -->
+                <div id="panel-applications" class="tab-content">
+                    <h2 style="margin-bottom: var(--spacing-sm);">Job Applications</h2>
+                    <p style="color: var(--color-text-muted); margin-bottom: var(--spacing-md);">Manage applications submitted by candidates via the careers portal.</p>
+                    
+                    {% if applications %}
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Candidate Details</th>
+                                    <th>Applied Position</th>
+                                    <th>Cover Letter & Resume</th>
+                                    <th>Submitted At</th>
+                                    <th style="text-align: right;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for app in applications %}
+                                <tr>
+                                    <td>
+                                        <strong style="color: var(--color-dark-navy); display: block; font-size: 0.95rem;">{{ app.name }}</strong>
+                                        <span style="font-size: 0.85rem; color: var(--color-text-muted); display: block; margin-top: 2px;"><i class="bi bi-envelope-fill"></i> {{ app.email }}</span>
+                                        <span style="font-size: 0.85rem; color: var(--color-text-muted); display: block; margin-top: 2px;"><i class="bi bi-telephone-fill"></i> {{ app.phone }}</span>
+                                    </td>
+                                    <td>
+                                        <strong style="color: var(--color-dark-navy); font-size: 0.95rem;">{{ app.job_title }}</strong>
+                                        <span style="font-size: 0.775rem; color: var(--color-text-muted); display: block; margin-top: 2px;">Job ID Ref: #{{ app.job_id }}</span>
+                                    </td>
+                                    <td>
+                                        <div style="font-size: 0.875rem; color: var(--color-text-muted); margin-bottom: var(--spacing-xs); white-space: pre-wrap; max-width: 320px; line-height: 1.4;">{{ app.cover_letter }}</div>
+                                        <a href="{{ app.resume_path }}" target="_blank" class="btn btn-secondary btn-sm" style="margin-top: 6px; padding: 4px 10px; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 4px;">
+                                            <i class="bi bi-file-earmark-arrow-down-fill"></i> View Resume
+                                        </a>
+                                    </td>
+                                    <td style="font-size: 0.85rem; color: var(--color-text-muted);">
+                                        {{ app.created_at }}
+                                    </td>
+                                    <td style="text-align: right; vertical-align: middle;">
+                                        <form action="{{ url_for('admin.delete_application', app_id=app.id) }}" method="POST" onsubmit="return confirm('Purge this application record and delete the resume file from local storage permanently?');">
+                                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                            <button type="submit" class="btn btn-danger btn-sm" aria-label="Delete application">
+                                                <i class="bi bi-trash-fill"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="text-center" style="padding: var(--spacing-xl) 0;">
+                        <i class="bi bi-people-fill" style="font-size: 3rem; color: var(--color-border); display: block; margin-bottom: var(--spacing-sm);"></i>
+                        <h3 style="color: var(--color-text-muted);">No applications found</h3>
+                        <p style="color: var(--color-text-muted);">No candidates have applied for jobs yet.</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+            </main>
+
+        </div>
+    </div>
+</section>
+
+<!-- Tabs Switching Orchestration Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const navBtns = document.querySelectorAll('.admin-nav-btn');
+        const panels = document.querySelectorAll('.tab-content');
+
+        const switchTab = (targetId) => {
+            // Remove active classes
+            navBtns.forEach(btn => {
+                const dataTarget = btn.getAttribute('data-target');
+                if (dataTarget === targetId) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            panels.forEach(panel => {
+                if (panel.id === targetId) {
+                    panel.classList.add('active');
+                } else {
+                    panel.classList.remove('active');
+                }
+            });
+        };
+
+        // Click Event Bindings
+        navBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetPanelId = btn.getAttribute('data-target');
+                switchTab(targetPanelId);
+                // Set window hash to persist tab on reload/redirects
+                window.location.hash = targetPanelId.replace('panel-', '');
+            });
+        });
+
+        // Hash Navigation Handler (checks hash on load, e.g. #jobs or #contacts)
+        const parseHash = () => {
+            const hash = window.location.hash;
+            if (hash) {
+                const cleanHash = hash.substring(1);
+                const matchedPanelId = 'panel-' + cleanHash;
+                const panelExists = document.getElementById(matchedPanelId);
+                if (panelExists) {
+                    switchTab(matchedPanelId);
+                }
+            }
+        };
+
+        parseHash();
+        
+        // Listen for changes
+        window.addEventListener('hashchange', parseHash);
+    });
+</script>
+{% endblock %}

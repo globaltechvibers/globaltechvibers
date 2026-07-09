@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+
+{% block title %}Projects | GlobalTechVibers{% endblock %}
+
+{% block description %}Explore the project portfolio of GlobalTechVibers. View our custom commercial web apps, IEEE capstone solutions, and machine learning mockups.{% endblock %}
+
+{% block content %}
+<!-- Projects Hero Section -->
+<section class="section animate-fade" style="background-color: var(--color-section-bg); padding: var(--spacing-xl) 0; border-bottom: 1px solid var(--color-border); text-align: center;">
+    <div class="container" style="max-width: 800px;">
+        <span style="display: inline-block; padding: 6px 12px; background: rgba(214, 40, 40, 0.08); border: 1px solid rgba(214, 40, 40, 0.15); color: var(--color-primary); font-size: 0.85rem; font-weight: 700; border-radius: 30px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--spacing-md);">
+            <i class="bi bi-rocket-takeoff-fill"></i> Coming Soon
+        </span>
+        <h1 style="margin-bottom: var(--spacing-sm);">Official Projects Portfolio</h1>
+        <p style="font-size: 1.25rem; color: var(--color-text-muted); font-weight: 600; margin-bottom: 0;">Launching July 9, 2026</p>
+        <p style="color: var(--color-text-muted); font-size: 0.95rem; margin-top: 8px;">We are currently uploading our complete catalog of enterprise web systems and IEEE capstone models. Sneak peek below.</p>
+    </div>
+</section>
+
+<!-- Projects Catalog with Filters -->
+<section class="section">
+    <div class="container">
+        <!-- Interactive Category Filters Mockup -->
+        <div style="display: flex; justify-content: center; gap: var(--spacing-sm); margin-bottom: var(--spacing-xl); flex-wrap: wrap;" class="reveal reveal-up">
+            <button class="btn btn-primary btn-sm filter-btn" data-filter="all">All Projects</button>
+            <button class="btn btn-secondary btn-sm filter-btn" data-filter="commercial">Commercial Web</button>
+            <button class="btn btn-secondary btn-sm filter-btn" data-filter="academic">Academic & IEEE</button>
+            <button class="btn btn-secondary btn-sm filter-btn" data-filter="ai-ml">AI & Machine Learning</button>
+        </div>
+        
+        <!-- Project Cards Grid -->
+        <div class="grid grid-3" id="projects-grid">
+            <!-- Project 1: Commercial -->
+            <div class="card reveal reveal-up project-item" data-category="commercial" style="padding: 0;">
+                <div style="background: var(--color-dark-navy); height: 180px; display: flex; align-items: center; justify-content: center; color: white; position: relative;">
+                    <i class="bi bi-wallet2" style="font-size: 3.5rem; color: var(--color-primary);"></i>
+                    <span style="position: absolute; top: 12px; right: 12px; background: var(--color-primary); color: white; font-size: 0.75rem; font-weight: 700; padding: 4px 8px; border-radius: 4px;">COMING SOON</span>
+                </div>
+                <div style="padding: var(--spacing-md);">
+                    <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--color-primary);">Commercial ERP</span>
+                    <h3 style="font-size: 1.25rem; margin-top: 4px; margin-bottom: 8px;">Apex Ledger CRM</h3>
+                    <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: var(--spacing-sm);">An automated inventory tracking and CRM module built for a medium distribution enterprise, utilizing Neon PostgreSQL.</p>
+                    <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: var(--spacing-md);">
+                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">Flask</span>
+                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">PostgreSQL</span>
+                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">Vanilla JS</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Project 2: AI/ML -->
+            <div class="card reveal reveal-up project-item" data-category="ai-ml" style="padding: 0;">
+                <div style="background: var(--color-dark-navy); height: 180px; display: flex; align-items: center; justify-content: center; color: white; position: relative;">
+                    <i class="bi bi-chat-quote" style="font-size: 3.5rem; color: var(--color-primary);"></i>
+                    <span style="position: absolute; top: 12px; right: 12px; background: var(--color-primary); color: white; font-size: 0.75rem; font-weight: 700; padding: 4px 8px; border-radius: 4px;">COMING SOON</span>
+                </div>
+                <div style="padding: var(--spacing-md);">
+                    <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--color-primary);">Artificial Intelligence</span>
+                    <h3 style="font-size: 1.25rem; margin-top: 4px; margin-bottom: 8px;">Aegis Query Assistant</h3>
+                    <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: var(--spacing-sm);">Intelligent support bot integrating Google Gemini APIs, featuring semantic history caching for low-latency client service.</p>
+                    <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: var(--spacing-md);">
+                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">Gemini API</span>
+                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">Python</span>
+                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">Vector DB</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Project 3: Academic -->
+            <div class="card reveal reveal-up project-item" data-category="academic" style="padding: 0;">
+                <div style="background: var(--color-dark-navy); height: 180px; display: flex; align-items: center; justify-content: center; color: white; position: relative;">
+                    <i class="bi bi-shield-lock" style="font-size: 3.5rem; color: var(--color-primary);"></i>
+                    <span style="position: absolute; top: 12px; right: 12px; background: var(--color-primary); color: white; font-size: 0.75rem; font-weight: 700; padding: 4px 8px; border-radius: 4px;">COMING SOON</span>
+                </div>
+                <div style="padding: var(--spacing-md);">
+                    <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--color-primary);">IEEE Capstone</span>
+                    <h3 style="font-size: 1.25rem; margin-top: 4px; margin-bottom: 8px;">TrustVote Blockchain</h3>
+                    <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: var(--spacing-sm);">An academic final year implementation of secure cryptographic protocols to establish double-spending immunity in online ballots.</p>
+                    <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: var(--spacing-md);">
+                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">Cryptography</span>
+                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">Python</span>
+                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">SQLite</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Project 4: AI/ML -->
+            <div class="card reveal reveal-up project-item" data-category="ai-ml" style="padding: 0;">
+                <div style="background: var(--color-dark-navy); height: 180px; display: flex; align-items: center; justify-content: center; color: white; position: relative;">
+                    <i class="bi bi-bar-chart-line" style="font-size: 3.5rem; color: var(--color-primary);"></i>
+                    <span style="position: absolute; top: 12px; right: 12px; background: var(--color-primary); color: white; font-size: 0.75rem; font-weight: 700; padding: 4px 8px; border-radius: 4px;">COMING SOON</span>
+                </div>
+                <div style="padding: var(--spacing-md);">
+                    <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--color-primary);">Machine Learning</span>
+                    <h3 style="font-size: 1.25rem; margin-top: 4px; margin-bottom: 8px;">SentimenX Core</h3>
+                    <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: var(--spacing-sm);">Algorithmic trading sentiment parser tracking financial news, trained using Pandas and Scikit-Learn pipelines.</p>
+                    <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: var(--spacing-md);">
+                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">Scikit-Learn</span>
+                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">Pandas</span>
+                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">Python</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Project 5: Commercial -->
+            <div class="card reveal reveal-up project-item" data-category="commercial" style="padding: 0;">
+                <div style="background: var(--color-dark-navy); height: 180px; display: flex; align-items: center; justify-content: center; color: white; position: relative;">
+                    <i class="bi bi-box" style="font-size: 3.5rem; color: var(--color-primary);"></i>
+                    <span style="position: absolute; top: 12px; right: 12px; background: var(--color-primary); color: white; font-size: 0.75rem; font-weight: 700; padding: 4px 8px; border-radius: 4px;">COMING SOON</span>
+                </div>
+                <div style="padding: var(--spacing-md);">
+                    <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--color-primary);">Commercial CRM</span>
+                    <h3 style="font-size: 1.25rem; margin-top: 4px; margin-bottom: 8px;">SwiftCargo Dispatch</h3>
+                    <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: var(--spacing-sm);">SaaS transport dispatching tracking dashboard equipped with custom calendar tools and SMS notification scripts.</p>
+                    <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: var(--spacing-md);">
+                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">Flask Blueprints</span>
+                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">PostgreSQL</span>
+                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">APIs</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Project 6: Academic -->
+            <div class="card reveal reveal-up project-item" data-category="academic" style="padding: 0;">
+                <div style="background: var(--color-dark-navy); height: 180px; display: flex; align-items: center; justify-content: center; color: white; position: relative;">
+                    <i class="bi bi-activity" style="font-size: 3.5rem; color: var(--color-primary);"></i>
+                    <span style="position: absolute; top: 12px; right: 12px; background: var(--color-primary); color: white; font-size: 0.75rem; font-weight: 700; padding: 4px 8px; border-radius: 4px;">COMING SOON</span>
+                </div>
+                <div style="padding: var(--spacing-md);">
+                    <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--color-primary);">IEEE Capstone</span>
+                    <h3 style="font-size: 1.25rem; margin-top: 4px; margin-bottom: 8px;">Aegis Health Analytics</h3>
+                    <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: var(--spacing-sm);">An academic algorithm implementing SVM models to perform low-latency classification of cardiovascular symptoms datasets.</p>
+                    <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: var(--spacing-md);">
+                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">SVM Algorithm</span>
+                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">Pandas</span>
+                        <span style="font-size: 0.75rem; background: var(--color-section-bg); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--color-border);">Flask</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Interactive Filter script -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectItems = document.querySelectorAll('.project-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove primary class from active button and restore secondary
+                filterBtns.forEach(b => {
+                    b.classList.remove('btn-primary');
+                    b.classList.add('btn-secondary');
+                });
+                
+                // Add primary style to this clicked button
+                btn.classList.remove('btn-secondary');
+                btn.classList.add('btn-primary');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                projectItems.forEach(item => {
+                    if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                        item.style.display = 'block';
+                        // Trigger scroll animation check in case hidden items now show
+                        item.classList.add('active');
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}
