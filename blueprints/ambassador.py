@@ -1,12 +1,23 @@
 import re
 import random
-from flask import Blueprint, request, render_template, redirect, url_for, flash, abort
+from functools import wraps
+from flask import Blueprint, request, render_template, redirect, url_for, flash, abort, session
 from database.db import execute_read, execute_write
 
 ambassador_bp = Blueprint('ambassador', __name__)
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
 PHONE_REGEX = re.compile(r'^\+?[0-9\s\-()]{10,20}$')
+
+def ambassador_required(f):
+    """Decorator to enforce ambassador authentication on routes."""
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not session.get('ambassador_id'):
+            flash("Please log in with your email and referral code first.", "error")
+            return redirect(url_for('ambassador.login'))
+        return f(*args, **kwargs)
+    return decorated_function
 
 def generate_unique_code(name):
     """Generates a unique referral code GTV-AMB-[FIRST_NAME]-[RANDOM_4_DIGITS] and verifies it against the DB."""
@@ -66,7 +77,6 @@ def join():
             INSERT INTO ambassadors (name, email, phone, college, payment_info, referral_code, status)
             VALUES (%s, %s, %s, %s, %s, %s, 'Approved')
             """
-            # We set status directly to 'Approved' so they get their offer letter instantly!
             execute_write(query, (name, email, phone, college, payment_info, referral_code))
             
             # Retrieve ID to redirect
@@ -81,6 +91,77 @@ def join():
             flash(f"System Error: {e}", "error")
             
     return render_template('ambassadors/join.html')
+
+@ambassador_bp.route('/ambassadors/login', methods=['GET', 'POST'])
+def login():
+    """Handles passwordless ambassador authentication via email and referral code."""
+    if session.get('ambassador_id'):
+        return redirect(url_for('ambassador.dashboard'))
+        
+    if request.method == 'POST':
+        email = request.form.get('email', '').strip()
+        referral_code = request.form.get('referral_code', '').strip()
+        
+        if not email or not referral_code:
+            flash("Please enter both email and referral code.", "error")
+            return render_template('ambassadors/login.html', email=email)
+            
+        rows = execute_read("SELECT id FROM ambassadors WHERE email = %s AND referral_code = %s", (email, referral_code))
+        if rows:
+            session['ambassador_id'] = rows[0]['id']
+            flash("Login successful! Welcome to your Ambassador Dashboard.", "success")
+            return redirect(url_for('ambassador.dashboard'))
+        else:
+            flash("Invalid credentials. Please verify your email and referral code.", "error")
+            
+    return render_template('ambassadors/login.html')
+
+@ambassador_bp.route('/ambassadors/logout')
+def logout():
+    """Logs out the ambassador by clearing session credentials."""
+    session.pop('ambassador_id', None)
+    flash("Session terminated successfully. You have logged out.", "success")
+    return redirect(url_for('ambassador.login'))
+
+@ambassador_bp.route('/ambassadors/dashboard')
+@ambassador_required
+def dashboard():
+    """Displays ambassador's personal statistics, account status, and referred clients list."""
+    amb_id = session.get('ambassador_id')
+    rows = execute_read("SELECT * FROM ambassadors WHERE id = %s", (amb_id,))
+    if not rows:
+        session.pop('ambassador_id', None)
+        return redirect(url_for('ambassador.login'))
+        
+    ambassador = dict(rows[0])
+    
+    # Fetch list of inquiries linked to their referral code
+    referrals = execute_read(
+        "SELECT name, subject, created_at FROM contacts WHERE referral_code = %s ORDER BY created_at DESC",
+        (ambassador['referral_code'],)
+    )
+    
+    referrals_count = len(referrals)
+    estimated_earnings = referrals_count * 2000 # Estimate ₹2,000 commission per booking on average
+    
+    # Safely format date in Python
+    created_at = ambassador.get('created_at')
+    if hasattr(created_at, 'strftime'):
+        formatted_date = created_at.strftime('%B %d, %Y')
+    else:
+        try:
+            formatted_date = str(created_at).split()[0]
+        except Exception:
+            formatted_date = str(created_at)
+            
+    return render_template(
+        'ambassadors/dashboard.html',
+        ambassador=ambassador,
+        referrals=referrals,
+        referrals_count=referrals_count,
+        estimated_earnings=estimated_earnings,
+        formatted_date=formatted_date
+    )
 
 @ambassador_bp.route('/ambassadors/welcome/<int:amb_id>')
 def welcome(amb_id):

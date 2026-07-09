@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+{% block title %}Ambassador Dashboard | GlobalTechVibers{% endblock %}
+
+{% block description %}Track your performance, view your referred clients, check payout details, and print your letter of appointment.{% endblock %}
+
+{% block content %}
+<section class="section animate-fade" style="background-color: var(--color-section-bg); padding: var(--spacing-xl) 0; border-bottom: 1px solid var(--color-border);">
+    <div class="container">
+        
+        <!-- Header bar -->
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--spacing-md); margin-bottom: var(--spacing-lg);">
+            <div>
+                <span style="font-weight: 700; color: var(--color-primary); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 4px;">Ambassador Dashboard</span>
+                <h1 style="color: var(--color-dark-navy); margin: 0; font-size: 1.85rem;">Welcome, {{ ambassador.name.split()[0] }}!</h1>
+                <p style="color: var(--color-text-muted); font-size: 0.95rem; margin-top: 4px;">Joined on {{ formatted_date }} | {{ ambassador.college }}</p>
+            </div>
+            
+            <div style="display: flex; gap: var(--spacing-sm);">
+                <a href="/ambassadors/welcome/{{ ambassador.id }}" target="_blank" class="btn btn-secondary" style="display: inline-flex; align-items: center; gap: 6px; padding: 0.6rem 1.25rem; font-size: 0.9rem;">
+                    <i class="bi bi-file-earmark-pdf-fill"></i> View Appointment Letter
+                </a>
+                <a href="/ambassadors/logout" class="btn btn-outline" style="display: inline-flex; align-items: center; gap: 6px; padding: 0.6rem 1.25rem; font-size: 0.9rem; border-color: var(--color-border); color: var(--color-dark-navy);">
+                    <i class="bi bi-box-arrow-right"></i> Log Out
+                </a>
+            </div>
+        </div>
+        
+        <!-- Metrics Grid -->
+        <div class="grid grid-3" style="gap: var(--spacing-md); margin-bottom: var(--spacing-xl);">
+            
+            <!-- Metric 1: Referral Code -->
+            <div style="background-color: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: var(--spacing-md); display: flex; align-items: center; gap: 16px;">
+                <div style="background: rgba(214, 40, 40, 0.08); border-radius: 8px; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                    <i class="bi bi-qr-code" style="color: var(--color-primary); font-size: 1.35rem;"></i>
+                </div>
+                <div>
+                    <span style="font-size: 0.8rem; color: var(--color-text-muted); font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 2px;">Your Referral Code</span>
+                    <strong style="color: var(--color-dark-navy); font-size: 1.15rem; font-family: monospace; text-transform: uppercase; letter-spacing: 0.05em;">{{ ambassador.referral_code }}</strong>
+                </div>
+            </div>
+            
+            <!-- Metric 2: Total Referrals -->
+            <div style="background-color: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: var(--spacing-md); display: flex; align-items: center; gap: 16px;">
+                <div style="background: rgba(214, 40, 40, 0.08); border-radius: 8px; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                    <i class="bi bi-people-fill" style="color: var(--color-primary); font-size: 1.35rem;"></i>
+                </div>
+                <div>
+                    <span style="font-size: 0.8rem; color: var(--color-text-muted); font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 2px;">Total Leads Referred</span>
+                    <strong style="color: var(--color-dark-navy); font-size: 1.35rem;">{{ referrals_count }}</strong>
+                </div>
+            </div>
+            
+            <!-- Metric 3: Account Status -->
+            <div style="background-color: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: var(--spacing-md); display: flex; align-items: center; gap: 16px;">
+                {% if ambassador.status == 'Approved' or ambassador.status == 'Active' %}
+                <div style="background: rgba(16, 185, 129, 0.08); border-radius: 8px; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                    <i class="bi bi-patch-check-fill" style="color: #10B981; font-size: 1.35rem;"></i>
+                </div>
+                <div>
+                    <span style="font-size: 0.8rem; color: var(--color-text-muted); font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 2px;">Account Status</span>
+                    <strong style="color: #10B981; font-size: 1.1rem; text-transform: uppercase;">Active / Approved</strong>
+                </div>
+                {% else %}
+                <div style="background: rgba(245, 158, 11, 0.08); border-radius: 8px; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                    <i class="bi bi-hourglass-split" style="color: #F59E0B; font-size: 1.35rem;"></i>
+                </div>
+                <div>
+                    <span style="font-size: 0.8rem; color: var(--color-text-muted); font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 2px;">Account Status</span>
+                    <strong style="color: #F59E0B; font-size: 1.1rem; text-transform: uppercase;">Pending Review</strong>
+                </div>
+                {% endif %}
+            </div>
+            
+        </div>
+        
+        <!-- Bottom Panel Content -->
+        <div class="grid grid-3" style="gap: var(--spacing-lg); align-items: start;">
+            
+            <!-- Left Info Block (1/3 width) -->
+            <div class="reveal reveal-up active">
+                <!-- Card: Payout Details -->
+                <div style="background-color: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: var(--spacing-md); margin-bottom: var(--spacing-md); box-shadow: var(--shadow-sm);">
+                    <h3 style="font-size: 1.1rem; color: var(--color-dark-navy); margin-bottom: var(--spacing-xs); display: flex; align-items: center; gap: 8px;">
+                        <i class="bi bi-wallet2" style="color: var(--color-primary);"></i> Payout Method
+                    </h3>
+                    <p style="color: var(--color-text-muted); font-size: 0.9rem; margin-bottom: var(--spacing-sm);">Commissions are automatically wired to this destination within 48h of client payment:</p>
+                    <div style="background: var(--color-section-bg); border: 1px dashed var(--color-border); border-radius: 4px; padding: 10px 14px; font-weight: 600; font-family: monospace; font-size: 0.95rem; color: var(--color-dark-navy);">
+                        {{ ambassador.payment_info }}
+                    </div>
+                </div>
+                
+                <!-- Card: Instructions -->
+                <div style="background-color: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: var(--spacing-md); box-shadow: var(--shadow-sm);">
+                    <h3 style="font-size: 1.1rem; color: var(--color-dark-navy); margin-bottom: var(--spacing-xs); display: flex; align-items: center; gap: 8px;">
+                        <i class="bi bi-megaphone-fill" style="color: var(--color-primary);"></i> Quick Tips
+                    </h3>
+                    <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--spacing-xs); font-size: 0.875rem; color: var(--color-text-muted); padding: 0;">
+                        <li><i class="bi bi-check-circle" style="color: var(--color-primary); margin-right: 6px;"></i> Send campus flyers in department student groups.</li>
+                        <li><i class="bi bi-check-circle" style="color: var(--color-primary); margin-right: 6px;"></i> Remind peers that they get full Viva prep sessions.</li>
+                        <li><i class="bi bi-check-circle" style="color: var(--color-primary); margin-right: 6px;"></i> Audits local business pages and pitches setups.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Right Referrals Table (2/3 width) -->
+            <div class="reveal reveal-up active" style="grid-column: span 2; background-color: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: var(--spacing-md); box-shadow: var(--shadow-sm);">
+                <h3 style="font-size: 1.2rem; color: var(--color-dark-navy); margin-bottom: var(--spacing-sm); display: flex; align-items: center; gap: 8px;">
+                    <i class="bi bi-list-stars" style="color: var(--color-primary);"></i> Live Referrals Activity
+                </h3>
+                
+                {% if referrals %}
+                <div style="overflow-x: auto; width: 100%;">
+                    <table style="width: 100%; border-collapse: collapse; margin-top: var(--spacing-xs);">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--color-border); text-align: left;">
+                                <th style="padding: 10px; font-size: 0.85rem; color: var(--color-text-muted); font-weight: 700; text-transform: uppercase;">Client Lead</th>
+                                <th style="padding: 10px; font-size: 0.85rem; color: var(--color-text-muted); font-weight: 700; text-transform: uppercase;">Inquiry Details</th>
+                                <th style="padding: 10px; font-size: 0.85rem; color: var(--color-text-muted); font-weight: 700; text-transform: uppercase;">Referred At</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for ref in referrals %}
+                            <tr style="border-bottom: 1px solid var(--color-border);">
+                                <td style="padding: 12px 10px; font-weight: 600; color: var(--color-dark-navy);">
+                                    {{ ref.name }}
+                                </td>
+                                <td style="padding: 12px 10px; color: var(--color-text); font-size: 0.9rem;">
+                                    {{ ref.subject }}
+                                </td>
+                                <td style="padding: 12px 10px; color: var(--color-text-muted); font-size: 0.85rem;">
+                                    {{ ref.created_at }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div style="text-align: center; padding: var(--spacing-lg) 0; color: var(--color-text-muted);">
+                    <i class="bi bi-chat-left-heart" style="font-size: 2.5rem; color: var(--color-border); display: block; margin-bottom: var(--spacing-sm);"></i>
+                    <h4 style="margin: 0; color: var(--color-text-muted);">No referrals logged yet</h4>
+                    <p style="font-size: 0.85rem; color: var(--color-text-muted); margin-top: 4px;">Once a client enters your referral code on the contact form, they will appear here live!</p>
+                </div>
+                {% endif %}
+            </div>
+            
+        </div>
+        
+    </div>
+</section>
+{% endblock %}
