@@ -57,8 +57,27 @@ app = create_app()
 
 if __name__ == '__main__':
     # Support Render port injection. Bind to 0.0.0.0 if PORT is defined (production), 
-    # otherwise fall back to localhost (127.0.0.1) and port 8080 to avoid Windows socket conflicts.
-    port = int(os.environ.get('PORT', 8080))
+    # otherwise fall back to localhost (127.0.0.1) and scan candidate ports to avoid Windows socket conflicts.
     host = '0.0.0.0' if 'PORT' in os.environ else '127.0.0.1'
     
-    app.run(host=host, port=port, debug=app.config.get('DEBUG', False))
+    if 'PORT' in os.environ:
+        # Production (Render) - strict port binding
+        port = int(os.environ['PORT'])
+        app.run(host=host, port=port, debug=app.config.get('DEBUG', False))
+    else:
+        # Local development - try sequential ports if 8080 is restricted or in use
+        candidate_ports = [8080, 8081, 8082, 8083, 8084, 8085, 9090, 5000, 5001]
+        server_started = False
+        
+        for p in candidate_ports:
+            try:
+                # Run Werkzeug server
+                app.run(host=host, port=p, debug=app.config.get('DEBUG', False))
+                server_started = True
+                break
+            except OSError as e:
+                print(f"[PORT CONFLICT] Port {p} is restricted or already in use: {e}")
+                print("[*] Automatically shifting to next fallback candidate port...")
+                
+        if not server_started:
+            print("[CRITICAL ERROR] All local fallback candidate ports are blocked. Please inspect socket permissions.")
