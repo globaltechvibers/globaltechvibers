@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
-{% block title %}GlobalTechVibers | Professional Software & Academic Solutions{% endblock %}
+{% block title %}GlobalTechVibers | Custom Software Development &amp; AI Solutions{% endblock %}
+
+{% block description %}GlobalTechVibers builds custom web applications, AI solutions, business software, cloud systems, and academic technology projects using modern engineering practices.{% endblock %}
 
 {% block extra_head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/loader.css') }}">
@@ -83,25 +85,25 @@
     </div>
 </section>
 
-<!-- 2. STATISTICS -->
+<!-- 2. VALUE PROPOSITION STATS -->
 <section style="background-color: var(--color-dark-navy); color: white; padding: var(--spacing-lg) 0;">
     <div class="container">
         <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-md); text-align: center;" class="grid-2">
             <div class="reveal reveal-up">
-                <h3 style="font-size: 2.5rem; color: var(--color-primary); margin-bottom: 5px;">150+</h3>
-                <p style="color: #94A3B8; font-size: 0.95rem; margin-bottom: 0;">Projects Completed</p>
+                <i class="bi bi-code-slash" style="font-size: 2.5rem; color: var(--color-primary); display: block; margin-bottom: 10px;"></i>
+                <p style="color: #94A3B8; font-size: 0.95rem; margin-bottom: 0; font-weight: 600;">Custom Software Solutions</p>
             </div>
             <div class="reveal reveal-up">
-                <h3 style="font-size: 2.5rem; color: var(--color-primary); margin-bottom: 5px;">99%</h3>
-                <p style="color: #94A3B8; font-size: 0.95rem; margin-bottom: 0;">Client Satisfaction</p>
+                <i class="bi bi-cpu" style="font-size: 2.5rem; color: var(--color-primary); display: block; margin-bottom: 10px;"></i>
+                <p style="color: #94A3B8; font-size: 0.95rem; margin-bottom: 0; font-weight: 600;">AI &amp; Web Development</p>
             </div>
             <div class="reveal reveal-up">
-                <h3 style="font-size: 2.5rem; color: var(--color-primary); margin-bottom: 5px;">24/7</h3>
-                <p style="color: #94A3B8; font-size: 0.95rem; margin-bottom: 0;">Deployment Support</p>
+                <i class="bi bi-shield-lock" style="font-size: 2.5rem; color: var(--color-primary); display: block; margin-bottom: 10px;"></i>
+                <p style="color: #94A3B8; font-size: 0.95rem; margin-bottom: 0; font-weight: 600;">Secure Architecture</p>
             </div>
             <div class="reveal reveal-up">
-                <h3 style="font-size: 2.5rem; color: var(--color-primary); margin-bottom: 5px;">10+</h3>
-                <p style="color: #94A3B8; font-size: 0.95rem; margin-bottom: 0;">Years Expert Experience</p>
+                <i class="bi bi-cloud-arrow-up" style="font-size: 2.5rem; color: var(--color-primary); display: block; margin-bottom: 10px;"></i>
+                <p style="color: #94A3B8; font-size: 0.95rem; margin-bottom: 0; font-weight: 600;">Deployment &amp; Technical Support</p>
             </div>
         </div>
     </div>
@@ -113,7 +115,7 @@
         <div class="reveal reveal-left">
             <span style="font-weight: 700; color: var(--color-primary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px;">Who We Are</span>
             <h2 style="margin-bottom: var(--spacing-md);">Reliable, Scalable, Secure, and Affordable Software.</h2>
-            <p>GlobalTechVibers is an established software development company providing premium technology solutions for students, startups, small businesses, and corporations.</p>
+            <p>GlobalTechVibers is a modern software development company specializing in custom web applications, AI-powered solutions, business automation, cloud software, and academic technology solutions. We combine modern technologies with clean engineering practices to build secure, scalable, and high-quality software tailored to each client's requirements.</p>
             <p style="color: var(--color-text-muted);">Our mission is simple: to deliver clean, modern engineering with strict adherence to deadlines, fully customized to meet unique commercial objectives or academic rubrics.</p>
             <a href="/about" class="btn btn-secondary" style="margin-top: var(--spacing-sm);">Learn More About Us <i class="bi bi-arrow-right"></i></a>
         </div>
@@ -339,44 +341,79 @@
     <div class="container">
         <div class="section-header reveal reveal-up">
             <span style="font-weight: 700; color: var(--color-primary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px;">Showcase</span>
-            <h2>Recent Enterprise Projects</h2>
+            <h2>Featured Portfolio Projects</h2>
             <p>Take a look at a selection of technology systems engineered by our group.</p>
         </div>
         
         <div class="grid grid-3">
             <!-- Project 1 -->
-            <div class="card reveal reveal-up" style="padding: 0;">
-                <div style="background: var(--color-dark-navy); height: 180px; display: flex; align-items: center; justify-content: center; color: white;">
-                    <i class="bi bi-wallet2" style="font-size: 3.5rem; color: var(--color-primary);"></i>
+            <div class="card reveal reveal-up" style="padding: 0; background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-md); display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div style="background: var(--color-dark-navy); height: 180px; display: flex; align-items: center; justify-content: center; color: white; border-top-left-radius: var(--radius-md); border-top-right-radius: var(--radius-md);">
+                        <i class="bi bi-wallet2" style="font-size: 3.5rem; color: var(--color-primary);"></i>
+                    </div>
+                    <div style="padding: var(--spacing-md);">
+                        <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--color-primary);">Commercial ERP</span>
+                        <h3 style="font-size: 1.25rem; margin-top: 4px; margin-bottom: 8px;">Apex Ledger CRM</h3>
+                        <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: var(--spacing-sm); line-height: 1.45;">An automated inventory tracking and CRM module built for a medium distribution enterprise, utilizing Neon PostgreSQL.</p>
+                        <div style="margin-bottom: var(--spacing-sm); font-size: 0.8rem; color: var(--color-text-muted);">
+                            <strong>Technologies:</strong> Flask, PostgreSQL, Vanilla JS
+                        </div>
+                        <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.8rem; color: var(--color-text-muted); display: flex; flex-direction: column; gap: 4px;">
+                            <li><i class="bi bi-check2" style="color: #10B981;"></i> Multi-user role routing</li>
+                            <li><i class="bi bi-check2" style="color: #10B981;"></i> Real-time inventory tracking</li>
+                        </ul>
+                    </div>
                 </div>
-                <div style="padding: var(--spacing-md);">
-                    <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--color-primary);">Commercial ERP</span>
-                    <h3 style="font-size: 1.25rem; margin-top: 4px; margin-bottom: 8px;">Apex Ledger CRM</h3>
-                    <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: var(--spacing-sm);">An automated inventory tracking and CRM module built for a medium distribution enterprise, utilizing Neon PostgreSQL.</p>
+                <div style="padding: 0 var(--spacing-md) var(--spacing-md) var(--spacing-md);">
                     <a href="/projects" style="font-weight: 600; font-size: 0.9rem;">View Preview <i class="bi bi-chevron-right"></i></a>
                 </div>
             </div>
+            
             <!-- Project 2 -->
-            <div class="card reveal reveal-up" style="padding: 0;">
-                <div style="background: var(--color-dark-navy); height: 180px; display: flex; align-items: center; justify-content: center; color: white;">
-                    <i class="bi bi-chat-quote" style="font-size: 3.5rem; color: var(--color-primary);"></i>
+            <div class="card reveal reveal-up" style="padding: 0; background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-md); display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div style="background: var(--color-dark-navy); height: 180px; display: flex; align-items: center; justify-content: center; color: white; border-top-left-radius: var(--radius-md); border-top-right-radius: var(--radius-md);">
+                        <i class="bi bi-chat-quote" style="font-size: 3.5rem; color: var(--color-primary);"></i>
+                    </div>
+                    <div style="padding: var(--spacing-md);">
+                        <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--color-primary);">Artificial Intelligence</span>
+                        <h3 style="font-size: 1.25rem; margin-top: 4px; margin-bottom: 8px;">Aegis Query Assistant</h3>
+                        <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: var(--spacing-sm); line-height: 1.45;">Intelligent support bot integrating Google Gemini APIs, featuring semantic history caching for low-latency client service.</p>
+                        <div style="margin-bottom: var(--spacing-sm); font-size: 0.8rem; color: var(--color-text-muted);">
+                            <strong>Technologies:</strong> Gemini API, Python, Vector DB
+                        </div>
+                        <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.8rem; color: var(--color-text-muted); display: flex; flex-direction: column; gap: 4px;">
+                            <li><i class="bi bi-check2" style="color: #10B981;"></i> Semantic history caching</li>
+                            <li><i class="bi bi-check2" style="color: #10B981;"></i> Gemini API integration</li>
+                        </ul>
+                    </div>
                 </div>
-                <div style="padding: var(--spacing-md);">
-                    <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--color-primary);">Artificial Intelligence</span>
-                    <h3 style="font-size: 1.25rem; margin-top: 4px; margin-bottom: 8px;">Aegis Query Assistant</h3>
-                    <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: var(--spacing-sm);">Intelligent support bot integrating Google Gemini APIs, featuring semantic history caching for low-latency client service.</p>
+                <div style="padding: 0 var(--spacing-md) var(--spacing-md) var(--spacing-md);">
                     <a href="/projects" style="font-weight: 600; font-size: 0.9rem;">View Preview <i class="bi bi-chevron-right"></i></a>
                 </div>
             </div>
+            
             <!-- Project 3 -->
-            <div class="card reveal reveal-up" style="padding: 0;">
-                <div style="background: var(--color-dark-navy); height: 180px; display: flex; align-items: center; justify-content: center; color: white;">
-                    <i class="bi bi-shield-lock" style="font-size: 3.5rem; color: var(--color-primary);"></i>
+            <div class="card reveal reveal-up" style="padding: 0; background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-md); display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div style="background: var(--color-dark-navy); height: 180px; display: flex; align-items: center; justify-content: center; color: white; border-top-left-radius: var(--radius-md); border-top-right-radius: var(--radius-md);">
+                        <i class="bi bi-shield-lock" style="font-size: 3.5rem; color: var(--color-primary);"></i>
+                    </div>
+                    <div style="padding: var(--spacing-md);">
+                        <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--color-primary);">Academic Capstone</span>
+                        <h3 style="font-size: 1.25rem; margin-top: 4px; margin-bottom: 8px;">TrustVote Blockchain</h3>
+                        <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: var(--spacing-sm); line-height: 1.45;">An academic final year implementation of secure cryptographic protocols to establish double-spending immunity in online ballots.</p>
+                        <div style="margin-bottom: var(--spacing-sm); font-size: 0.8rem; color: var(--color-text-muted);">
+                            <strong>Technologies:</strong> Cryptography, Python, SQLite
+                        </div>
+                        <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.8rem; color: var(--color-text-muted); display: flex; flex-direction: column; gap: 4px;">
+                            <li><i class="bi bi-check2" style="color: #10B981;"></i> Double-spending immunity checks</li>
+                            <li><i class="bi bi-check2" style="color: #10B981;"></i> Secure cryptographic ballots</li>
+                        </ul>
+                    </div>
                 </div>
-                <div style="padding: var(--spacing-md);">
-                    <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--color-primary);">Academic Capstone</span>
-                    <h3 style="font-size: 1.25rem; margin-top: 4px; margin-bottom: 8px;">TrustVote Blockchain</h3>
-                    <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: var(--spacing-sm);">An academic final year implementation of secure cryptographic protocols to establish double-spending immunity in online ballots.</p>
+                <div style="padding: 0 var(--spacing-md) var(--spacing-md) var(--spacing-md);">
                     <a href="/projects" style="font-weight: 600; font-size: 0.9rem;">View Preview <i class="bi bi-chevron-right"></i></a>
                 </div>
             </div>
@@ -387,26 +424,95 @@
     </div>
 </section>
 
-<!-- 9. TESTIMONIALS PLACEHOLDER -->
+<!-- Our Commitment Section -->
+<section class="section" style="border-top: 1px solid var(--color-border); background-color: var(--color-section-bg);">
+    <div class="container">
+        <div class="section-header reveal reveal-up">
+            <span style="font-weight: 700; color: var(--color-primary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px;">Guarantees</span>
+            <h2>Our Commitment</h2>
+            <p>Every project we deliver is backed by our promise of professional engineering and support.</p>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--spacing-md);">
+            <!-- Card 1 -->
+            <div class="card reveal reveal-up active" style="padding: var(--spacing-md); border-color: var(--color-border); box-shadow: var(--shadow-sm); background: #FFFFFF; border-radius: var(--radius-sm); text-align: center;">
+                <div style="font-size: 2rem; color: var(--color-primary); margin-bottom: 10px;"><i class="bi bi-chat-left-dots-fill"></i></div>
+                <h4 style="margin-top: 0; margin-bottom: var(--spacing-xs); font-size: 1.1rem; color: var(--color-dark-navy);">Transparent Communication</h4>
+                <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.45; margin: 0;">We keep you updated at every stage of development with clear milestones, honest scheduling, and quick response times.</p>
+            </div>
+            <!-- Card 2 -->
+            <div class="card reveal reveal-up active" style="padding: var(--spacing-md); border-color: var(--color-border); box-shadow: var(--shadow-sm); background: #FFFFFF; border-radius: var(--radius-sm); text-align: center;">
+                <div style="font-size: 2rem; color: var(--color-primary); margin-bottom: 10px;"><i class="bi bi-shield-lock-fill"></i></div>
+                <h4 style="margin-top: 0; margin-bottom: var(--spacing-xs); font-size: 1.1rem; color: var(--color-dark-navy);">Secure Development</h4>
+                <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.45; margin: 0;">We enforce parameterized queries, sanitizations, and standard session protection to keep your software and data secure.</p>
+            </div>
+            <!-- Card 3 -->
+            <div class="card reveal reveal-up active" style="padding: var(--spacing-md); border-color: var(--color-border); box-shadow: var(--shadow-sm); background: #FFFFFF; border-radius: var(--radius-sm); text-align: center;">
+                <div style="font-size: 2rem; color: var(--color-primary); margin-bottom: 10px;"><i class="bi bi-patch-check-fill"></i></div>
+                <h4 style="margin-top: 0; margin-bottom: var(--spacing-xs); font-size: 1.1rem; color: var(--color-dark-navy);">Quality Assurance</h4>
+                <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.45; margin: 0;">Every codebase is subjected to strict manual and automated test evaluations before handing over configuration files.</p>
+            </div>
+            <!-- Card 4 -->
+            <div class="card reveal reveal-up active" style="padding: var(--spacing-md); border-color: var(--color-border); box-shadow: var(--shadow-sm); background: #FFFFFF; border-radius: var(--radius-sm); text-align: center;">
+                <div style="font-size: 2rem; color: var(--color-primary); margin-bottom: 10px;"><i class="bi bi-life-preserver"></i></div>
+                <h4 style="margin-top: 0; margin-bottom: var(--spacing-xs); font-size: 1.1rem; color: var(--color-dark-navy);">Long-Term Technical Support</h4>
+                <p style="font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.45; margin: 0;">We provide reliable deployment help, AnyDesk/TeamViewer setups, and post-launch bug fixes for peace of mind.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 9. WHY CLIENTS CHOOSE US -->
 <section class="section">
     <div class="container">
         <div class="section-header reveal reveal-up">
-            <span style="font-weight: 700; color: var(--color-primary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px;">Endorsements</span>
-            <h2>Client & Student Feedback</h2>
-            <p>Read opinions shared by companies and academic graduates who have partnered with us.</p>
+            <span style="font-weight: 700; color: var(--color-primary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px;">Our Strengths</span>
+            <h2>Why Clients Choose GlobalTechVibers</h2>
+            <p>We focus on delivering clean code, secure frameworks, and dependable technical execution.</p>
         </div>
         
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-lg);" class="grid-2">
-            <div class="reveal reveal-left" style="border-left: 3px solid var(--color-primary); padding: var(--spacing-md) var(--spacing-lg); background-color: var(--color-section-bg); border-radius: 0 var(--radius-md) var(--radius-md) 0;">
-                <p style="font-style: italic; font-size: 1.05rem; margin-bottom: var(--spacing-sm);">"GlobalTechVibers built our corporate database infrastructure and custom client onboarding CRM. The team demonstrated high technical proficiency, delivering the product two weeks ahead of schedule. The system loads instantly."</p>
-                <cite style="display: block; font-weight: 700; font-style: normal; color: var(--color-dark-navy);">Amit Kumar</cite>
-                <span style="font-size: 0.85rem; color: var(--color-text-muted);">CTO, Zenith Logistics Solutions</span>
+        <div class="grid grid-3" style="gap: var(--spacing-md);">
+            <!-- Card 1 -->
+            <div class="card reveal reveal-up" style="background-color: var(--color-section-bg); border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: var(--spacing-md);">
+                <h4 style="color: var(--color-dark-navy); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; font-size: 1.1rem; margin-top: 0;">
+                    <i class="bi bi-patch-check-fill" style="color: #10B981;"></i> Modern Technologies
+                </h4>
+                <p style="font-size: 0.875rem; color: var(--color-text-muted); line-height: 1.45; margin: 0;">Utilizing Python Flask, Neon PostgreSQL, SQLite, and vanilla JS to build high-performance, lightweight web solutions.</p>
             </div>
-            
-            <div class="reveal reveal-right" style="border-left: 3px solid var(--color-primary); padding: var(--spacing-md) var(--spacing-lg); background-color: var(--color-section-bg); border-radius: 0 var(--radius-md) var(--radius-md) 0;">
-                <p style="font-style: italic; font-size: 1.05rem; margin-bottom: var(--spacing-sm);">"For my computer science capstone project, I needed a customized Flask dashboard with SQLite data structures. GlobalTechVibers provided clean code, a structured PDF project thesis, and guided me through local installation."</p>
-                <cite style="display: block; font-weight: 700; font-style: normal; color: var(--color-dark-navy);">Rohan Sharma</cite>
-                <span style="font-size: 0.85rem; color: var(--color-text-muted);">B.Tech Graduate, SRM University</span>
+            <!-- Card 2 -->
+            <div class="card reveal reveal-up" style="background-color: var(--color-section-bg); border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: var(--spacing-md);">
+                <h4 style="color: var(--color-dark-navy); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; font-size: 1.1rem; margin-top: 0;">
+                    <i class="bi bi-patch-check-fill" style="color: #10B981;"></i> Transparent Communication
+                </h4>
+                <p style="font-size: 0.875rem; color: var(--color-text-muted); line-height: 1.45; margin: 0;">Clear status updates, direct feedback options, and complete honesty regarding features and scopes.</p>
+            </div>
+            <!-- Card 3 -->
+            <div class="card reveal reveal-up" style="background-color: var(--color-section-bg); border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: var(--spacing-md);">
+                <h4 style="color: var(--color-dark-navy); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; font-size: 1.1rem; margin-top: 0;">
+                    <i class="bi bi-patch-check-fill" style="color: #10B981;"></i> Secure Development
+                </h4>
+                <p style="font-size: 0.875rem; color: var(--color-text-muted); line-height: 1.45; margin: 0;">Strict SQL parameter injection checks, global CSRF tokens, secure file upload routines, and SSL compliance.</p>
+            </div>
+            <!-- Card 4 -->
+            <div class="card reveal reveal-up" style="background-color: var(--color-section-bg); border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: var(--spacing-md);">
+                <h4 style="color: var(--color-dark-navy); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; font-size: 1.1rem; margin-top: 0;">
+                    <i class="bi bi-patch-check-fill" style="color: #10B981;"></i> On-Time Delivery
+                </h4>
+                <p style="font-size: 0.875rem; color: var(--color-text-muted); line-height: 1.45; margin: 0;">Respecting deadlines with granular milestone reviews, ensuring codebases are finalized exactly when expected.</p>
+            </div>
+            <!-- Card 5 -->
+            <div class="card reveal reveal-up" style="background-color: var(--color-section-bg); border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: var(--spacing-md);">
+                <h4 style="color: var(--color-dark-navy); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; font-size: 1.1rem; margin-top: 0;">
+                    <i class="bi bi-patch-check-fill" style="color: #10B981;"></i> Clean Maintainable Code
+                </h4>
+                <p style="font-size: 0.875rem; color: var(--color-text-muted); line-height: 1.45; margin: 0;">Well-commented classes, modular blueprint divisions, standard schema definitions, and clear readme setups.</p>
+            </div>
+            <!-- Card 6 -->
+            <div class="card reveal reveal-up" style="background-color: var(--color-section-bg); border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: var(--spacing-md);">
+                <h4 style="color: var(--color-dark-navy); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; font-size: 1.1rem; margin-top: 0;">
+                    <i class="bi bi-patch-check-fill" style="color: #10B981;"></i> Post-Deployment Support
+                </h4>
+                <p style="font-size: 0.875rem; color: var(--color-text-muted); line-height: 1.45; margin: 0;">Remote installation via AnyDesk, developer walkthroughs, database configuration support, and help sheets.</p>
             </div>
         </div>
     </div>
