@@ -16,6 +16,62 @@
     </div>
 </section>
 
+<!-- Value Proposition Section -->
+<section style="background-color: #FFFFFF; padding: var(--spacing-lg) 0 var(--spacing-sm) 0; border-bottom: 1px solid var(--color-border);">
+    <div class="container">
+        <div style="text-align: center; margin-bottom: var(--spacing-md);" class="reveal reveal-up">
+            <h2 style="font-size: 1.5rem; color: var(--color-dark-navy); margin-bottom: 6px;">What's Included in Your Project Package?</h2>
+            <p style="color: var(--color-text-muted); font-size: 0.95rem; max-width: 600px; margin: 0 auto;">No hidden costs. We provide a complete end-to-end kit so you can submit your project and present it with absolute confidence.</p>
+        </div>
+        
+        <div class="grid grid-4" style="gap: var(--spacing-md);">
+            <!-- Feature 1 -->
+            <div class="card reveal reveal-up active" style="padding: var(--spacing-md); border-color: var(--color-border); box-shadow: var(--shadow-sm); display: flex; gap: 12px; align-items: flex-start; background: var(--color-section-bg); border-radius: var(--radius-sm);">
+                <div style="background: rgba(214, 40, 40, 0.08); border-radius: var(--radius-sm); width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--color-primary); font-size: 1.25rem;">
+                    <i class="bi bi-code-square"></i>
+                </div>
+                <div>
+                    <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; color: var(--color-dark-navy); font-weight: 700;">Complete Source Code</h4>
+                    <p style="margin: 0; font-size: 0.8rem; color: var(--color-text-muted); line-height: 1.45;">Fully commented code, SQL database scripts, configuration guides, and environment setups.</p>
+                </div>
+            </div>
+            
+            <!-- Feature 2 -->
+            <div class="card reveal reveal-up active" style="padding: var(--spacing-md); border-color: var(--color-border); box-shadow: var(--shadow-sm); display: flex; gap: 12px; align-items: flex-start; background: var(--color-section-bg); border-radius: var(--radius-sm);">
+                <div style="background: rgba(214, 40, 40, 0.08); border-radius: var(--radius-sm); width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--color-primary); font-size: 1.25rem;">
+                    <i class="bi bi-laptop"></i>
+                </div>
+                <div>
+                    <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; color: var(--color-dark-navy); font-weight: 700;">100% Run Guarantee</h4>
+                    <p style="margin: 0; font-size: 0.8rem; color: var(--color-text-muted); line-height: 1.45;">Zero setup hassle. Our engineering team connects via AnyDesk/TeamViewer to install all software dependencies.</p>
+                </div>
+            </div>
+            
+            <!-- Feature 3 -->
+            <div class="card reveal reveal-up active" style="padding: var(--spacing-md); border-color: var(--color-border); box-shadow: var(--shadow-sm); display: flex; gap: 12px; align-items: flex-start; background: var(--color-section-bg); border-radius: var(--radius-sm);">
+                <div style="background: rgba(214, 40, 40, 0.08); border-radius: var(--radius-sm); width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--color-primary); font-size: 1.25rem;">
+                    <i class="bi bi-file-earmark-pdf"></i>
+                </div>
+                <div>
+                    <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; color: var(--color-dark-navy); font-weight: 700;">Project Reports & PPT</h4>
+                    <p style="margin: 0; font-size: 0.8rem; color: var(--color-text-muted); line-height: 1.45;">IEEE standard report templates, data-flow diagrams, system architecture charts, and slides.</p>
+                </div>
+            </div>
+            
+            <!-- Feature 4 -->
+            <div class="card reveal reveal-up active" style="padding: var(--spacing-md); border-color: var(--color-border); box-shadow: var(--shadow-sm); display: flex; gap: 12px; align-items: flex-start; background: var(--color-section-bg); border-radius: var(--radius-sm);">
+                <div style="background: rgba(214, 40, 40, 0.08); border-radius: var(--radius-sm); width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--color-primary); font-size: 1.25rem;">
+                    <i class="bi bi-easel2"></i>
+                </div>
+                <div>
+                    <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; color: var(--color-dark-navy); font-weight: 700;">Viva & Seminar Prep</h4>
+                    <p style="margin: 0; font-size: 0.8rem; color: var(--color-text-muted); line-height: 1.45;">Developer-led video review sessions explaining code modules and algorithms so you ace your Viva exams.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Projects Catalog with Filters -->
 <section class="section">
     <div class="container">
@@ -61,6 +117,22 @@
                                     </span>
                                 {% endfor %}
                             </div>
+                            
+                            <!-- Deliverables Checklist -->
+                            <ul style="list-style: none; padding: 0; margin: var(--spacing-sm) 0 0 0; display: flex; flex-direction: column; gap: 6px; border-top: 1px solid var(--color-section-bg); padding-top: 10px;">
+                                <li style="font-size: 0.8rem; color: var(--color-text-muted); display: flex; align-items: center; gap: 6px; font-weight: 500;">
+                                    <i class="bi bi-patch-check-fill" style="color: #10B981; font-size: 0.9rem;"></i> Complete Code &amp; SQL Database Scripts
+                                </li>
+                                <li style="font-size: 0.8rem; color: var(--color-text-muted); display: flex; align-items: center; gap: 6px; font-weight: 500;">
+                                    <i class="bi bi-patch-check-fill" style="color: #10B981; font-size: 0.9rem;"></i> Remote AnyDesk/TeamViewer Installation
+                                </li>
+                                <li style="font-size: 0.8rem; color: var(--color-text-muted); display: flex; align-items: center; gap: 6px; font-weight: 500;">
+                                    <i class="bi bi-patch-check-fill" style="color: #10B981; font-size: 0.9rem;"></i> IEEE Report Template &amp; Seminar PPT Slides
+                                </li>
+                                <li style="font-size: 0.8rem; color: var(--color-text-muted); display: flex; align-items: center; gap: 6px; font-weight: 500;">
+                                    <i class="bi bi-patch-check-fill" style="color: #10B981; font-size: 0.9rem;"></i> Developer Viva Explanation Support
+                                </li>
+                            </ul>
                         </div>
                     </div>
                     
