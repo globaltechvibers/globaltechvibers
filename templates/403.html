@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Access Forbidden | GlobalTechVibers{% endblock %}
+
+{% block content %}
+<section class="section animate-fade" style="min-height: calc(100vh - var(--header-height) - 250px); display: flex; align-items: center; justify-content: center; background-color: var(--color-section-bg);">
+    <div class="container text-center" style="max-width: 600px;">
+        
+        <!-- Vector illustration for Forbidden -->
+        <div class="reveal reveal-up active" style="margin-bottom: var(--spacing-md); display: flex; justify-content: center; width: 100%;">
+            <svg width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto;">
+                <circle cx="120" cy="120" r="100" fill="#FEF2F2"/>
+                
+                <!-- Shield shape -->
+                <path d="M120 50 C140 50, 170 40, 180 45 C190 75, 190 125, 120 185 C50 125, 50 75, 60 45 C70 40, 100 50, 120 50 Z" fill="#EF4444" opacity="0.1" />
+                <path d="M120 50 C140 50, 170 40, 180 45 C190 75, 190 125, 120 185 C50 125, 50 75, 60 45 C70 40, 100 50, 120 50 Z" stroke="#EF4444" stroke-width="4" stroke-linejoin="round" />
+                
+                <!-- Lock Icon inside shield -->
+                <rect x="95" y="105" width="50" height="40" rx="6" fill="#EF4444" />
+                <path d="M105 105 V90 C105 81.7 111.7 75 120 75 C128.3 75 135 81.7 135 90 V105" stroke="#EF4444" stroke-width="4" stroke-linecap="round" />
+                
+                <!-- Exclamation Dot -->
+                <circle cx="120" cy="125" r="3" fill="#FFFFFF"/>
+            </svg>
+        </div>
+        
+        <div class="reveal reveal-up active" style="max-width: 500px; margin: 0 auto;">
+            <span style="display: inline-block; padding: 4px 10px; background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.15); color: #EF4444; font-size: 0.85rem; font-weight: 700; border-radius: 4px; margin-bottom: var(--spacing-sm);">403 ERROR</span>
+            <h1 style="font-size: 2.25rem; margin-bottom: var(--spacing-sm); color: var(--color-dark-navy);">Access Forbidden</h1>
+            <p style="color: var(--color-text-muted); font-size: 1.05rem; margin-bottom: var(--spacing-lg);">The request was understood, but the server is refusing to authorize it.</p>
+            
+            <div style="text-align: left; background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--spacing-md); margin-bottom: var(--spacing-lg); box-shadow: var(--shadow-sm);">
+                <strong style="color: var(--color-dark-navy); display: block; margin-bottom: 8px;"><i class="bi bi-info-circle-fill" style="color: var(--color-primary); margin-right: 6px;"></i> Common Resolutions:</strong>
+                <ul style="margin-left: 20px; font-size: 0.925rem; color: var(--color-text-muted); display: flex; flex-direction: column; gap: 6px;">
+                    <li><strong>Refresh the Page</strong>: If the website was left open in a tab, security tokens (CSRF) may have expired. Refreshing generates fresh credentials.</li>
+                    <li><strong>Enable Cookies</strong>: If cookies are blocked (or third-party cookies are disabled in private browsing), sessions cannot be verified. Enable cookies and try again.</li>
+                    <li><strong>Clear Cache</strong>: Cached forms might submit obsolete headers. Try submitting from an Incognito/Private window.</li>
+                </ul>
+            </div>
+            
+            <a href="/" class="btn btn-primary" style="padding: 0.75rem 1.75rem;"><i class="bi bi-house-door-fill" style="margin-right: 6px;"></i> Return to Homepage</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -41,6 +41,11 @@ def create_app():
         app.logger.warning(f"404 Error: Page not found - {error}")
         return render_template('404.html'), 404
         
+    @app.errorhandler(403)
+    def forbidden_error(error):
+        app.logger.warning(f"403 Error: Access Forbidden - {error}")
+        return render_template('403.html'), 403
+        
     @app.errorhandler(500)
     def internal_error(error):
         app.logger.error(f"500 Error: Server malfunction - {error}")
