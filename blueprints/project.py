@@ -1,5 +1,7 @@
+import os
 import re
-from flask import Blueprint, request, render_template, redirect, url_for, flash, jsonify
+import io
+from flask import Blueprint, request, render_template, redirect, url_for, flash, jsonify, send_file
 from database.db import execute_read, execute_write
 
 project_bp = Blueprint('project', __name__)
@@ -88,3 +90,110 @@ def book():
         }), 200
     except Exception as e:
         return jsonify({'success': False, 'message': f'Server Error saving booking: {e}'}), 500
+
+@project_bp.route('/tools/research-agent')
+def research_agent_workspace():
+    """Renders the interactive AI Research Agent workspace page."""
+    return render_template('tools/research_agent.html')
+
+@project_bp.route('/tools/research-agent/run', methods=['POST'])
+def run_research():
+    """Triggers the autonomous search & LLaMA synthesis pipeline."""
+    from blueprints.research_agent import research_agent
+    
+    data = request.get_json(force=True, silent=True) or {}
+    topic = data.get('topic', '').strip()
+    depth = data.get('depth', 'quick').lower()
+    
+    if not topic:
+        return jsonify({'success': False, 'error': 'Please enter a research topic.'}), 400
+        
+    if len(topic) > 300:
+        return jsonify({'success': False, 'error': 'Topic is too long. Max 300 characters.'}), 400
+        
+    if depth not in {'quick', 'deep', 'expert'}:
+        depth = 'quick'
+        
+    try:
+        result = research_agent(topic, depth=depth)
+        return jsonify({
+            'success': True,
+            'filename': result['filename'],
+            'report': result['report'],
+            'sources': result['sources'],
+            'depth': result['depth'],
+            'model_used': result.get('model_used', 'unknown')
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@project_bp.route('/tools/research-agent/download/<filename>')
+def download_txt_report(filename):
+    """Downloads the saved raw text research report."""
+    from blueprints.research_agent import REPORTS_DIR
+    
+    safe_name = os.path.basename(filename)
+    filepath = os.path.join(REPORTS_DIR, safe_name)
+    
+    if not os.path.exists(filepath):
+        from flask import abort
+        abort(404)
+        
+    return send_file(filepath, as_attachment=True)
+
+@project_bp.route('/tools/research-agent/download-pdf/<filename>')
+def download_pdf_report(filename):
+    """Downloads the dynamic compiled, logo-branded PDF version of the report."""
+    from blueprints.research_agent import REPORTS_DIR
+    from blueprints.pdf_generator import generate_pdf
+    
+    safe_name = os.path.basename(filename)
+    # Target saved txt report filename
+    txt_filename = safe_name.replace('.pdf', '-report.txt').replace('-report-report.txt', '-report.txt')
+    if not txt_filename.endswith('.txt'):
+        txt_filename = safe_name + '-report.txt'
+        
+    # Standard replacement rules
+    if '-report.txt' not in txt_filename:
+        txt_filename = txt_filename.replace('.txt', '') + '-report.txt'
+
+    filepath = os.path.join(REPORTS_DIR, txt_filename)
+    # Check fallback naming if direct lookup fails
+    if not os.path.exists(filepath):
+        # Scan dir for fuzzy match
+        for f in os.listdir(REPORTS_DIR):
+            if f.lower().startswith(safe_name.split('-report')[0].lower()):
+                filepath = os.path.join(REPORTS_DIR, f)
+                break
+                
+    if not os.path.exists(filepath):
+        from flask import abort
+        abort(404)
+        
+    with open(filepath, 'r', encoding='utf-8') as f:
+        report_text = f.read()
+        
+    # Extract topic from header
+    topic = "Research Report"
+    try:
+        first_line = report_text.split('\n')[0]
+        if first_line.startswith("Research Report: "):
+            topic = first_line.replace("Research Report: ", "").strip()
+    except Exception:
+        pass
+        
+    # Extract report body content (strip prefix divider)
+    body_text = report_text
+    if "==================================================" in body_text:
+        body_text = body_text.split("==================================================")[1].strip()
+        
+    try:
+        pdf_bytes = generate_pdf(topic, body_text)
+        return send_file(
+            io.BytesIO(pdf_bytes),
+            mimetype='application/pdf',
+            as_attachment=True,
+            download_name=safe_name.replace('.txt', '.pdf').replace('.pdf.pdf', '.pdf')
+        )
+    except Exception as e:
+        return jsonify({'success': False, 'error': f"Failed to generate PDF: {str(e)}"}), 500

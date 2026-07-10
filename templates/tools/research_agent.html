@@ -1,0 +1,335 @@
+{% extends 'base.html' %}
+
+{% block title %}Autonomous AI Research Agent | GlobalTechVibers{% endblock %}
+{% block description %}Autonomously search the web, synthesize source citations, and generate PDF research briefings in real time using Groq LLaMA models.{% endblock %}
+
+{% block content %}
+<section class="section animate-fade" style="background-color: var(--color-section-bg); padding: var(--spacing-xl) 0; border-bottom: 1px solid var(--color-border);">
+    <div class="container">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="breadcrumb" style="margin-bottom: var(--spacing-sm);">
+            <ol style="display: flex; list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: var(--color-text-muted); gap: 6px; flex-wrap: wrap;">
+                <li><a href="/" style="color: var(--color-text-muted); font-weight: 500;">Home</a></li>
+                <li>/</li>
+                <li><a href="/services" style="color: var(--color-text-muted); font-weight: 500;">Services</a></li>
+                <li>/</li>
+                <li style="color: var(--color-primary); font-weight: 600;" aria-current="page">AI Research Tool</li>
+            </ol>
+        </nav>
+
+        <div style="max-width: 900px; margin: 0 auto; text-align: center;">
+            <span style="font-weight: 700; color: var(--color-primary); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                <i class="bi bi-robot"></i> Interactive AI Showcase
+            </span>
+            <h1 style="font-size: 2.75rem; line-height: 1.2; margin-bottom: var(--spacing-sm); color: var(--color-dark-navy);">Autonomous AI Research Agent</h1>
+            <p style="font-size: 1.15rem; color: var(--color-text-muted); line-height: 1.5; margin-bottom: var(--spacing-md); max-width: 700px; margin-left: auto; margin-right: auto;">
+                Provide a research topic. The autonomous pipeline will search the web, parse summaries, compile citations, and synthesize a professional briefing using LLaMA models.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container" style="max-width: 900px;">
+        
+        <!-- Workspace Card Control Panel -->
+        <div class="card reveal reveal-up active" style="background-color: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--spacing-lg); box-shadow: var(--shadow-sm); margin-bottom: var(--spacing-xl);">
+            <form id="researchForm" style="display: flex; flex-direction: column; gap: var(--spacing-md);">
+                
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <label for="topicInput" style="font-weight: 600; font-size: 0.95rem; color: var(--color-dark-navy);">Enter Your Research Topic *</label>
+                    <div style="display: flex; gap: var(--spacing-sm); width: 100%; flex-wrap: wrap;">
+                        <input type="text" id="topicInput" required placeholder="e.g. Quantum Computing breakthroughs 2025 or Flask 3.0 vs FastAPI" style="flex: 1; min-width: 280px; padding: 0.8rem 1.2rem; border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-size: 1rem;">
+                        <button type="submit" id="submitBtn" class="btn btn-primary" style="padding: 0.8rem 1.75rem; font-size: 1rem; display: inline-flex; align-items: center; gap: 8px;">
+                            Start Research <i class="bi bi-cpu"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Options Panel -->
+                <div style="display: flex; gap: var(--spacing-lg); align-items: center; flex-wrap: wrap; border-top: 1px solid var(--color-border); padding-top: var(--spacing-md);">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-weight: 600; font-size: 0.85rem; color: var(--color-text-muted);">Research Depth:</span>
+                        <div style="display: flex; border: 1px solid var(--color-border); border-radius: 4px; overflow: hidden; background-color: var(--color-section-bg);">
+                            <label style="cursor: pointer; padding: 6px 12px; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
+                                <input type="radio" name="depth" value="quick" checked style="margin: 0;"> Quick
+                            </label>
+                            <label style="cursor: pointer; padding: 6px 12px; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; border-left: 1px solid var(--color-border); border-right: 1px solid var(--color-border);">
+                                <input type="radio" name="depth" value="deep" style="margin: 0;"> Deep
+                            </label>
+                            <label style="cursor: pointer; padding: 6px 12px; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
+                                <input type="radio" name="depth" value="expert" style="margin: 0;"> Expert
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div style="font-size: 0.85rem; color: var(--color-text-muted); display: inline-flex; align-items: center; gap: 6px;">
+                        <i class="bi bi-info-circle-fill" style="color: var(--color-primary);"></i>
+                        <span>Includes automated citations &amp; logo-branded PDF downloads.</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Live Loading Status Display Panel -->
+        <div id="loadingStatus" style="display: none; text-align: center; padding: var(--spacing-xl) 0;" class="reveal reveal-up active">
+            <div style="width: 50px; height: 50px; border: 4px solid rgba(214, 40, 40, 0.1); border-top-color: var(--color-primary); border-radius: 50%; animation: spin 1s infinite linear; margin: 0 auto 16px;"></div>
+            <h3 id="statusHeading" style="font-size: 1.25rem; color: var(--color-dark-navy); margin-bottom: 6px;">Initializing Research Agent...</h3>
+            <p id="statusDesc" style="color: var(--color-text-muted); font-size: 0.95rem;">Preparing search queries and connecting to LLaMA synthesis nodes.</p>
+        </div>
+        
+        <!-- Output Report Render Area -->
+        <div id="reportContainer" style="display: none;" class="reveal reveal-up active">
+            
+            <!-- Metadata & Downloads header -->
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: var(--spacing-md); flex-wrap: wrap; margin-bottom: var(--spacing-md); background: var(--color-section-bg); padding: 12px var(--spacing-md); border: 1px solid var(--color-border); border-radius: var(--radius-sm);">
+                <div>
+                    <span style="font-size: 0.85rem; color: var(--color-text-muted); display: block;">Model Used: <strong id="modelLabel" style="color: var(--color-primary);">Unknown</strong></span>
+                    <span style="font-size: 0.85rem; color: var(--color-text-muted); display: block;">Depth Level: <strong id="depthLabel" style="color: var(--color-primary);">Quick</strong></span>
+                </div>
+                <div style="display: flex; gap: var(--spacing-xs); flex-wrap: wrap;">
+                    <button id="downloadTxtBtn" class="btn btn-outline" style="padding: 6px 12px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 6px; font-weight: 600;">
+                        <i class="bi bi-filetype-txt"></i> Download TXT
+                    </button>
+                    <button id="downloadPdfBtn" class="btn btn-primary" style="padding: 6px 12px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 6px; font-weight: 600;">
+                        <i class="bi bi-filetype-pdf"></i> Download Branded PDF
+                    </button>
+                </div>
+            </div>
+            
+            <div style="background-color: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--spacing-xl); box-shadow: var(--shadow-sm); margin-bottom: var(--spacing-lg);">
+                <div id="reportContent" style="color: var(--color-text); font-size: 1.05rem;">
+                    <!-- Appended dynamically via javascript parser -->
+                </div>
+            </div>
+            
+            <!-- Citations & Web Sources Catalog -->
+            <div style="background-color: var(--color-section-bg); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--spacing-lg); margin-bottom: var(--spacing-xl);">
+                <h3 style="font-size: 1.25rem; color: var(--color-dark-navy); margin-top: 0; margin-bottom: var(--spacing-md); display: flex; align-items: center; gap: 8px;">
+                    <i class="bi bi-bookmark-star-fill" style="color: var(--color-primary);"></i> Verified Search Citations
+                </h3>
+                <ol id="sourcesList" style="padding-left: 20px; display: flex; flex-direction: column; gap: 12px; margin: 0;">
+                    <!-- Appended dynamically -->
+                </ol>
+            </div>
+            
+            <!-- Interlink promo block -->
+            <div class="card text-center" style="background: linear-gradient(135deg, rgba(214,40,40,0.05) 0%, rgba(214,40,40,0.01) 100%); border: 1px dashed rgba(214,40,40,0.25); border-radius: var(--radius-md); padding: var(--spacing-lg);">
+                <h3 style="color: var(--color-dark-navy); margin-top: 0; margin-bottom: 6px;">Want to Host This AI Agent Yourself?</h3>
+                <p style="color: var(--color-text-muted); font-size: 0.95rem; margin-bottom: 12px;">This complete project is available for purchase including fully commented source code, setup briefs, and dual exporters.</p>
+                <a href="/projects" class="btn btn-outline" style="font-size: 0.85rem; padding: 6px 16px;">View Store Listing <i class="bi bi-chevron-right"></i></a>
+            </div>
+            
+        </div>
+        
+    </div>
+</section>
+
+<!-- Inline CSS Keyframe for spinner -->
+<style>
+    @keyframes spin {
+        100% { transform: rotate(360deg); }
+    }
+</style>
+
+<!-- AJAX Request Logic & UI state rendering -->
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("researchForm");
+        const topicInp = document.getElementById("topicInput");
+        const submitBtn = document.getElementById("submitBtn");
+        
+        const loadingStatus = document.getElementById("loadingStatus");
+        const statusHeading = document.getElementById("statusHeading");
+        const statusDesc = document.getElementById("statusDesc");
+        
+        const reportContainer = document.getElementById("reportContainer");
+        const reportContent = document.getElementById("reportContent");
+        const sourcesList = document.getElementById("sourcesList");
+        const modelLabel = document.getElementById("modelLabel");
+        const depthLabel = document.getElementById("depthLabel");
+        
+        const downloadTxtBtn = document.getElementById("downloadTxtBtn");
+        const downloadPdfBtn = document.getElementById("downloadPdfBtn");
+        
+        let lastReportFilename = "";
+        
+        // Progress stage simulations
+        let stageTimer;
+        const stages = [
+            { h: "Searching DuckDuckGo...", d: "Collecting top search results related to your topic." },
+            { h: "Extracting Content...", d: "Parsing snippets and assembling source context arrays." },
+            { h: "Synthesizing Findings...", d: "Synthesizing cross-checked information via LLaMA-3.3 70B." },
+            { h: "Structuring Report...", d: "Structuring Executive Summary, Key Facts, and Conclusion sections." }
+        ];
+        
+        function startStatusInterval() {
+            let step = 0;
+            statusHeading.textContent = stages[0].h;
+            statusDesc.textContent = stages[0].d;
+            
+            stageTimer = setInterval(() => {
+                step = (step + 1) % stages.length;
+                statusHeading.textContent = stages[step].h;
+                statusDesc.textContent = stages[step].d;
+            }, 4500);
+        }
+        
+        function stopStatusInterval() {
+            clearInterval(stageTimer);
+        }
+        
+        function parseMarkdownToHTML(text) {
+            let html = text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
+            
+            // Format Headers
+            html = html.replace(/^## (.*?)$/gm, '<h3 style="color: var(--color-primary); font-size: 1.35rem; margin-top: 24px; margin-bottom: 12px; border-bottom: 1px solid var(--color-border); padding-bottom: 6px;">$1</h3>');
+            html = html.replace(/^### (.*?)$/gm, '<h4 style="color: var(--color-dark-navy); font-size: 1.15rem; margin-top: 16px; margin-bottom: 8px;">$1</h4>');
+            
+            // Format Bold text
+            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            
+            // Format bullet lists
+            html = html.replace(/^\- (.*?)$/gm, '<li style="margin-left: 20px; margin-bottom: 6px; list-style-type: square; line-height: 1.6;">$1</li>');
+            
+            // Parse paragraphs by dividing blocks
+            let lines = html.split("\n");
+            let result = "";
+            let inList = false;
+            
+            for (let line of lines) {
+                let trimmed = line.trim();
+                if (!trimmed) {
+                    if (inList) {
+                        result += "</ul>";
+                        inList = false;
+                    }
+                    continue;
+                }
+                
+                if (trimmed.startsWith("<li")) {
+                    if (!inList) {
+                        result += '<ul style="margin-bottom: 12px; padding: 0;">';
+                        inList = true;
+                    }
+                    result += line;
+                } else if (trimmed.startsWith("<h")) {
+                    if (inList) {
+                        result += "</ul>";
+                        inList = false;
+                    }
+                    result += line;
+                } else {
+                    if (inList) {
+                        result += "</ul>";
+                        inList = false;
+                    }
+                    result += `<p style="line-height: 1.7; margin-bottom: 12px; color: var(--color-text);">${line}</p>`;
+                }
+            }
+            if (inList) {
+                result += "</ul>";
+            }
+            
+            return result;
+        }
+
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            
+            const topic = topicInp.value.trim();
+            const depth = document.querySelector('input[name="depth"]:checked').value;
+            
+            if (!topic) return;
+            
+            // Set UI State: loading
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = 'Researching... <i class="bi bi-hourglass-split"></i>';
+            
+            reportContainer.style.display = "none";
+            loadingStatus.style.display = "block";
+            
+            startStatusInterval();
+            
+            // Fetch CSRF Token from meta tags
+            const csrfMeta = document.querySelector('meta[name="csrf-token"]');
+            const headers = { "Content-Type": "application/json" };
+            if (csrfMeta) {
+                headers["X-CSRFToken"] = csrfMeta.getAttribute("content");
+            }
+            
+            fetch("/tools/research-agent/run", {
+                method: "POST",
+                headers: headers,
+                body: JSON.stringify({ topic, depth })
+            })
+            .then(res => res.json())
+            .then(data => {
+                stopStatusInterval();
+                loadingStatus.style.display = "none";
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Start Research <i class="bi bi-cpu"></i>';
+                
+                if (data.success) {
+                    lastReportFilename = data.filename;
+                    
+                    // Populate metadata labels
+                    modelLabel.textContent = data.model_used;
+                    depthLabel.textContent = data.depth.toUpperCase();
+                    
+                    // Render report markdown content
+                    reportContent.innerHTML = parseMarkdownToHTML(data.report);
+                    
+                    // Render sources bibliography
+                    sourcesList.innerHTML = "";
+                    if (data.sources && data.sources.length > 0) {
+                        data.sources.forEach(src => {
+                            const li = document.createElement("li");
+                            li.innerHTML = `
+                                <a href="${src.url}" target="_blank" rel="noopener" style="font-weight: 600; color: var(--color-dark-navy); text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+                                    ${src.title} <i class="bi bi-box-arrow-up-right" style="font-size: 0.75rem; color: var(--color-primary);"></i>
+                                </a>
+                                <p style="font-size: 0.85rem; color: var(--color-text-muted); margin: 2px 0 0 0; line-height: 1.4;">${src.snippet}...</p>
+                            `;
+                            sourcesList.appendChild(li);
+                        });
+                    } else {
+                        sourcesList.innerHTML = '<li style="list-style: none; color: var(--color-text-muted);">No external source links cataloged.</li>';
+                    }
+                    
+                    reportContainer.style.display = "block";
+                    
+                    // Scroll down to the report container smoothly
+                    reportContainer.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    alert("Error running research agent: " + (data.error || "Unexpected response."));
+                }
+            })
+            .catch(err => {
+                stopStatusInterval();
+                loadingStatus.style.display = "none";
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Start Research <i class="bi bi-cpu"></i>';
+                alert("Network error executing research agent: " + err.message);
+            });
+        });
+        
+        // Trigger report downloads
+        downloadTxtBtn.addEventListener("click", () => {
+            if (lastReportFilename) {
+                window.location.href = `/tools/research-agent/download/${lastReportFilename}`;
+            }
+        });
+        
+        downloadPdfBtn.addEventListener("click", () => {
+            if (lastReportFilename) {
+                const pdfName = lastReportFilename.replace('.txt', '.pdf');
+                window.location.href = `/tools/research-agent/download-pdf/${pdfName}`;
+            }
+        });
+    });
+</script>
+{% endblock %}
