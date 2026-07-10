@@ -278,11 +278,19 @@ def _create_tables(app):
                 'An autonomous research assistant that takes any topic, fetches top web sources via DuckDuckGo, synthesizes findings using Groq LLaMA models, and exports citation-backed research briefs.',
                 'Flask, Python, Groq API, DuckDuckGo Search',
                 7999
+            ),
+            (
+                'Aegis RAG: Document Q&A System',
+                'ai-ml',
+                'An advanced Retrieval-Augmented Generation (RAG) system utilizing FastAPI and local FAISS vector indices to query custom PDF documents with real-time semantic context injection.',
+                'FastAPI, Python, FAISS Vector DB, Gemini API',
+                9999
             )
         ]
         
         # Clean up any old demo projects
-        cur.execute(f"DELETE FROM projects WHERE title != {placeholder};", ('Autonomous AI Research Agent',))
+        cur.execute(f"DELETE FROM projects WHERE title NOT IN ({placeholder}, {placeholder});", 
+                    ('Autonomous AI Research Agent', 'Aegis RAG: Document Q&A System'))
         
         for proj in projects_data:
             cur.execute(f"SELECT COUNT(*) FROM projects WHERE title = {placeholder};", (proj[0],))
