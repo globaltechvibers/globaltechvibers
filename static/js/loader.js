@@ -50,10 +50,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.add('loading-active');
     
     const textSteps = [
-        { id: 'step-1', duration: 300 }, // Building Tomorrow
-        { id: 'step-2', duration: 300 }, // Engineering Innovation
-        { id: 'step-3', duration: 300 }, // Web Apps, AI, Projects
-        { id: 'step-4', duration: 300 }  // Empowering Student Innovation
+        { id: 'step-1', duration: 450 }, // Building Tomorrow
+        { id: 'step-2', duration: 450 }, // Engineering Innovation
+        { id: 'step-3', duration: 450 }, // Web Apps, AI, Projects
+        { id: 'step-4', duration: 450 }  // Empowering Student Innovation
     ];
     
     let currentDelay = 0;
