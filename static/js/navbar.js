@@ -23,10 +23,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 1. Sticky Header Transformation on Scroll
     const handleScroll = () => {
-        if (window.scrollY > 20) {
+        const isHomePage = document.querySelector('.hero-section-video') !== null;
+        if (window.scrollY > 50) {
             header.classList.add('scrolled');
+            if (isHomePage) {
+                header.classList.remove('header-dark-glass');
+            }
         } else {
             header.classList.remove('scrolled');
+            if (isHomePage) {
+                header.classList.add('header-dark-glass');
+            }
         }
     };
     

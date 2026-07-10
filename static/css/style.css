@@ -127,10 +127,15 @@ a:hover {
 
 .section {
     padding: var(--spacing-xxl) 0;
+    background-color: var(--color-bg);
+    position: relative;
+    z-index: 2;
 }
 
 .section-bg {
     background-color: var(--color-section-bg);
+    position: relative;
+    z-index: 2;
 }
 
 .section-header {
@@ -268,16 +273,47 @@ a:hover {
     top: 0;
     left: 0;
     z-index: 1000;
-    background-color: rgba(255, 255, 255, 0.95);
-    border-bottom: 1px solid var(--color-border);
-    transition: var(--transition-normal);
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(229, 231, 235, 0.5);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     display: flex;
     align-items: center;
 }
 
 .header.scrolled {
     height: 70px;
+    background-color: rgba(255, 255, 255, 0.85);
     box-shadow: var(--shadow-sm);
+    border-bottom: 1px solid rgba(229, 231, 235, 0.8);
+}
+
+/* Homepage Top State - Dark Glassmorphism to match video */
+.header.header-dark-glass {
+    background-color: rgba(15, 23, 42, 0.35) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.header.header-dark-glass .brand {
+    color: #FFFFFF !important;
+}
+
+.header.header-dark-glass .nav-links a {
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.header.header-dark-glass .nav-links a:hover,
+.header.header-dark-glass .nav-links a.active {
+    color: var(--color-primary) !important;
+}
+
+.header.header-dark-glass .mobile-nav-toggle {
+    color: #FFFFFF !important;
+}
+
+.header.header-dark-glass .nav-links a::after {
+    background-color: #FFFFFF !important;
 }
 
 .navbar {
@@ -287,6 +323,17 @@ a:hover {
     width: 100%;
 }
 
+.header .navbar {
+    max-width: 100% !important;
+    padding: 0 3% !important;
+}
+
+@media (max-width: 768px) {
+    .header .navbar {
+        padding: 0 1.25rem !important;
+    }
+}
+
 .brand {
     display: flex;
     align-items: center;
@@ -294,6 +341,13 @@ a:hover {
     font-weight: 800;
     font-size: 1.35rem;
     color: var(--color-dark-navy);
+}
+
+.brand img {
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    background-color: #FFFFFF;
 }
 
 .brand span {
@@ -774,4 +828,338 @@ textarea.form-control {
     color: #CBD5E1 !important; /* light slate gray */
 }
 
+/* --- Fullscreen Video Background & Overlay --- */
+.fullscreen-bg-video-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: -100;
+    pointer-events: none;
+    background-color: var(--color-dark-navy);
+}
 
+.fullscreen-bg-video-container video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%) scale(1.12); /* Centered and scaled to crop out the Gemini watermark */
+    object-fit: cover;
+}
+
+.fullscreen-bg-video-container .video-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.45); /* Dark overlay tint for readability */
+    z-index: 1;
+}
+
+/* --- Centered Video Hero Section --- */
+.hero-section-video {
+    position: relative;
+    height: 100vh;
+    min-height: 650px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent !important;
+    text-align: center;
+    padding: 0 !important;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.hero-section-video::before {
+    display: none; /* Disable default background image overlay */
+}
+
+.hero-container-centered {
+    max-width: 850px;
+    padding: 0 var(--spacing-md);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: #FFFFFF !important;
+    margin-bottom: var(--spacing-md);
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+}
+
+.hero-title span {
+    color: var(--color-primary);
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.85) !important;
+    margin-bottom: var(--spacing-xl);
+    max-width: 680px;
+    line-height: 1.65;
+}
+
+@media (max-width: 768px) {
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #FFFFFF;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 30px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--spacing-md);
+}
+
+.hero-buttons {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* White glassmorphic button override */
+.btn-outline-white {
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.75) 100%);
+    z-index: 1;
+}
+
+/* Ensure content sits above the overlay */
+.hero-section > * {
+    position: relative;
+    z-index: 2;
+}
+
+/* Option 1: Sleek Dark Mode Styling */
+.hero-section-dark h1 {
+    color: #FFFFFF !important;
+}
+
+.hero-section-dark p {
+    color: #CBD5E1 !important; /* light slate gray */
+}
+
+/* Overrides for buttons on dark background */
+.hero-section-dark .btn-secondary {
+    color: #FFFFFF !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    background-color: transparent !important;
+}
+
+.hero-section-dark .btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border-color: #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+/* --- About Hero Section Background & Overlay --- */
+.about-hero-section {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    transition: background var(--transition-normal);
+}
+
+.about-hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.75) 100%);
+    z-index: 1;
+}
+
+.about-hero-section > * {
+    position: relative;
+    z-index: 2;
+}
+
+.about-hero-section h1 {
+    color: #FFFFFF !important;
+}
+
+.about-hero-section p {
+    color: #CBD5E1 !important; /* light slate gray */
+}
+
+/* --- Fullscreen Video Background & Overlay --- */
+.fullscreen-bg-video-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 1;
+    pointer-events: none;
+    background-color: var(--color-dark-navy);
+}
+
+.fullscreen-bg-video-container video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%) scale(1.12); /* Centered and scaled to crop out the Gemini watermark */
+    object-fit: cover;
+}
+
+.fullscreen-bg-video-container .video-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.45); /* Dark overlay tint for readability */
+    z-index: 1;
+}
+
+/* --- Centered Video Hero Section --- */
+.hero-section-video {
+    position: relative;
+    height: 100vh;
+    min-height: 650px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent !important;
+    text-align: center;
+    padding: 0 !important;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.hero-section-video::before {
+    display: none; /* Disable default background image overlay */
+}
+
+.hero-container-centered {
+    max-width: 850px;
+    padding: 0 var(--spacing-md);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: #FFFFFF !important;
+    margin-bottom: var(--spacing-md);
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+}
+
+.hero-title span {
+    color: var(--color-primary);
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.85) !important;
+    margin-bottom: var(--spacing-xl);
+    max-width: 680px;
+    line-height: 1.65;
+}
+
+@media (max-width: 768px) {
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #FFFFFF;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 30px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--spacing-md);
+}
+
+.hero-buttons {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* White glassmorphic button override */
+.btn-outline-white {
+    background-color: transparent;
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.btn-outline-white:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: #FFFFFF;
+    color: #FFFFFF;
+    transform: translateY(-1px);
+}
+
+#hero-typewriter {
+    display: inline-block;
+    min-height: 1.15em;
+    min-width: 2px;
+    vertical-align: bottom;
+    color: var(--color-primary);
+    font-weight: 800;
+}

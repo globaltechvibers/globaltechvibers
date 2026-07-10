@@ -9,6 +9,14 @@
 {% endblock %}
 
 {% block content %}
+<!-- Fullscreen Background Video -->
+<div class="fullscreen-bg-video-container">
+    <video id="bg-video" autoplay muted loop playsinline>
+        <source src="{{ url_for('static', filename='videos/generate_a_video_clip_of_se.mp4') }}" type="video/mp4">
+    </video>
+    <div class="video-overlay"></div>
+</div>
+
 <!-- Loader HTML Overlay -->
 <div id="intro-loader" class="intro-loader">
     <div class="loader-content">
@@ -33,6 +41,7 @@
     <script>
         // Synchronous script run immediately during DOM parsing to prevent page flash (FOUC)
         (function() {
+            document.body.classList.add('home-page-body');
             const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             const hasLoadedBefore = sessionStorage.getItem('gtv_has_loaded_before');
             if (!prefersReducedMotion && !hasLoadedBefore) {
@@ -42,51 +51,28 @@
         })();
     </script>
 <!-- 1. HERO SECTION -->
-<section class="section animate-fade hero-section hero-section-dark" style="padding: var(--spacing-xl) 0; overflow: hidden; background-image: url('{{ url_for('static', filename='images/hero-bg.jpg') }}');">
-    <div class="container hero-container" style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: var(--spacing-xl); align-items: center;">
-        <div class="hero-text animate-slide-up">
-            <span style="display: inline-block; padding: 6px 12px; background: rgba(214, 40, 40, 0.08); border: 1px solid rgba(214, 40, 40, 0.15); color: var(--color-primary); font-size: 0.85rem; font-weight: 700; border-radius: 30px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--spacing-md);">
-                <span class="badge-pulse"></span>Enterprise Grade Solutions
-            </span>
-            <h1 style="line-height: 1.1; margin-bottom: var(--spacing-md); min-height: 110px;">
-                Building Tomorrow's<br>
-                <span id="hero-typewriter" class="typewriter-cursor" style="color: var(--color-primary); font-weight: 800;">Digital Solutions</span><br>
-                Today.
-            </h1>
-            <p style="font-size: 1.1rem; color: var(--color-text-muted); margin-bottom: var(--spacing-lg); max-width: 600px;">
-                GlobalTechVibers delivers professional software development, AI solutions, custom web applications, and academic project support with enterprise-level quality.
-            </p>
-            <div class="hero-buttons" style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap;">
-                <a href="/contact" class="btn btn-primary btn-lg">Start Your Project <i class="bi bi-arrow-right"></i></a>
-                <a href="/services" class="btn btn-secondary btn-lg">Explore Services</a>
-            </div>
-        </div>
-        
-        <div class="hero-image reveal reveal-right active" style="display: flex; justify-content: center; align-items: center;">
-            <!-- Tech Orbit / Rotating Rounded Logo Container -->
-            <div class="hero-logo-orbit">
-                <!-- Glow background -->
-                <div class="hero-logo-glow"></div>
-                
-                <!-- Outer dashed tech ring -->
-                <div class="orbit-ring ring-outer"></div>
-                
-                <!-- Orbiting Particle -->
-                <div class="orbiting-particle-container">
-                    <div class="orbiting-particle"></div>
-                </div>
-                
-                <!-- Inner logo frame -->
-                <div class="hero-logo-frame">
-                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="GlobalTechVibers Logo" class="hero-logo-img">
-                </div>
-            </div>
+<section class="hero-section hero-section-video animate-fade">
+    <div class="container hero-container-centered animate-slide-up">
+        <span class="hero-badge">
+            <span class="badge-pulse"></span>Enterprise Grade Solutions
+        </span>
+        <h1 class="hero-title">
+            Building Tomorrow's<br>
+            <span id="hero-typewriter" class="typewriter-cursor">Digital Solutions</span><br>
+            Today.
+        </h1>
+        <p class="hero-subtitle">
+            GlobalTechVibers delivers professional software development, AI solutions, custom web applications, and academic project support with enterprise-level quality.
+        </p>
+        <div class="hero-buttons">
+            <a href="/contact" class="btn btn-primary btn-lg">Start Your Project <i class="bi bi-arrow-right"></i></a>
+            <a href="/services" class="btn btn-outline-white btn-lg">Explore Services</a>
         </div>
     </div>
 </section>
 
 <!-- 2. VALUE PROPOSITION STATS -->
-<section style="background-color: var(--color-dark-navy); color: white; padding: var(--spacing-lg) 0;">
+<section style="background-color: var(--color-dark-navy); color: white; padding: var(--spacing-lg) 0; position: relative; z-index: 2;">
     <div class="container">
         <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-md); text-align: center;" class="grid-2">
             <div class="reveal reveal-up">
@@ -603,14 +589,15 @@
         function type() {
             const currentWord = words[wordIndex];
             if (isDeleting) {
-                typewriter.textContent = currentWord.substring(0, charIndex - 1);
                 charIndex--;
                 typeSpeed = 40;
             } else {
-                typewriter.textContent = currentWord.substring(0, charIndex + 1);
                 charIndex++;
                 typeSpeed = 80;
             }
+            
+            const text = currentWord.substring(0, charIndex);
+            typewriter.textContent = text || "\u00A0";
             
             if (!isDeleting && charIndex === currentWord.length) {
                 isDeleting = true;
