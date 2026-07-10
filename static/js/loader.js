@@ -6,7 +6,7 @@
 // HARD FAILSAFE: No matter what happens (video blocking, script errors, slow network),
 // force the homepage content to be fully visible within 3 seconds.
 (function() {
-    var FAILSAFE_MS = 4000;
+    var FAILSAFE_MS = 6000;
     setTimeout(function() {
         var loader = document.getElementById('intro-loader');
         var homepage = document.getElementById('homepage-content');
@@ -50,10 +50,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.add('loading-active');
     
     const textSteps = [
-        { id: 'step-1', duration: 600 }, // Building Tomorrow
-        { id: 'step-2', duration: 600 }, // Engineering Innovation
-        { id: 'step-3', duration: 700 }, // Web Apps, AI, Projects
-        { id: 'step-4', duration: 600 }  // Empowering Student Innovation
+        { id: 'step-1', duration: 900 }, // Building Tomorrow
+        { id: 'step-2', duration: 900 }, // Engineering Innovation
+        { id: 'step-3', duration: 1000 }, // Web Apps, AI, Projects
+        { id: 'step-4', duration: 900 }  // Empowering Student Innovation
     ];
     
     let currentDelay = 0;
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentDelay += step.duration;
     });
     
-    // 4. Logo Reveal Step (lasts 300ms)
+    // 4. Logo Reveal Step (lasts 400ms)
     setTimeout(() => {
         const logoStep = document.getElementById('step-logo');
         if (logoStep) {
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, currentDelay);
     
-    // 5. Loader Exit & Homepage Entrance trigger (300ms + 200ms = 500ms after logo starts)
+    // 5. Loader Exit & Homepage Entrance trigger (400ms + 400ms = 800ms after logo starts)
     setTimeout(() => {
         // Loader fades away
         if (loader) {
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Trigger page elements slide-ups
         triggerHomepageEntrance();
-    }, currentDelay + 500);
+    }, currentDelay + 800);
     
     // 6. Final cleanup (complete fade-out transition duration of 400ms)
     setTimeout(() => {
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Mark session lock so user isn't slowed down on subsequent navigations back home
         sessionStorage.setItem('gtv_has_loaded_before', 'true');
-    }, currentDelay + 500 + 400);
+    }, currentDelay + 800 + 400);
 
     // 7. Staggered Homepage Entry Animations
     function triggerHomepageEntrance() {
