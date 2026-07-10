@@ -513,6 +513,16 @@ a:hover {
     margin-top: 3px;
 }
 
+.footer-contact-info a {
+    color: #94A3B8;
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+.footer-contact-info a:hover {
+    color: var(--color-primary);
+}
+
 .footer-bottom {
     border-top: 1px solid #1E293B;
     padding-top: var(--spacing-lg);
