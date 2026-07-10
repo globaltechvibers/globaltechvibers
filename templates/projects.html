@@ -86,13 +86,26 @@
 <!-- Projects Catalog with Filters -->
 <section class="section">
     <div class="container">
-        <!-- Category Filters -->
-        <div style="display: flex; justify-content: center; gap: var(--spacing-sm); margin-bottom: var(--spacing-xl); flex-wrap: wrap;" class="reveal reveal-up">
-            <button class="btn btn-primary btn-sm filter-btn" data-filter="all">All Projects</button>
-            <button class="btn btn-secondary btn-sm filter-btn" data-filter="commercial">Commercial Web</button>
-            <button class="btn btn-secondary btn-sm filter-btn" data-filter="academic">Academic &amp; College</button>
-            <button class="btn btn-secondary btn-sm filter-btn" data-filter="ai-ml">AI & Machine Learning</button>
-        </div>
+        <!-- Search & Filter Form -->
+        <form method="GET" action="/projects" class="reveal reveal-up" style="display: flex; gap: var(--spacing-sm); margin-bottom: var(--spacing-xl); max-width: 800px; margin-left: auto; margin-right: auto; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 250px; display: flex; border: 1px solid var(--color-border); border-radius: var(--radius-sm); overflow: hidden; background: #FFF;">
+                <span style="display: flex; align-items: center; padding-left: 14px; color: var(--color-text-muted);"><i class="bi bi-search"></i></span>
+                <input type="text" name="q" placeholder="Search by name, technology, or keywords..." value="{{ q }}" style="border: none; padding: 12px 14px; width: 100%; outline: none; font-family: var(--font-main);">
+            </div>
+            <select name="category" onchange="this.form.submit()" style="border: 1px solid var(--color-border); padding: 12px 14px; border-radius: var(--radius-sm); outline: none; background: #FFF; font-family: var(--font-main); min-width: 180px; color: var(--color-text-muted); cursor: pointer;">
+                <option value="">All Categories</option>
+                <option value="commercial" {% if category == 'commercial' %}selected{% endif %}>Commercial Web</option>
+                <option value="academic" {% if category == 'academic' %}selected{% endif %}>Academic &amp; College</option>
+                <option value="ai-ml" {% if category == 'ai-ml' %}selected{% endif %}>AI &amp; Machine Learning</option>
+                <option value="cybersecurity" {% if category == 'cybersecurity' %}selected{% endif %}>Cybersecurity</option>
+                <option value="blockchain" {% if category == 'blockchain' %}selected{% endif %}>Blockchain &amp; Web3</option>
+                <option value="cloud" {% if category == 'cloud' %}selected{% endif %}>Cloud &amp; DevOps</option>
+            </select>
+            <button type="submit" class="btn btn-primary" style="padding: 12px 24px; font-weight: 600;">Search</button>
+            {% if q or category %}
+                <a href="/projects" class="btn btn-secondary" style="padding: 12px 18px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; border: 1px solid var(--color-border); border-radius: var(--radius-sm);">Clear</a>
+            {% endif %}
+        </form>
         
         <!-- Project Cards Grid -->
         <div class="grid grid-3" id="projects-grid">
@@ -102,16 +115,36 @@
                     <div>
                         <!-- Card Header Graphic based on Category -->
                         <div style="background: var(--color-dark-navy); height: 160px; display: flex; align-items: center; justify-content: center; color: white; border-top-left-radius: var(--radius-md); border-top-right-radius: var(--radius-md); position: relative;">
-                            {% if project.category == 'commercial' %}
-                                <i class="bi bi-wallet2" style="font-size: 3rem; color: var(--color-primary);"></i>
+                            {% if project.category == 'commercial' or project.category == 'web-development' %}
+                                <i class="bi bi-laptop" style="font-size: 3rem; color: var(--color-primary);"></i>
                             {% elif project.category == 'ai-ml' %}
-                                <i class="bi bi-chat-quote" style="font-size: 3rem; color: var(--color-primary);"></i>
-                            {% else %}
+                                <i class="bi bi-cpu" style="font-size: 3rem; color: var(--color-primary);"></i>
+                            {% elif project.category == 'cybersecurity' %}
                                 <i class="bi bi-shield-lock" style="font-size: 3rem; color: var(--color-primary);"></i>
+                            {% elif project.category == 'blockchain' %}
+                                <i class="bi bi-link-45deg" style="font-size: 3rem; color: var(--color-primary);"></i>
+                            {% elif project.category == 'cloud' %}
+                                <i class="bi bi-cloud-arrow-up" style="font-size: 3rem; color: var(--color-primary);"></i>
+                            {% else %}
+                                <i class="bi bi-code-slash" style="font-size: 3rem; color: var(--color-primary);"></i>
                             {% endif %}
                             
                             <span style="position: absolute; bottom: 12px; left: 12px; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px); color: white; font-size: 0.75rem; font-weight: 600; padding: 4px 8px; border-radius: 4px; text-transform: uppercase;">
-                                {{ project.category }}
+                                {% if project.category == 'commercial' %}
+                                    Commercial
+                                {% elif project.category == 'academic' %}
+                                    Academic
+                                {% elif project.category == 'ai-ml' %}
+                                    AI &amp; ML
+                                {% elif project.category == 'cybersecurity' %}
+                                    Cybersecurity
+                                {% elif project.category == 'blockchain' %}
+                                    Blockchain
+                                {% elif project.category == 'cloud' %}
+                                    Cloud/DevOps
+                                {% else %}
+                                    {{ project.category }}
+                                {% endif %}
                             </span>
                         </div>
                         
@@ -176,10 +209,27 @@
             {% else %}
                 <div style="grid-column: span 3; text-align: center; padding: var(--spacing-xl) 0;">
                     <i class="bi bi-inbox" style="font-size: 3rem; color: var(--color-text-muted);"></i>
-                    <p style="margin-top: 10px; color: var(--color-text-muted);">No projects found in catalog database.</p>
+                    <p style="margin-top: 10px; color: var(--color-text-muted);">No projects found matching your search query.</p>
                 </div>
             {% endif %}
         </div>
+
+        <!-- Pagination Controls -->
+        {% if total_pages > 1 %}
+        <div style="display: flex; justify-content: center; gap: 8px; margin-top: var(--spacing-xl);" class="reveal reveal-up">
+            {% if page > 1 %}
+                <a href="{{ url_for('project.catalog', page=page-1, q=q, category=category) }}" class="btn btn-secondary btn-sm" style="display: inline-flex; align-items: center; gap: 4px; text-decoration: none; border-radius: var(--radius-sm); padding: 8px 14px; font-weight: 600;"><i class="bi bi-chevron-left"></i> Prev</a>
+            {% endif %}
+            
+            {% for p in range(1, total_pages + 1) %}
+                <a href="{{ url_for('project.catalog', page=p, q=q, category=category) }}" class="btn {% if p == page %}btn-primary{% else %}btn-secondary{% endif %} btn-sm" style="text-decoration: none; border-radius: var(--radius-sm); padding: 8px 14px; font-weight: 600;">{{ p }}</a>
+            {% endfor %}
+            
+            {% if page < total_pages %}
+                <a href="{{ url_for('project.catalog', page=page+1, q=q, category=category) }}" class="btn btn-secondary btn-sm" style="display: inline-flex; align-items: center; gap: 4px; text-decoration: none; border-radius: var(--radius-sm); padding: 8px 14px; font-weight: 600;">Next <i class="bi bi-chevron-right"></i></a>
+            {% endif %}
+        </div>
+        {% endif %}
     </div>
 </section>
 
@@ -252,31 +302,7 @@
 <!-- Modal Control Script -->
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // --- 1. Project Filter Functionality ---
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        const projectItems = document.querySelectorAll('.project-item');
-
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterBtns.forEach(b => {
-                    b.classList.remove('btn-primary');
-                    b.classList.add('btn-secondary');
-                });
-                btn.classList.remove('btn-secondary');
-                btn.classList.add('btn-primary');
-
-                const filterValue = btn.getAttribute('data-filter');
-
-                projectItems.forEach(item => {
-                    if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
-                        item.style.display = 'flex';
-                        item.classList.add('active');
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
-            });
-        });
+        // --- 1. Project Filter Functionality (Moved to Backend SQL for Pagination Compatibility) ---
 
         // --- 2. Booking Modal Functionality ---
         const bookingModal = document.getElementById('bookingModal');

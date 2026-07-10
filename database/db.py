@@ -285,12 +285,69 @@ def _create_tables(app):
                 'An advanced Retrieval-Augmented Generation (RAG) system utilizing FastAPI and local FAISS vector indices to query custom PDF documents with real-time semantic context injection.',
                 'FastAPI, Python, FAISS Vector DB, Gemini API',
                 9999
+            ),
+            (
+                'StegoShare: Secure Image Steganography System',
+                'cybersecurity',
+                'An advanced image steganography platform leveraging FastAPI and LSB pixel encoding to hide AES-256 encrypted messages inside standard images without visual degradation.',
+                'FastAPI, Python, Cryptography (AES-256), Pillow',
+                7999
+            ),
+            (
+                'TrustChain: Cryptographic E-Voting Ledger',
+                'blockchain',
+                'A secure, transparent digital voting platform using cryptographic block hashing to form an immutable ledger, preventing database tampering and double-voting.',
+                'FastAPI, Python, SHA-256 Hash Chain, SQLite',
+                8999
+            ),
+            (
+                'DeepGuard: CNN-Based Plant Disease Classifier',
+                'ai-ml',
+                'A deep learning convolutional neural network (CNN) system designed to detect and classify crop leaf diseases from uploaded images with statistical confidence readouts.',
+                'Python, TensorFlow, OpenCV, Flask',
+                8999
+            ),
+            (
+                'CipherVault: Secure File Storage with Hybrid Encryption',
+                'cybersecurity',
+                'A secure cloud vault featuring hybrid cryptography, encrypting user files locally with symmetric AES keys and locking keys asynchronously with RSA key pairs.',
+                'Python, Cryptography (AES + RSA), Flask, SQLite',
+                8499
+            ),
+            (
+                'Intellecta: Automated Resume ATS Screener & Matcher',
+                'ai-ml',
+                'An intelligent resume parsing system utilizing Natural Language Processing (NLP) and cosine similarity metrics to screen CVs against job descriptions and display ATS scores.',
+                'Python, Flask, SpaCy NLP, SQLite',
+                7499
+            ),
+            (
+                'Sentinel: Real-Time Server Performance & Uptime Monitor',
+                'cloud',
+                'A lightweight systems monitoring dashboard displaying real-time CPU, RAM, and disk utilization charts with automated SMTP email alert configurations.',
+                'FastAPI, Python, Psutil, Chart.js, SQLite',
+                6999
+            ),
+            (
+                'Apex Ledger: Business CRM with Invoice PDF Mailer',
+                'web-development',
+                'A complete client relations management (CRM) platform equipped with sales pipelines, contact management directories, and automated PDF invoice mailing queues.',
+                'Python, Flask, SQLite, ReportLab, SMTP',
+                7999
+            ),
+            (
+                'MediChain: Patient Electronic Health Records Blockchain Ledger',
+                'blockchain',
+                'A secure patient electronic health records (EHR) database simulated on a local cryptographic blockchain ledger to enforce medical record compliance and privacy.',
+                'Python, Flask, SHA-256 Block Ledger, Cryptography',
+                9499
             )
         ]
         
-        # Clean up any old demo projects
-        cur.execute(f"DELETE FROM projects WHERE title NOT IN ({placeholder}, {placeholder});", 
-                    ('Autonomous AI Research Agent', 'Aegis RAG: Document Q&A System'))
+        # Clean up any old demo projects dynamically
+        project_titles = [p[0] for p in projects_data]
+        placeholders_str = ', '.join([placeholder] * len(project_titles))
+        cur.execute(f"DELETE FROM projects WHERE title NOT IN ({placeholders_str});", tuple(project_titles))
         
         for proj in projects_data:
             cur.execute(f"SELECT COUNT(*) FROM projects WHERE title = {placeholder};", (proj[0],))

@@ -11,16 +11,66 @@ PHONE_REGEX = re.compile(r'^\+?[0-9\s\-()]{10,20}$')
 
 @project_bp.route('/projects')
 def catalog():
-    """Renders the project catalog page, loading projects dynamically from the database."""
+    """Renders the project catalog page, loading projects dynamically with search and pagination."""
+    # 1. Retrieve query parameters
+    search_query = request.args.get('q', '').strip()
+    category_filter = request.args.get('category', '').strip()
+    
     try:
-        # Fetch all active projects
-        projects = execute_read("SELECT * FROM projects WHERE status = 'Active' ORDER BY id ASC")
+        page = int(request.args.get('page', 1))
+    except ValueError:
+        page = 1
+        
+    per_page = 6
+    offset = (page - 1) * per_page
+    
+    # 2. Build parameterized queries
+    placeholder = '%s'
+    query = "SELECT * FROM projects WHERE status = 'Active'"
+    count_query = "SELECT COUNT(*) FROM projects WHERE status = 'Active'"
+    params = []
+    count_params = []
+    
+    if search_query:
+        search_clause = " AND (title ILIKE %s OR description ILIKE %s OR technologies ILIKE %s OR category ILIKE %s)"
+        query += search_clause
+        count_query += search_clause
+        search_param = f"%{search_query}%"
+        params.extend([search_param, search_param, search_param, search_param])
+        count_params.extend([search_param, search_param, search_param, search_param])
+        
+    if category_filter:
+        category_clause = " AND category = %s"
+        query += category_clause
+        count_query += category_clause
+        params.append(category_filter)
+        count_params.append(category_filter)
+        
+    query += " ORDER BY id ASC LIMIT %s OFFSET %s"
+    params.extend([per_page, offset])
+    
+    try:
+        # Execute database queries
+        projects = execute_read(query, tuple(params))
+        total_count_row = execute_read(count_query, tuple(count_params))
+        total_count = total_count_row[0]['count'] if total_count_row else 0
     except Exception as e:
         projects = []
-        # Fallback if connection fails
+        total_count = 0
         print(f"Error querying projects catalog: {e}")
         
-    return render_template('projects.html', projects=projects)
+    import math
+    total_pages = math.ceil(total_count / per_page)
+    
+    return render_template(
+        'projects.html', 
+        projects=projects,
+        q=search_query,
+        category=category_filter,
+        page=page,
+        total_pages=total_pages,
+        total_count=total_count
+    )
 
 @project_bp.route('/projects/book', methods=['POST'])
 def book():
