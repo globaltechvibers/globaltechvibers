@@ -24,11 +24,10 @@ DEPTH_CONFIG = {
 }
 
 FALLBACK_MODELS = [
-    "llama-3.3-70b-specdec",     # primary (Llama 3.3 70B SpecDec)
-    "llama-3.1-8b-instant",      # fallback 1 (Llama 3.1 8B Instant)
-    "llama3-70b-8192",           # fallback 2 (Llama 3 70B)
-    "llama3-8b-8192",            # fallback 3 (Llama 3 8B)
-    "mixtral-8x7b-32768",        # fallback 4 (Mixtral 8x7B)
+    "llama-3.3-70b-versatile",   # primary (Llama 3.3 70B Versatile)
+    "openai/gpt-oss-20b",        # fallback 1 (GPT-OSS 20B)
+    "llama-3.1-8b-instant",      # fallback 2 (Llama 3.1 8B Instant)
+    "mixtral-8x7b-32768",        # fallback 3 (Mixtral 8x7B)
 ]
 
 SNIPPET_LIMIT = 300
