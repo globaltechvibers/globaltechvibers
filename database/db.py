@@ -273,34 +273,6 @@ def _create_tables(app):
         """
         projects_data = [
             (
-                'Apex Ledger CRM',
-                'commercial',
-                'An automated inventory tracking, sales reporting, and CRM module built for commercial distribution enterprises.',
-                'Flask, PostgreSQL, Vanilla JS',
-                3999
-            ),
-            (
-                'Aegis Query Assistant',
-                'ai-ml',
-                'Intelligent support bot integrating Google Gemini APIs, featuring semantic history caching for low-latency client service.',
-                'Gemini API, Python, Vector DB',
-                4999
-            ),
-            (
-                'TrustVote Blockchain',
-                'academic',
-                'An academic capstone implementation of secure cryptographic protocols to establish double-spending immunity in online ballots.',
-                'Cryptography, Python, SQLite',
-                4499
-            ),
-            (
-                'SentimenX Core',
-                'ai-ml',
-                'Algorithmic trading sentiment parser tracking financial news headlines, trained using Scikit-Learn classification pipelines.',
-                'Scikit-Learn, Pandas, Python',
-                4299
-            ),
-            (
                 'Autonomous AI Research Agent',
                 'ai-ml',
                 'An autonomous research assistant that takes any topic, fetches top web sources via DuckDuckGo, synthesizes findings using Groq LLaMA models, and exports citation-backed research briefs.',
@@ -308,13 +280,17 @@ def _create_tables(app):
                 7999
             )
         ]
+        
+        # Clean up any old demo projects
+        cur.execute(f"DELETE FROM projects WHERE title != {placeholder};", ('Autonomous AI Research Agent',))
+        
         for proj in projects_data:
             cur.execute(f"SELECT COUNT(*) FROM projects WHERE title = {placeholder};", (proj[0],))
             exists = cur.fetchone()[0]
             if exists == 0:
                 cur.execute(seed_proj_query, proj)
         conn.commit()
-        app.logger.info("Database: Seeded default project catalog.")
+        app.logger.info("Database: Seeded default project catalog (only Autonomous AI Research Agent).")
             
         cur.close()
         app.logger.info("Database: Tables initialized or verified successfully.")
