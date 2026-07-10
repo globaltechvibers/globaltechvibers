@@ -37,4 +37,13 @@ document.addEventListener('DOMContentLoaded', () => {
             element.classList.add('active');
         });
     }
+
+    // Failsafe: force reveal all elements after 1.2 seconds in case IntersectionObserver is delayed or blocked
+    setTimeout(() => {
+        revealElements.forEach(element => {
+            if (!element.classList.contains('active')) {
+                element.classList.add('active');
+            }
+        });
+    }, 1200);
 });
