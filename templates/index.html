@@ -11,7 +11,7 @@
 {% block content %}
 <!-- Fullscreen Background Video -->
 <div class="fullscreen-bg-video-container">
-    <video id="bg-video" autoplay muted loop playsinline>
+    <video id="bg-video" autoplay muted loop playsinline preload="none">
         <source src="{{ url_for('static', filename='videos/generate_a_video_clip_of_se.mp4') }}" type="video/mp4">
     </video>
     <div class="video-overlay"></div>
@@ -51,8 +51,8 @@
         })();
     </script>
 <!-- 1. HERO SECTION -->
-<section class="hero-section hero-section-video reveal reveal-fade">
-    <div class="container hero-container-centered reveal reveal-up">
+<section class="hero-section hero-section-video animate-fade">
+    <div class="container hero-container-centered animate-slide-up">
         <span class="hero-badge">
             <span class="badge-pulse"></span>Enterprise Grade Solutions
         </span>
