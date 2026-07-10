@@ -131,6 +131,20 @@ def book():
             ref_code_cleaned
         ))
         
+        # Trigger Automated WhatsApp Alerts to Student & Coordinator
+        try:
+            from utils.whatsapp import send_whatsapp_booking_alerts
+            price_formatted = f"INR {project['price']:,}"
+            send_whatsapp_booking_alerts(
+                student_name=name,
+                student_phone=phone,
+                project_title=project['title'],
+                price_formatted=price_formatted,
+                referral_code=ref_code_cleaned
+            )
+        except Exception as ws_err:
+            print(f"WhatsApp Dispatch Warning: {ws_err}")
+        
         return jsonify({
             'success': True,
             'message': 'Project Demo Booking Successful!',
