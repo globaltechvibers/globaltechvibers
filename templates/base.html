@@ -50,33 +50,64 @@
     <!-- Header Navigation -->
     <header class="header">
         <div class="container navbar">
-            <a href="/" class="brand" style="display: flex; align-items: center; gap: 8px;" aria-label="GlobalTechVibers Home">
-                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="GlobalTechVibers Logo" style="height: 52px; width: auto; object-fit: contain;">
-                GlobalTech<span>Vibers</span>
-            </a>
+            <!-- Left Side: Hamburger Menu & Brand Logo -->
+            <div class="navbar-left">
+                <button class="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <i class="bi bi-list"></i>
+                </button>
+                <a href="/" class="brand" aria-label="GlobalTechVibers Home">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="GlobalTechVibers Logo" style="height: 38px; width: 38px; object-fit: cover;">
+                    GlobalTech<span>Vibers</span>
+                </a>
+            </div>
             
-            <button class="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
-                <i class="bi bi-list"></i>
-            </button>
-            
-            <nav>
-                <ul class="nav-links">
+            <!-- Middle Side: Floating Pill Navigation Container (Desktop only) -->
+            <div class="navbar-middle">
+                <ul class="nav-pill-links">
                     <li><a href="/">Home</a></li>
                     <li><a href="/about">About</a></li>
                     <li><a href="/services">Services</a></li>
                     <li><a href="/projects">Projects</a></li>
-                    <li><a href="/tools/research-agent" style="color: var(--color-primary); font-weight: bold;">AI Research Agent</a></li>
+                    <li><a href="/blog">Blog</a></li>
+                    <li><a href="/careers">Careers</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </div>
+            
+            <!-- Right Side: CTA Buttons (Desktop only) -->
+            <div class="navbar-right">
+                <a href="/tools/research-agent" class="btn-ask-ai"><i class="bi bi-stars"></i> Ask AI</a>
+                
+                {% if session.get('admin_logged_in') %}
+                    <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary btn-sm" style="font-size: 0.85rem; padding: 0.4rem 0.8rem;"><i class="bi bi-shield-fill"></i> Admin Panel</a>
+                {% elif session.get('ambassador_id') %}
+                    <a href="{{ url_for('ambassador.dashboard') }}" class="btn btn-primary btn-sm" style="font-size: 0.85rem; padding: 0.4rem 0.8rem;"><i class="bi bi-people-fill"></i> Dashboard</a>
+                {% else %}
+                    <a href="{{ url_for('ambassador.login') }}" class="btn-ambassador-link"><i class="bi bi-people-fill"></i> Login</a>
+                {% endif %}
+            </div>
+            
+            <!-- Slide Drawer / Mobile Navigation Links (Toggled by hamburger menu) -->
+            <nav class="nav-links nav-drawer" id="nav-links">
+                <ul class="drawer-links-wrapper">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/services">Services</a></li>
+                    <li><a href="/projects">Projects</a></li>
+                    <li><a href="/tools/research-agent" class="mobile-research-link"><i class="bi bi-stars"></i> AI Research Agent</a></li>
                     <li><a href="/blog">Blog</a></li>
                     <li><a href="/careers">Careers</a></li>
                     <li><a href="/contact">Contact</a></li>
                     
-                    {% if session.get('admin_logged_in') %}
-                        <li><a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary btn-sm" style="color: white !important; font-size: 0.85rem; padding: 0.4rem 0.8rem; margin-left: 5px; text-decoration: none;"><i class="bi bi-shield-fill"></i> Admin Panel</a></li>
-                    {% elif session.get('ambassador_id') %}
-                        <li><a href="{{ url_for('ambassador.dashboard') }}" class="btn btn-primary btn-sm" style="color: white !important; font-size: 0.85rem; padding: 0.4rem 0.8rem; margin-left: 5px; text-decoration: none;"><i class="bi bi-people-fill"></i> Dashboard</a></li>
-                    {% else %}
-                        <li><a href="{{ url_for('ambassador.login') }}" style="display: inline-flex; align-items: center; gap: 4px; text-decoration: none;"><i class="bi bi-people-fill"></i> Ambassador Login</a></li>
-                    {% endif %}
+                    <li style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; width: 100%;">
+                        {% if session.get('admin_logged_in') %}
+                            <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary btn-sm" style="color: white !important; width: 100%; text-align: center;"><i class="bi bi-shield-fill"></i> Admin Panel</a>
+                        {% elif session.get('ambassador_id') %}
+                            <a href="{{ url_for('ambassador.dashboard') }}" class="btn btn-primary btn-sm" style="color: white !important; width: 100%; text-align: center;"><i class="bi bi-people-fill"></i> Dashboard</a>
+                        {% else %}
+                            <a href="{{ url_for('ambassador.login') }}" class="btn btn-outline" style="color: white !important; border-color: rgba(255, 255, 255, 0.3); width: 100%; text-align: center; justify-content: center;"><i class="bi bi-people-fill"></i> Login</a>
+                        {% endif %}
+                    </li>
                 </ul>
             </nav>
         </div>

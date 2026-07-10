@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const header = document.querySelector('.header');
     const mobileToggle = document.querySelector('.mobile-nav-toggle');
     const navLinks = document.querySelector('.nav-links');
-    const navLinksItems = document.querySelectorAll('.nav-links a');
+    const navLinksItems = document.querySelectorAll('.nav-links a, .nav-pill-links a');
     const body = document.body;
 
     const setNavOpen = (isOpen) => {
@@ -23,15 +23,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 1. Sticky Header Transformation on Scroll
     const handleScroll = () => {
-        const isHomePage = document.querySelector('.hero-section-video') !== null;
+        const isDarkHeroPage = document.querySelector('.hero-section-video') !== null || document.querySelector('.research-bg-video-container') !== null;
         if (window.scrollY > 50) {
             header.classList.add('scrolled');
-            if (isHomePage) {
+            if (isDarkHeroPage) {
                 header.classList.remove('header-dark-glass');
             }
         } else {
             header.classList.remove('scrolled');
-            if (isHomePage) {
+            if (isDarkHeroPage) {
                 header.classList.add('header-dark-glass');
             }
         }

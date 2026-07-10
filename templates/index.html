@@ -613,7 +613,7 @@
         
         // Stagger startup timing based on loader session state
         const hasLoadedBefore = sessionStorage.getItem('gtv_has_loaded_before');
-        const startDelay = hasLoadedBefore ? 500 : 8000;
+        const startDelay = hasLoadedBefore ? 500 : 2600;
         setTimeout(type, startDelay);
     });
 </script>
