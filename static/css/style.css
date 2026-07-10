@@ -1263,18 +1263,7 @@ textarea.form-control {
     box-shadow: 0 4px 14px rgba(51, 102, 255, 0.1);
 }
 
-/* Glowing underline indicator for active tab */
-.nav-pill-links a.active::after {
-    content: '';
-    position: absolute;
-    bottom: 5px;
-    left: 25%;
-    right: 25%;
-    height: 3px;
-    background-color: #3366FF;
-    border-radius: 99px;
-    box-shadow: 0 0 10px rgba(51, 102, 255, 0.9);
-}
+
 
 /* Dark gradient "Ask AI" capsule pill button */
 .btn-ask-ai {
