@@ -231,6 +231,22 @@
     </div>
 </section>
 
+<!-- Custom Project Banner Section -->
+<section style="background-color: var(--color-dark-navy); color: white; padding: var(--spacing-xl) 0; position: relative; z-index: 2; border-top: 1px solid rgba(255,255,255,0.1);">
+    <div class="container text-center" style="max-width: 800px; display: flex; flex-direction: column; align-items: center; gap: var(--spacing-md);">
+        <span class="reveal reveal-up" style="background: rgba(214, 40, 40, 0.2); border: 1px solid var(--color-primary); color: var(--color-primary); font-size: 0.85rem; font-weight: 700; padding: 6px 16px; border-radius: 30px; text-transform: uppercase; letter-spacing: 0.05em; display: inline-flex; align-items: center; gap: 6px;">
+            <i class="bi bi-gear-fill"></i> Custom Development
+        </span>
+        <h2 class="reveal reveal-up" style="font-size: 2.25rem; font-weight: 800; line-height: 1.25; margin-bottom: 0;">Have a Specific Project Topic in Mind?</h2>
+        <p class="reveal reveal-up" style="font-size: 1.15rem; color: rgba(255,255,255,0.85); line-height: 1.6; max-width: 680px; margin-top: 0; margin-bottom: var(--spacing-sm);">
+            If your college coordinator assigned a custom topic or department guidelines, share your requirements! Our senior developers will build your custom project from scratch, compile the reports, and guide you through the submission.
+        </p>
+        <button id="openCustomModalBtn" class="btn btn-primary btn-lg reveal reveal-up" style="font-weight: 700; border-radius: var(--radius-sm); padding: var(--spacing-sm) var(--spacing-lg);">
+            Submit Custom Requirements <i class="bi bi-arrow-right"></i>
+        </button>
+    </div>
+</section>
+
 <!-- Booking Overlay Modal -->
 <div id="bookingModal" style="display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); align-items: center; justify-content: center;">
     <div style="background-color: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-md); max-width: 500px; width: 90%; padding: var(--spacing-lg); box-shadow: var(--shadow-lg); position: relative; margin: auto;">
@@ -294,6 +310,86 @@
             <button class="btn btn-secondary close-success-btn" style="padding: 0.5rem 2rem; width: 100%; font-weight: 600;">Close Panel</button>
         </div>
         
+    </div>
+</div>
+
+<!-- Custom Project Requirements Modal -->
+<div id="customModal" style="display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); align-items: center; justify-content: center;">
+    <div style="background-color: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-md); max-width: 550px; width: 90%; padding: var(--spacing-lg); box-shadow: var(--shadow-lg); position: relative; margin: auto;">
+        
+        <!-- Close trigger icon -->
+        <span id="closeCustomModalBtn" style="position: absolute; top: 12px; right: 16px; font-size: 1.75rem; font-weight: 700; cursor: pointer; color: var(--color-text-muted); transition: color 0.2s ease;">&times;</span>
+        
+        <!-- Step 1: Form panel -->
+        <div id="customFormStep">
+            <h3 style="color: var(--color-dark-navy); margin-bottom: 4px; font-size: 1.35rem;">Submit Custom Project Guidelines</h3>
+            <p style="color: var(--color-text-muted); font-size: 0.85rem; margin-top: 0; margin-bottom: var(--spacing-md);">Describe your project topic and college specifications. Our developers will build it for you!</p>
+            
+            <form id="customForm" style="display: flex; flex-direction: column; gap: var(--spacing-sm);">
+                <div class="form-group" style="display: flex; flex-direction: column; gap: 4px;">
+                    <label for="customName" class="form-label" style="font-weight: 600; font-size: 0.875rem;">Your Name *</label>
+                    <input type="text" id="customName" required class="form-control" placeholder="Enter your full name">
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-sm);" class="grid-2">
+                    <div class="form-group" style="display: flex; flex-direction: column; gap: 4px;">
+                        <label for="customEmail" class="form-label" style="font-weight: 600; font-size: 0.875rem;">Email Address *</label>
+                        <input type="email" id="customEmail" required class="form-control" placeholder="name@gmail.com">
+                    </div>
+                    <div class="form-group" style="display: flex; flex-direction: column; gap: 4px;">
+                        <label for="customPhone" class="form-label" style="font-weight: 600; font-size: 0.875rem;">WhatsApp Number *</label>
+                        <input type="tel" id="customPhone" required class="form-control" placeholder="e.g. 9876543210">
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-sm);" class="grid-2">
+                    <div class="form-group" style="display: flex; flex-direction: column; gap: 4px;">
+                        <label for="customDept" class="form-label" style="font-weight: 600; font-size: 0.875rem;">Department *</label>
+                        <select id="customDept" required class="form-control" style="background: white; cursor: pointer;">
+                            <option value="">Select Branch</option>
+                            <option value="CSE">Computer Science (CSE)</option>
+                            <option value="IT">Information Technology (IT)</option>
+                            <option value="ECE">Electronics (ECE)</option>
+                            <option value="EEE">Electrical (EEE)</option>
+                            <option value="Other">Other Branch</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="display: flex; flex-direction: column; gap: 4px;">
+                        <label for="customDeadline" class="form-label" style="font-weight: 600; font-size: 0.875rem;">Target Deadline</label>
+                        <input type="text" id="customDeadline" class="form-control" placeholder="e.g. End of next week">
+                    </div>
+                </div>
+
+                <div class="form-group" style="display: flex; flex-direction: column; gap: 4px;">
+                    <label for="customTopic" class="form-label" style="font-weight: 600; font-size: 0.875rem;">Project Topic / Domain *</label>
+                    <input type="text" id="customTopic" required class="form-control" placeholder="e.g. AI-driven Crop Advisory System or IoT Smart Home">
+                </div>
+
+                <div class="form-group" style="display: flex; flex-direction: column; gap: 4px;">
+                    <label for="customRequirements" class="form-label" style="font-weight: 600; font-size: 0.875rem;">Describe Requirements &amp; Technologies *</label>
+                    <textarea id="customRequirements" required class="form-control" rows="4" placeholder="Describe features, preferred framework (e.g. Django, FastAPI, React), hardware components, or college guidelines..." style="resize: vertical; font-family: var(--font-main);"></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" id="customSubmitBtn" style="width: 100%; font-weight: 600; padding: 0.75rem; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    Submit Custom Project Requirements <i class="bi bi-chevron-right"></i>
+                </button>
+            </form>
+        </div>
+        
+        <!-- Step 2: Success panel -->
+        <div id="customSuccessStep" style="display: none; text-align: center; padding: var(--spacing-sm) 0;">
+            <div style="background: rgba(16, 185, 129, 0.08); border-radius: 50%; width: 64px; height: 64px; display: inline-flex; align-items: center; justify-content: center; margin-bottom: var(--spacing-md);">
+                <i class="bi bi-patch-check-fill" style="color: #10B981; font-size: 2.25rem;"></i>
+            </div>
+            <h3 style="color: var(--color-dark-navy); margin-bottom: 8px; font-size: 1.4rem;">Requirements Submitted!</h3>
+            <p style="font-size: 0.95rem; color: var(--color-text-muted); margin-bottom: var(--spacing-md); line-height: 1.5; text-align: left;">
+                Hi <strong id="customSuccessStudentName">Student</strong>,<br><br>
+                Thank you for submitting your custom project guidelines for <strong id="customSuccessTopic">Topic</strong>. We have logged your request.
+                Our team lead developer will message you on WhatsApp shortly to discuss details, delivery estimates, and quote calculations.
+            </p>
+            <button class="btn btn-secondary close-custom-success-btn" style="width: 100%; font-weight: 600; padding: 0.75rem;">Close Window</button>
+        </div>
+
     </div>
 </div>
 
@@ -398,6 +494,96 @@
                 bookingSubmitBtn.innerHTML = 'Confirm Free Demo Booking <i class="bi bi-chevron-right"></i>';
             }
         });
+
+        // --- 3. Custom Project Requirements Modal Functionality ---
+        const customModal = document.getElementById('customModal');
+        const openCustomModalBtn = document.getElementById('openCustomModalBtn');
+        const closeCustomModalBtn = document.getElementById('closeCustomModalBtn');
+        const closeCustomSuccessBtn = document.querySelector('.close-custom-success-btn');
+        
+        const customFormStep = document.getElementById('customFormStep');
+        const customSuccessStep = document.getElementById('customSuccessStep');
+        const customForm = document.getElementById('customForm');
+        const customSubmitBtn = document.getElementById('customSubmitBtn');
+
+        // Open Custom Modal
+        if (openCustomModalBtn) {
+            openCustomModalBtn.addEventListener('click', () => {
+                customFormStep.style.display = 'block';
+                customSuccessStep.style.display = 'none';
+                customForm.reset();
+                customModal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
+        }
+
+        // Close Custom Modal
+        const dismissCustomModal = () => {
+            customModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
+
+        if (closeCustomModalBtn) closeCustomModalBtn.addEventListener('click', dismissCustomModal);
+        if (closeCustomSuccessBtn) closeCustomSuccessBtn.addEventListener('click', dismissCustomModal);
+
+        window.addEventListener('click', (e) => {
+            if (e.target === customModal) {
+                dismissCustomModal();
+            }
+        });
+
+        // Submit Custom Requirements via AJAX
+        if (customForm) {
+            customForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const name = document.getElementById('customName').value.trim();
+                const email = document.getElementById('customEmail').value.trim();
+                const phone = document.getElementById('customPhone').value.trim();
+                const department = document.getElementById('customDept').value;
+                const deadline = document.getElementById('customDeadline').value.trim();
+                const topic = document.getElementById('customTopic').value.trim();
+                const requirements = document.getElementById('customRequirements').value.trim();
+
+                customSubmitBtn.disabled = true;
+                customSubmitBtn.innerHTML = '<i class="bi bi-arrow-clockwise animate-spin" style="display:inline-block; animation: spin 1s linear infinite;"></i> Submitting Guidelines...';
+
+                try {
+                    const response = await fetch('/projects/custom-submit', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': "{{ csrf_token() }}"
+                        },
+                        body: JSON.stringify({ name, email, phone, department, deadline, topic, requirements })
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok && result.success) {
+                        // Populate success info
+                        document.getElementById('customSuccessStudentName').textContent = result.student_name;
+                        document.getElementById('customSuccessTopic').textContent = result.topic;
+
+                        customFormStep.style.display = 'none';
+                        customSuccessStep.style.display = 'block';
+                        customForm.reset();
+
+                        // Open 100% Free WhatsApp Chat redirect
+                        const message = encodeURIComponent(`Hi GlobalTechVibers! I just submitted my custom project requirements.\n\n👤 Name: ${result.student_name}\n📚 Topic: ${result.topic}\n🎓 Dept: ${result.department}\n📅 Deadline: ${deadline || 'Flexible'}`);
+                        const waUrl = `https://wa.me/918328186045?text=${message}`;
+                        window.open(waUrl, '_blank');
+                    } else {
+                        window.showToast(result.message || 'Submission failed.', 'error');
+                    }
+                } catch (err) {
+                    window.showToast('Server communication error.', 'error');
+                } finally {
+                    customSubmitBtn.disabled = false;
+                    customSubmitBtn.innerHTML = 'Submit Custom Project Requirements <i class="bi bi-chevron-right"></i>';
+                }
+            });
+        }
     });
 </script>
 {% endblock %}

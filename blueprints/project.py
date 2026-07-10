@@ -301,3 +301,53 @@ def details(project_id, slug):
         return redirect(url_for('project.catalog'))
         
     return render_template('project_detail.html', project=project, related=related)
+
+@project_bp.route('/projects/custom-submit', methods=['POST'])
+def custom_submit():
+    """Accepts custom project requirements requests from students."""
+    if request.is_json:
+        data = request.get_json() or {}
+        name = data.get('name', '').strip()
+        email = data.get('email', '').strip()
+        phone = data.get('phone', '').strip()
+        department = data.get('department', '').strip()
+        topic = data.get('topic', '').strip()
+        requirements = data.get('requirements', '').strip()
+        deadline = data.get('deadline', '').strip()
+    else:
+        name = request.form.get('name', '').strip()
+        email = request.form.get('email', '').strip()
+        phone = request.form.get('phone', '').strip()
+        department = request.form.get('department', '').strip()
+        topic = request.form.get('topic', '').strip()
+        requirements = request.form.get('requirements', '').strip()
+        deadline = request.form.get('deadline', '').strip()
+
+    # Validations
+    if not name or not email or not phone or not department or not topic or not requirements:
+        return jsonify({'success': False, 'message': 'Please fill out all required fields.'}), 400
+
+    if not EMAIL_REGEX.match(email):
+        return jsonify({'success': False, 'message': 'Please enter a valid email address.'}), 400
+
+    if not PHONE_REGEX.match(phone):
+        return jsonify({'success': False, 'message': 'Please enter a valid WhatsApp phone number.'}), 400
+
+    # Insert into database
+    try:
+        query = """
+        INSERT INTO custom_requests (name, email, phone, department, topic, requirements, deadline, status)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, 'Pending')
+        """
+        execute_write(query, (name, email, phone, department, topic, requirements, deadline))
+        
+        return jsonify({
+            'success': True,
+            'message': 'Custom Project Requirements Submitted Successfully!',
+            'student_name': name,
+            'topic': topic,
+            'department': department,
+            'phone': phone
+        }), 200
+    except Exception as e:
+        return jsonify({'success': False, 'message': f'Server Error saving custom request: {e}'}), 500

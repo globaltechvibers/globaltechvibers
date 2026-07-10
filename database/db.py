@@ -148,6 +148,20 @@ def _create_tables(app):
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
         """
+        custom_requests_sql = """
+        CREATE TABLE IF NOT EXISTS custom_requests (
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(100) NOT NULL,
+            email VARCHAR(100) NOT NULL,
+            phone VARCHAR(20) NOT NULL,
+            department VARCHAR(50) NOT NULL,
+            topic VARCHAR(200) NOT NULL,
+            requirements TEXT NOT NULL,
+            deadline VARCHAR(50),
+            status VARCHAR(50) DEFAULT 'Pending',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+        """
     else:
         contacts_sql = """
         CREATE TABLE IF NOT EXISTS contacts (
@@ -232,6 +246,20 @@ def _create_tables(app):
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
         """
+        custom_requests_sql = """
+        CREATE TABLE IF NOT EXISTS custom_requests (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            email TEXT NOT NULL,
+            phone TEXT NOT NULL,
+            department TEXT NOT NULL,
+            topic TEXT NOT NULL,
+            requirements TEXT NOT NULL,
+            deadline TEXT,
+            status TEXT DEFAULT 'Pending',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+        """
 
     conn = get_connection()
     try:
@@ -243,6 +271,7 @@ def _create_tables(app):
         cur.execute(ambassadors_sql)
         cur.execute(projects_sql)
         cur.execute(bookings_sql)
+        cur.execute(custom_requests_sql)
         conn.commit()
         
         # Seed default Campus Tech Ambassador job if empty
