@@ -383,6 +383,11 @@
                     
                     // Reset form
                     bookingForm.reset();
+
+                    // Open 100% Free WhatsApp Chat redirect
+                    const message = encodeURIComponent(`Hi GlobalTechVibers! I just booked a free live demo for ${result.project_title}. Let's schedule the live video call!`);
+                    const waUrl = `https://wa.me/918328186045?text=${message}`;
+                    window.open(waUrl, '_blank');
                 } else {
                     window.showToast(result.message || 'Booking failed.', 'error');
                 }

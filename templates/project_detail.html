@@ -350,6 +350,11 @@
                 // Toggle view panels
                 modalFormStep.style.display = 'none';
                 modalSuccessStep.style.display = 'block';
+
+                // Open 100% Free WhatsApp Chat redirect
+                const message = encodeURIComponent(`Hi GlobalTechVibers! I just booked a free live demo for ${data.project_title}. Let's schedule the live video call!`);
+                const waUrl = `https://wa.me/918328186045?text=${message}`;
+                window.open(waUrl, '_blank');
             })
             .catch(error => {
                 alert(error.message || 'An error occurred. Please try again.');
