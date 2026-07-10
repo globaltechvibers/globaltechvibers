@@ -247,3 +247,43 @@ def download_pdf_report(filename):
         )
     except Exception as e:
         return jsonify({'success': False, 'error': f"Failed to generate PDF: {str(e)}"}), 500
+
+def slugify(text):
+    """Utility to convert text to SEO-friendly slug strings."""
+    text = text.lower()
+    text = re.sub(r'[^a-z0-9\s-]', '', text)
+    text = re.sub(r'[\s-]+', '-', text)
+    return text.strip('-')
+
+@project_bp.app_template_filter('slugify')
+def slugify_filter(s):
+    return slugify(s)
+
+@project_bp.route('/projects/<int:project_id>-<string:slug>')
+def details(project_id, slug):
+    """Renders the detailed SEO landing page for a specific project."""
+    try:
+        # Fetch target project
+        rows = execute_read("SELECT * FROM projects WHERE id = %s AND status = 'Active'", (project_id,))
+        if not rows:
+            flash("Project not found in our catalog.", "error")
+            return redirect(url_for('project.catalog'))
+            
+        project = rows[0]
+        
+        # Enforce canonical SEO URLs (redirect if slug is mismatched)
+        expected_slug = slugify(project['title'])
+        if slug != expected_slug:
+            return redirect(url_for('project.details', project_id=project_id, slug=expected_slug), code=301)
+            
+        # Fetch related projects (same category, excluding current one) for internal linking
+        related = execute_read(
+            "SELECT * FROM projects WHERE category = %s AND id != %s AND status = 'Active' LIMIT 3",
+            (project['category'], project_id)
+        )
+    except Exception as e:
+        print(f"Error querying project details: {e}")
+        flash("An error occurred while loading project details.", "error")
+        return redirect(url_for('project.catalog'))
+        
+    return render_template('project_detail.html', project=project, related=related)

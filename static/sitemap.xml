@@ -162,4 +162,65 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
+  <!-- Dedicated Projects SEO Landing Pages -->
+  <url>
+    <loc>https://www.globaltechvibers.com/projects/1-autonomous-ai-research-agent</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.globaltechvibers.com/projects/2-aegis-rag-document-qa-system</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.globaltechvibers.com/projects/3-stegoshare-secure-image-steganography-system</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.globaltechvibers.com/projects/4-trustchain-cryptographic-e-voting-ledger</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.globaltechvibers.com/projects/5-deepguard-cnn-based-plant-disease-classifier</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.globaltechvibers.com/projects/6-ciphervault-secure-file-storage-with-hybrid-encryption</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.globaltechvibers.com/projects/7-intellecta-automated-resume-ats-screener-matcher</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.globaltechvibers.com/projects/8-sentinel-real-time-server-performance-uptime-monitor</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.globaltechvibers.com/projects/9-apex-ledger-business-crm-with-invoice-pdf-mailer</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.globaltechvibers.com/projects/10-medichain-patient-electronic-health-records-blockchain-ledger</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
 </urlset>
