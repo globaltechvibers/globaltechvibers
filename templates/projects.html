@@ -156,13 +156,20 @@
                             <span style="display: block; font-size: 0.7rem; text-transform: uppercase; color: var(--color-text-muted); font-weight: 600; letter-spacing: 0.05em;">Project Price</span>
                             <span style="font-weight: 700; color: var(--color-primary); font-size: 1.25rem;">₹{{ "{:,}".format(project.price) }}</span>
                         </div>
-                        <button class="btn btn-primary btn-sm book-demo-btn" 
-                                data-project-id="{{ project.id }}" 
-                                data-project-title="{{ project.title }}" 
-                                data-project-price="₹{{ '{:,}'.format(project.price) }}"
-                                style="font-weight: 600; padding: 0.45rem 0.9rem; font-size: 0.85rem;">
-                            Book Free Demo <i class="bi bi-chevron-right" style="font-size: 0.75rem;"></i>
-                        </button>
+                        <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 6px;">
+                            {% if project.title == 'Autonomous AI Research Agent' %}
+                                <a href="/tools/research-agent" class="btn btn-outline" style="font-weight: 600; padding: 0.35rem 0.75rem; font-size: 0.75rem; border-color: #10B981; color: #10B981; display: inline-flex; align-items: center; gap: 4px; text-decoration: none; border-radius: var(--radius-sm);">
+                                    Try Live Demo <i class="bi bi-play-circle"></i>
+                                </a>
+                            {% endif %}
+                            <button class="btn btn-primary btn-sm book-demo-btn" 
+                                    data-project-id="{{ project.id }}" 
+                                    data-project-title="{{ project.title }}" 
+                                    data-project-price="₹{{ '{:,}'.format(project.price) }}"
+                                    style="font-weight: 600; padding: 0.45rem 0.9rem; font-size: 0.85rem;">
+                                Book Free Demo <i class="bi bi-chevron-right" style="font-size: 0.75rem;"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 {% endfor %}
