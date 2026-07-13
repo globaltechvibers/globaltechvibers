@@ -106,6 +106,22 @@
                 <a href="/projects" class="btn btn-secondary" style="padding: 12px 18px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; border: 1px solid var(--color-border); border-radius: var(--radius-sm);">Clear</a>
             {% endif %}
         </form>
+
+        <!-- Interactive Project Cost Estimator Banner Card -->
+        <div class="card reveal reveal-up active animate-slide-up" style="margin-bottom: var(--spacing-lg); border-color: rgba(214, 40, 40, 0.2); background: rgba(214, 40, 40, 0.02); display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-md); flex-wrap: wrap; padding: var(--spacing-md) var(--spacing-lg); border-radius: var(--radius-sm); border: 1px solid var(--color-border); box-shadow: var(--shadow-sm); z-index: 2; position: relative;">
+            <div style="display: flex; align-items: center; gap: 12px; text-align: left;">
+                <div style="background: rgba(214, 40, 40, 0.1); border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; color: var(--color-primary); font-size: 1.25rem; flex-shrink: 0;">
+                    <i class="bi bi-calculator-fill"></i>
+                </div>
+                <div>
+                    <h4 style="margin: 0 0 2px 0; font-size: 1.05rem; color: var(--color-dark-navy); font-weight: 700;">Calculate Your Project Budget Instantly</h4>
+                    <p style="margin: 0; font-size: 0.85rem; color: var(--color-text-muted);">Select your branch, project level, and required deliverables to estimate costs in real time.</p>
+                </div>
+            </div>
+            <button id="openCalculatorBtn" class="btn btn-secondary btn-sm" style="border: 1px solid var(--color-primary); color: var(--color-primary); background: transparent; font-weight: 700; padding: 10px 18px; border-radius: var(--radius-sm); transition: all 0.2s ease; cursor: pointer;">
+                Open Cost Estimator <i class="bi bi-calculator"></i>
+            </button>
+        </div>
         
         <!-- Project Cards Grid -->
         <div class="grid grid-3" id="projects-grid">
@@ -393,6 +409,116 @@
     </div>
 </div>
 
+<!-- Interactive Cost Estimator Modal -->
+<div id="calculatorModal" style="display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); align-items: center; justify-content: center;">
+    <div style="background-color: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-md); max-width: 600px; width: 95%; padding: var(--spacing-lg); box-shadow: var(--shadow-lg); position: relative; margin: auto; max-height: 90vh; overflow-y: auto;">
+        
+        <!-- Close trigger icon -->
+        <span id="closeCalculatorModalBtn" style="position: absolute; top: 12px; right: 16px; font-size: 1.75rem; font-weight: 700; cursor: pointer; color: var(--color-text-muted); transition: color 0.2s ease;">&times;</span>
+        
+        <h3 style="color: var(--color-dark-navy); margin-bottom: 4px; font-size: 1.4rem; display: flex; align-items: center; gap: 8px; text-align: left;">
+            <i class="bi bi-calculator-fill" style="color: var(--color-primary);"></i> Academic Project Cost Estimator
+        </h3>
+        <p style="color: var(--color-text-muted); font-size: 0.85rem; margin-top: 0; margin-bottom: var(--spacing-md); text-align: left;">Configure your engineering project scope and see dynamic pricing estimates in real time.</p>
+        
+        <form id="calculatorForm" style="display: flex; flex-direction: column; gap: var(--spacing-md);">
+            
+            <!-- Step 1: Project Level -->
+            <div style="border-bottom: 1px solid var(--color-border); padding-bottom: var(--spacing-sm); text-align: left;">
+                <label style="font-weight: 700; font-size: 0.95rem; color: var(--color-dark-navy); display: block; margin-bottom: 8px;">1. Select Project Level *</label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-sm);">
+                    <label style="border: 1px solid var(--color-border); border-radius: 6px; padding: 12px; cursor: pointer; display: flex; align-items: flex-start; gap: 8px; transition: border-color 0.2s ease;" class="calc-card">
+                        <input type="radio" name="calcLevel" value="mini" checked style="margin-top: 3px;">
+                        <div>
+                            <span style="font-weight: 600; font-size: 0.85rem; display: block; color: var(--color-dark-navy);">Mini Project</span>
+                            <span style="font-size: 0.75rem; color: var(--color-text-muted);">Base: ₹3,999</span>
+                        </div>
+                    </label>
+                    <label style="border: 1px solid var(--color-border); border-radius: 6px; padding: 12px; cursor: pointer; display: flex; align-items: flex-start; gap: 8px; transition: border-color 0.2s ease;" class="calc-card">
+                        <input type="radio" name="calcLevel" value="capstone" style="margin-top: 3px;">
+                        <div>
+                            <span style="font-weight: 600; font-size: 0.85rem; display: block; color: var(--color-dark-navy);">Final Year Capstone</span>
+                            <span style="font-size: 0.75rem; color: var(--color-text-muted);">Base: ₹7,499</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Step 2: Tech Domain -->
+            <div style="border-bottom: 1px solid var(--color-border); padding-bottom: var(--spacing-sm); text-align: left;">
+                <label style="font-weight: 700; font-size: 0.95rem; color: var(--color-dark-navy); display: block; margin-bottom: 8px;">2. Select Technology Domain *</label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-sm);">
+                    <label style="border: 1px solid var(--color-border); border-radius: 6px; padding: 10px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 600; color: var(--color-dark-navy);">
+                        <input type="radio" name="calcTech" value="web" checked> Web App (Flask/React)
+                    </label>
+                    <label style="border: 1px solid var(--color-border); border-radius: 6px; padding: 10px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 600; color: var(--color-dark-navy);">
+                        <input type="radio" name="calcTech" value="ai"> AI / Machine Learning (+₹1,500)
+                    </label>
+                    <label style="border: 1px solid var(--color-border); border-radius: 6px; padding: 10px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 600; color: var(--color-dark-navy);">
+                        <input type="radio" name="calcTech" value="cyber"> Cybersecurity (+₹1,000)
+                    </label>
+                    <label style="border: 1px solid var(--color-border); border-radius: 6px; padding: 10px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 600; color: var(--color-dark-navy);">
+                        <input type="radio" name="calcTech" value="blockchain"> Blockchain &amp; Web3 (+₹2,000)
+                    </label>
+                </div>
+            </div>
+
+            <!-- Step 3: Required Deliverables -->
+            <div style="border-bottom: 1px solid var(--color-border); padding-bottom: var(--spacing-sm); text-align: left;">
+                <label style="font-weight: 700; font-size: 0.95rem; color: var(--color-dark-navy); display: block; margin-bottom: 8px;">3. Choose Deliverables *</label>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--color-text-muted);">
+                        <input type="checkbox" name="calcDeliverable" value="code" checked disabled> <span>Source Code &amp; Database Setup (Included)</span>
+                    </label>
+                    <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--color-dark-navy); font-weight: 500;">
+                        <input type="checkbox" name="calcDeliverable" value="report" id="chkReport"> <span>Complete Documentation Report / Synopsis (+₹1,000)</span>
+                    </label>
+                    <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--color-dark-navy); font-weight: 500;">
+                        <input type="checkbox" name="calcDeliverable" value="ppt" id="chkPpt"> <span>Project PPT Presentation Slides (+₹499)</span>
+                    </label>
+                    <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--color-dark-navy); font-weight: 500;">
+                        <input type="checkbox" name="calcDeliverable" value="viva" id="chkViva"> <span>Viva preparation guide &amp; Lifetime support (+₹999)</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Step 4: Urgency -->
+            <div style="text-align: left;">
+                <label style="font-weight: 700; font-size: 0.95rem; color: var(--color-dark-navy); display: block; margin-bottom: 8px;">4. Select Deadline Urgency *</label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--spacing-sm);">
+                    <label style="border: 1px solid var(--color-border); border-radius: 6px; padding: 10px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center;">
+                        <input type="radio" name="calcUrgency" value="normal" checked>
+                        <span style="font-size: 0.75rem; font-weight: 700; color: var(--color-dark-navy);">Standard (2+ wks)</span>
+                        <span style="font-size: 0.65rem; color: var(--color-text-muted);">Included</span>
+                    </label>
+                    <label style="border: 1px solid var(--color-border); border-radius: 6px; padding: 10px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center;">
+                        <input type="radio" name="calcUrgency" value="fast">
+                        <span style="font-size: 0.75rem; font-weight: 700; color: var(--color-dark-navy);">Urgent (1 wk)</span>
+                        <span style="font-size: 0.65rem; color: var(--color-text-muted);">+₹1,000</span>
+                    </label>
+                    <label style="border: 1px solid var(--color-border); border-radius: 6px; padding: 10px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center;">
+                        <input type="radio" name="calcUrgency" value="critical">
+                        <span style="font-size: 0.75rem; font-weight: 700; color: var(--color-dark-navy);">Express (48h)</span>
+                        <span style="font-size: 0.65rem; color: var(--color-text-muted);">+₹2,499</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Dynamic Price Output -->
+            <div style="background-color: rgba(214, 40, 40, 0.05); border-radius: 6px; padding: 16px; border: 1px dashed var(--color-primary); display: flex; justify-content: space-between; align-items: center; margin-top: 10px; flex-wrap: wrap; gap: 12px; text-align: left;">
+                <div>
+                    <span style="font-size: 0.8rem; font-weight: 600; color: var(--color-text-muted); display: block; text-transform: uppercase;">Estimated Project Budget:</span>
+                    <span id="calculatedPriceDisplay" style="font-size: 1.6rem; font-weight: 800; color: var(--color-primary);">₹3,999 - ₹4,499</span>
+                </div>
+                <button type="button" id="lockPriceBtn" class="btn btn-primary" style="font-weight: 700; padding: 12px 20px; font-size: 0.9rem; border-radius: var(--radius-sm); cursor: pointer; display: inline-flex; align-items: center; gap: 8px;">
+                    Lock Price &amp; Consult <i class="bi bi-whatsapp"></i>
+                </button>
+            </div>
+            
+        </form>
+    </div>
+</div>
+
 <!-- Modal Control Script -->
 <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -582,6 +708,98 @@
                     customSubmitBtn.disabled = false;
                     customSubmitBtn.innerHTML = 'Submit Custom Project Requirements <i class="bi bi-chevron-right"></i>';
                 }
+            });
+        }
+
+        // --- 4. Interactive Cost Estimator Modal Functionality ---
+        const calculatorModal = document.getElementById('calculatorModal');
+        const openCalculatorBtn = document.getElementById('openCalculatorBtn');
+        const closeCalculatorModalBtn = document.getElementById('closeCalculatorModalBtn');
+        
+        const calculatorForm = document.getElementById('calculatorForm');
+        const calculatedPriceDisplay = document.getElementById('calculatedPriceDisplay');
+        const lockPriceBtn = document.getElementById('lockPriceBtn');
+
+        // Open Calculator Modal
+        if (openCalculatorBtn) {
+            openCalculatorBtn.addEventListener('click', () => {
+                calculatorModal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                updateCalculatedPrice();
+            });
+        }
+
+        // Close Calculator Modal
+        const dismissCalculatorModal = () => {
+            calculatorModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        };
+
+        if (closeCalculatorModalBtn) closeCalculatorModalBtn.addEventListener('click', dismissCalculatorModal);
+
+        window.addEventListener('click', (e) => {
+            if (e.target === calculatorModal) {
+                dismissCalculatorModal();
+            }
+        });
+
+        // Price Update Calculator logic
+        const updateCalculatedPrice = () => {
+            if (!calculatorForm) return;
+
+            const level = calculatorForm.elements['calcLevel'].value;
+            const tech = calculatorForm.elements['calcTech'].value;
+            const urgency = calculatorForm.elements['calcUrgency'].value;
+
+            const chkReport = document.getElementById('chkReport');
+            const chkPpt = document.getElementById('chkPpt');
+            const chkViva = document.getElementById('chkViva');
+
+            let base = level === 'mini' ? 3999 : 7499;
+
+            if (tech === 'ai') base += 1500;
+            if (tech === 'cyber') base += 1000;
+            if (tech === 'blockchain') base += 2000;
+
+            if (chkReport && chkReport.checked) base += 1000;
+            if (chkPpt && chkPpt.checked) base += 499;
+            if (chkViva && chkViva.checked) base += 999;
+
+            if (urgency === 'fast') base += 1000;
+            if (urgency === 'critical') base += 2499;
+
+            const maxVal = base + 500;
+
+            calculatedPriceDisplay.textContent = `₹${base.toLocaleString('en-IN')} - ₹${maxVal.toLocaleString('en-IN')}`;
+        };
+
+        // Listen for changes
+        if (calculatorForm) {
+            calculatorForm.addEventListener('change', updateCalculatedPrice);
+        }
+
+        // Lock Price & Consult on WhatsApp
+        if (lockPriceBtn) {
+            lockPriceBtn.addEventListener('click', () => {
+                const level = calculatorForm.elements['calcLevel'].value === 'mini' ? 'Mini Project' : 'Final Year Capstone';
+                let tech = 'Web Development';
+                if (calculatorForm.elements['calcTech'].value === 'ai') tech = 'AI / Machine Learning';
+                if (calculatorForm.elements['calcTech'].value === 'cyber') tech = 'Cybersecurity';
+                if (calculatorForm.elements['calcTech'].value === 'blockchain') tech = 'Blockchain & Web3';
+
+                const urgency = calculatorForm.elements['calcUrgency'].value;
+                const estimatedPrice = calculatedPriceDisplay.textContent;
+
+                const deliverables = ['Source Code & Setup'];
+                if (document.getElementById('chkReport')?.checked) deliverables.push('Documentation Report');
+                if (document.getElementById('chkPpt')?.checked) deliverables.push('PPT Slides');
+                if (document.getElementById('chkViva')?.checked) deliverables.push('Viva prep & support');
+
+                const message = encodeURIComponent(`Hi GlobalTechVibers! I estimated my project requirements and want to lock the price:\n\n🎓 Level: ${level}\n💻 Tech Domain: ${tech}\n📦 Deliverables: ${deliverables.join(', ')}\n📅 Urgency: ${urgency}\n💰 Price Range: ${estimatedPrice}\n\nLet's discuss my coordinator's guidelines!`);
+                const waUrl = `https://wa.me/918328186045?text=${message}`;
+                
+                dismissCalculatorModal();
+                window.open(waUrl, '_blank');
             });
         }
     });
