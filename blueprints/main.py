@@ -8,6 +8,7 @@ main_bp = Blueprint('main', __name__)
 BLOG_ARTICLES = [
     {
         'id': 1,
+        'slug': "empowering-academic-success-clean-code-capstone-projects",
         'title': "Empowering Academic Success: The Value of Clean Code in Capstone Projects",
         'category': "Academic Support",
         'date': "July 7, 2026",
@@ -19,6 +20,7 @@ BLOG_ARTICLES = [
     },
     {
         'id': 2,
+        'slug': "architecting-scalable-web-applications-flask-neon-postgresql",
         'title': "Architecting Scalable Web Applications with Flask and Neon PostgreSQL",
         'category': "Web Development",
         'date': "July 3, 2026",
@@ -30,6 +32,7 @@ BLOG_ARTICLES = [
     },
     {
         'id': 3,
+        'slug': "role-of-ai-llm-apis-automating-business-workflows",
         'title': "The Role of AI and LLM APIs in Automating Business Workflows",
         'category': "Artificial Intelligence",
         'date': "June 25, 2026",
@@ -41,6 +44,7 @@ BLOG_ARTICLES = [
     },
     {
         'id': 4,
+        'slug': "database-normalization-index-optimization-practical-guide",
         'title': "Database Normalization and Index Optimization: A Practical Guide",
         'category': "Database Solutions",
         'date': "June 18, 2026",
@@ -65,7 +69,6 @@ def about():
 @main_bp.route('/services')
 def services():
     return render_template('services.html')
-
 
 @main_bp.route('/blog')
 def blog():
@@ -105,6 +108,18 @@ def blog():
         selected_category=category_filter,
         search_query=request.args.get('q', '')
     )
+
+@main_bp.route('/blog/<string:slug>')
+def blog_detail(slug):
+    """Renders the detailed SEO landing page for a specific blog article."""
+    article = next((a for a in BLOG_ARTICLES if a['slug'] == slug), None)
+    if not article:
+        return render_template('404.html'), 404
+        
+    # Fetch related articles (same category, excluding current one)
+    related = [a for a in BLOG_ARTICLES if a['category'] == article['category'] and a['slug'] != slug][:3]
+    
+    return render_template('blog_detail.html', article=article, related=related)
 
 @main_bp.route('/careers')
 def careers():

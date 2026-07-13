@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ article.title }} | GlobalTechVibers Blog{% endblock %}
+
+{% block description %}{{ article.excerpt }}{% endblock %}
+
+{% block content %}
+<!-- JSON-LD Blog Posting Schema for Google SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "{{ article.title }}",
+  "description": "{{ article.excerpt }}",
+  "datePublished": "2026-07-07T09:00:00+05:30",
+  "dateModified": "2026-07-13T11:00:00+05:30",
+  "author": {
+    "@type": "Organization",
+    "name": "GlobalTechVibers",
+    "url": "https://www.globaltechvibers.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "GlobalTechVibers",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.globaltechvibers.com/static/images/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.globaltechvibers.com/blog/{{ article.slug }}"
+  }
+}
+</script>
+
+<!-- Breadcrumbs Navigation -->
+<section style="background-color: var(--color-section-bg); padding: 12px 0; border-bottom: 1px solid var(--color-border); font-size: 0.85rem;">
+    <div class="container" style="display: flex; gap: 8px; color: var(--color-text-muted);">
+        <a href="/" style="color: inherit; text-decoration: none;">Home</a>
+        <span>/</span>
+        <a href="/blog" style="color: inherit; text-decoration: none;">Blog</a>
+        <span>/</span>
+        <span style="color: var(--color-primary); font-weight: 600;">{{ article.category }}</span>
+    </div>
+</section>
+
+<!-- Blog Article Layout -->
+<section class="section animate-fade">
+    <div class="container" style="max-width: 1100px; display: grid; grid-template-columns: 2.2fr 0.8fr; gap: var(--spacing-xl);" class="grid-2">
+        
+        <!-- Left: Long-form Article Body -->
+        <article style="text-align: left;">
+            <span style="background: rgba(214, 40, 40, 0.08); color: var(--color-primary); font-weight: 700; font-size: 0.75rem; text-transform: uppercase; padding: 4px 12px; border-radius: 4px; display: inline-block; margin-bottom: var(--spacing-xs);">
+                {{ article.category }}
+            </span>
+            <h1 style="font-size: 2.5rem; line-height: 1.2; color: var(--color-dark-navy); margin-bottom: var(--spacing-sm); font-weight: 800;">
+                {{ article.title }}
+            </h1>
+            
+            <!-- Metadata Row -->
+            <div style="display: flex; gap: var(--spacing-md); font-size: 0.85rem; color: var(--color-text-muted); padding-bottom: var(--spacing-md); border-bottom: 1px solid var(--color-border); margin-bottom: var(--spacing-md); flex-wrap: wrap;">
+                <span><i class="bi bi-person-fill"></i> By GlobalTechVibers Team</span>
+                <span><i class="bi bi-calendar-event"></i> {{ article.date }}</span>
+                <span><i class="bi bi-clock"></i> {{ article.read_time }}</span>
+            </div>
+            
+            <!-- Article Content -->
+            <div class="article-rich-text" style="font-size: 1.1rem; line-height: 1.7; color: var(--color-text); display: flex; flex-direction: column; gap: var(--spacing-md);">
+                <p style="font-size: 1.2rem; font-weight: 500; color: var(--color-dark-navy); line-height: 1.6;">
+                    {{ article.excerpt }}
+                </p>
+                <p>
+                    {{ article.content }}
+                </p>
+                
+                <h3 style="font-size: 1.5rem; color: var(--color-dark-navy); font-weight: 700; margin-top: 12px; margin-bottom: 4px;">Why It Matters for Modern Development</h3>
+                <p>
+                    At GlobalTechVibers, we focus on engineering robust software patterns that enable clean execution pathways. Whether you are standardizing your academic capstone projects for recruiter assessments, or modularizing B2B business dashboards to run on serverless databases like Neon, prioritizing clean code standards remains the primary indicator of software longevity.
+                </p>
+
+                <h3 style="font-size: 1.5rem; color: var(--color-dark-navy); font-weight: 700; margin-top: 12px; margin-bottom: 4px;">Implementing Robust Framework Configurations</h3>
+                <p>
+                    When building web services, we utilize Python Flask blueprints, separate database query pools, execute secure parameter filters to avoid vulnerability injections, and optimize front-end assets to load instantly. Maintaining lightweight page speeds directly lowers client bounce rates and guarantees higher organic crawl rankings on Google.
+                </p>
+            </div>
+
+            <!-- Social Share Box -->
+            <div style="margin-top: var(--spacing-xl); padding-top: var(--spacing-md); border-top: 1px solid var(--color-border); display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-sm); flex-wrap: wrap;">
+                <span style="font-weight: 700; color: var(--color-dark-navy); font-size: 0.9rem;">Share this insight:</span>
+                <div style="display: flex; gap: 8px;">
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://www.globaltechvibers.com/blog/{{ article.slug }}" target="_blank" rel="noopener" class="btn btn-secondary btn-sm" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.75rem;"><i class="bi bi-linkedin"></i> LinkedIn</a>
+                    <a href="https://twitter.com/intent/tweet?text={{ article.title }}&url=https://www.globaltechvibers.com/blog/{{ article.slug }}" target="_blank" rel="noopener" class="btn btn-secondary btn-sm" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.75rem;"><i class="bi bi-twitter-x"></i> X</a>
+                </div>
+            </div>
+
+        </article>
+
+        <!-- Right: Glassmorphic Sidebar Widgets -->
+        <aside style="display: flex; flex-direction: column; gap: var(--spacing-lg);">
+            
+            <!-- CTA Card: Need custom development? -->
+            <div class="card" style="background: var(--color-dark-navy); color: white; border-radius: var(--radius-md); padding: var(--spacing-md); border: 1px solid rgba(255,255,255,0.1); text-align: left;">
+                <span style="color: var(--color-primary); font-size: 0.75rem; text-transform: uppercase; font-weight: 700; display: block; margin-bottom: 4px;">Custom Solutions</span>
+                <h4 style="color: white; font-weight: 700; font-size: 1.15rem; margin-top: 0; margin-bottom: var(--spacing-xs);">Need Custom Software built?</h4>
+                <p style="color: rgba(255,255,255,0.8); font-size: 0.8rem; line-height: 1.45; margin-bottom: var(--spacing-md);">
+                    Our developers write custom web applications, AI models, database layouts, and API connections tailored to your requirements.
+                </p>
+                <a href="/contact" class="btn btn-primary btn-sm" style="width: 100%; text-align: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">Get Free Estimate <i class="bi bi-arrow-right"></i></a>
+            </div>
+
+            <!-- CTA Card: Project Catalog -->
+            <div class="card" style="border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--spacing-md); background: var(--color-section-bg); text-align: left;">
+                <h4 style="font-weight: 700; font-size: 1.1rem; margin-top: 0; margin-bottom: var(--spacing-xs); color: var(--color-dark-navy);">Capstone Projects</h4>
+                <p style="color: var(--color-text-muted); font-size: 0.8rem; line-height: 1.45; margin-bottom: var(--spacing-md);">
+                    Browse our academic database for pre-built, verified mini/final year engineering solutions with complete reports and live video demos.
+                </p>
+                <a href="/projects" class="btn btn-secondary btn-sm" style="width: 100%; text-align: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">Explore Catalog <i class="bi bi-box-seam"></i></a>
+            </div>
+
+            <!-- Newsletter Signup widget -->
+            <div class="card" style="border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--spacing-md); background: white; text-align: left;">
+                <h4 style="font-weight: 700; font-size: 1.1rem; margin-top: 0; margin-bottom: var(--spacing-xs); color: var(--color-dark-navy);">Subscribe</h4>
+                <p style="color: var(--color-text-muted); font-size: 0.8rem; line-height: 1.45; margin-bottom: var(--spacing-md);">Stay updated with the latest software development tutorials and guidelines.</p>
+                <form style="display: flex; flex-direction: column; gap: 8px;">
+                    <input type="email" placeholder="email@example.com" required class="form-control" style="font-size: 0.8rem; padding: 8px 10px; margin-bottom: 0; border-radius: var(--radius-sm);">
+                    <button type="submit" class="btn btn-primary btn-sm" style="font-size: 0.8rem; font-weight: 700;">Join Newsletter</button>
+                </form>
+            </div>
+
+        </aside>
+
+    </div>
+</section>
+
+<!-- Bottom: Related Articles Grid -->
+{% if related %}
+<section class="section section-bg" style="border-top: 1px solid var(--color-border);">
+    <div class="container" style="max-width: 1100px;">
+        <h3 style="font-size: 1.65rem; color: var(--color-dark-navy); font-weight: 800; margin-bottom: var(--spacing-md); text-align: left;">Related Insights</h3>
+        
+        <div class="grid grid-3">
+            {% for rel in related %}
+            <div class="card reveal reveal-up" style="display: flex; flex-direction: column; justify-content: space-between; padding: 0; text-align: left; background: white;">
+                <!-- Card Header -->
+                <div style="background: var(--color-dark-navy); height: 130px; display: flex; align-items: center; justify-content: center; color: white;">
+                    {% if rel.category == 'Web Development' %}
+                        <i class="bi bi-window-sidebar" style="font-size: 2.5rem; color: var(--color-primary);"></i>
+                    {% elif rel.category == 'Artificial Intelligence' %}
+                        <i class="bi bi-cpu-fill" style="font-size: 2.5rem; color: var(--color-primary);"></i>
+                    {% elif rel.category == 'Database Solutions' %}
+                        <i class="bi bi-database-check" style="font-size: 2.5rem; color: var(--color-primary);"></i>
+                    {% else %}
+                        <i class="bi bi-journal-code" style="font-size: 2.5rem; color: var(--color-primary);"></i>
+                    {% endif %}
+                </div>
+                
+                <div style="padding: var(--spacing-md); flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; gap: 8px;">
+                    <div>
+                        <span style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: var(--color-primary);">{{ rel.category }}</span>
+                        <h4 style="font-size: 1.05rem; margin-top: 2px; margin-bottom: 6px; font-weight: 700;"><a href="{{ url_for('main.blog_detail', slug=rel.slug) }}" style="color: var(--color-dark-navy); text-decoration: none;">{{ rel.title }}</a></h4>
+                        <p style="font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 0;">{{ rel.excerpt }}</p>
+                    </div>
+                    
+                    <div style="border-top: 1px solid var(--color-border); padding-top: var(--spacing-sm); display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: var(--color-text-muted); margin-top: 10px;">
+                        <span>{{ rel.date }}</span>
+                        <span>{{ rel.read_time }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% endblock %}

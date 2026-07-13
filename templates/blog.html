@@ -54,7 +54,7 @@
             <div class="reveal reveal-up" style="border: 1px solid var(--color-border); border-radius: var(--radius-md); overflow: hidden; background: white; margin-bottom: var(--spacing-xl); box-shadow: var(--shadow-md); display: grid; grid-template-columns: 1.2fr 0.8fr;" class="grid-2">
                 <div style="padding: var(--spacing-xl); display: flex; flex-direction: column; justify-content: center;">
                     <span style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--color-primary); display: block; margin-bottom: 8px;">{{ featured.category }} &bull; Featured Spotlight</span>
-                    <h2 style="font-size: 1.85rem; margin-bottom: var(--spacing-sm);"><a href="#" style="color: var(--color-dark-navy);">{{ featured.title }}</a></h2>
+                    <h2 style="font-size: 1.85rem; margin-bottom: var(--spacing-sm);"><a href="{{ url_for('main.blog_detail', slug=featured.slug) }}" style="color: var(--color-dark-navy);">{{ featured.title }}</a></h2>
                     <p style="color: var(--color-text-muted); font-size: 0.95rem; margin-bottom: var(--spacing-md);">{{ featured.excerpt }}</p>
                     <div style="display: flex; align-items: center; gap: 15px; font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: var(--spacing-md);">
                         <span><i class="bi bi-calendar-event"></i> {{ featured.date }}</span>
@@ -92,7 +92,7 @@
                         <div style="padding: var(--spacing-md); flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
                             <div>
                                 <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--color-primary);">{{ article.category }}</span>
-                                <h3 style="font-size: 1.15rem; margin-top: 4px; margin-bottom: 8px; font-weight: 600;"><a href="#" style="color: var(--color-dark-navy);">{{ article.title }}</a></h3>
+                                <h3 style="font-size: 1.15rem; margin-top: 4px; margin-bottom: 8px; font-weight: 600;"><a href="{{ url_for('main.blog_detail', slug=article.slug) }}" style="color: var(--color-dark-navy);">{{ article.title }}</a></h3>
                                 <p style="font-size: 0.875rem; color: var(--color-text-muted); margin-bottom: var(--spacing-md);">{{ article.excerpt }}</p>
                             </div>
                             
