@@ -291,8 +291,16 @@ def _create_tables(app):
                 'Represent GlobalTechVibers on your campus. Share final-year capstone and college project catalogs in student WhatsApp groups, department forums, and coding clubs to earn performance-based commissions.',
                 'Enrolled in an Engineering / Computer Science / IT degree program\nStrong communication and networking skills\nActive in student groups or clubs'
             ))
+            cur.execute(seed_query, (
+                'Business Development Intern (Unpaid / Commission-Based)',
+                'Business Development',
+                'Remote / Part-Time (10-15 hours/week)',
+                'Internship',
+                'Work directly with the Founder to learn B2B tech sales and client acquisition. Conduct market research on Discord, Telegram, and LinkedIn to find prospective clients, draft personalized outreach messages for small businesses and academic groups, and manage our lead pipeline in our CRM. Earn a high commission % cut of every web/software project you help close, direct 1-on-1 mentorship from the founder, and an official certificate of completion with a strong LinkedIn recommendation.',
+                'Student or recent graduate in Business, Marketing, or Computer Science\nBasic understanding of tech terms (Web apps, AI, Databases)\nExcellent written communication skills in English'
+            ))
             conn.commit()
-            app.logger.info("Database: Seeded default Campus Tech Ambassador job.")
+            app.logger.info("Database: Seeded default jobs (Campus Ambassador & BD Intern).")
 
         # Seed default projects if they don't exist
         placeholder = '?' if _db_type == 'sqlite' else '%s'
